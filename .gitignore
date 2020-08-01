@@ -5,6 +5,7 @@ __pycache__/
 *$py.class
 frontend/
 frontend-2/
+Scripts/
 # C extensions
 *.so
 
@@ -38,6 +39,8 @@ MANIFEST
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+get-pip.py
+pyvenv.cfg
 
 # Unit test / coverage reports
 htmlcov/
