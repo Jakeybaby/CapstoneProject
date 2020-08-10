@@ -26,25 +26,29 @@ class Order(models.Model):
     employee_order = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, null=True, blank=False)
     date_order = models.DateTimeField(default=timezone.now)
     complete = models.BooleanField(default=False, null=True, blank=False)
-    service_order = models.ForeignKey(Services, on_delete=models.CASCADE,null=True,blank=False)
+    service = models.ManyToManyField(Services)
+    equiement = models.ManyToManyField(Equiement)
     feedbackETC = models.CharField(max_length=255,null=True,blank=True)
     feedbackCTE = models.CharField(max_length=255,null=True, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return self.cus_order.firstname
 
-class ServicesOrder(models.Model):
-    service = models.ForeignKey(Services,on_delete=models.SET_NULL,blank=True, null=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL,blank=True,null=True)
-    data_added = models.DateTimeField(auto_now_add=True)
+# class ServicesOrder(models.Model):
+#     service = models.ForeignKey(Services,on_delete=models.SET_NULL,blank=True, null=True)
+#     order = models.ForeignKey(Order, on_delete=models.SET_NULL,blank=True,null=True)
+#     data_added = models.DateTimeField(auto_now_add=True)
+#
+#     def __str__(self):
+#         return self.service.name
 
 
 
-class EquiementOrder(models.Model):
-    equiment = models.ForeignKey(Equiement,on_delete=models.SET_NULL,blank=True, null=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL,blank=True,null=True)
-    qunatity = models.IntegerField(default=0,null=True,blank=True)
-    date_added = models.DateTimeField(auto_now_add=True)
+# class EquiementOrder(models.Model):
+#     equiment = models.ForeignKey(Equiement,on_delete=models.SET_NULL,blank=True, null=True)
+#     order = models.ForeignKey(Order, on_delete=models.SET_NULL,blank=True,null=True)
+#     qunatity = models.IntegerField(default=0,null=True,blank=True)
+#     date_added = models.DateTimeField(auto_now_add=True)
 
 
 class Feedback(models.Model):
