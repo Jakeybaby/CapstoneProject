@@ -6,4 +6,5 @@ from .models import *
 
 admin.site.register(CustomerProfile)
 admin.site.register(EmployeeProfile)
+admin.site.register(TimeSheet)
 

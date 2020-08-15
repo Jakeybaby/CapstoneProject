@@ -13,14 +13,19 @@ def Cusinfo(request):
     os = Order.objects.all()
     dd = request.user.customerprofile.order_set.all()
     eqorder = EquiementOrder.objects.all()
+
+    time = TimeSheet.objects.all()
+    em = EmployeeProfile.objects.all()
     context = {
 
         'order':os,
         'test':dd,
-        'eqo':eqorder
+        'eqo':eqorder,
+        'time':time,
+        'em':em
 
     }
-    return render(request,'account/UserProfile.html',context)
+    return render(request, 'account/test.html', context)
 
 
 def CustomerRegiser(request):
