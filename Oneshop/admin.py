@@ -4,10 +4,12 @@ from .models import *
 
 
 admin.site.register(Order)
-# admin.site.register(EquiementOrder)
-admin.site.register(ServicesOrder)
+admin.site.register(SecurityOrder)
+admin.site.register(PropertyOrder)
 admin.site.register(Equipment)
 admin.site.register(Feedback)
-admin.site.register(Services)
+admin.site.register(PropetyServices)
+admin.site.register(SecurityServices)
 admin.site.register(CartItem)
-admin.site.register(Cart)
+admin.site.register(ShippingAddress)
+

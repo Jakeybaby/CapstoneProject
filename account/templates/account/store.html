@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript">
+    var user = '{{ request.user }}'
+
+    function getToken(name) {
+		    var cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        var cookies = document.cookie.split(';');
+		        for (var i = 0; i < cookies.length; i++) {
+		            var cookie = cookies[i].trim();
+		            // Does this cookie string begin with the name we want?
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                break;
+		            }
+		        }
+		    }
+		    return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken')
+</script>
+<body>
+{% block content %}
+    User :{{ request.user }}
+    <br>
+    {% for equipment in equipment %}
+     {{ equipment.name }}
+        <button data-equipment="{{ equipment.id }}" data-action="add"  class="update-cart">Add to Cart</button>
+        <br>
+
+    {% endfor %}
+    <a href="{% url 'cart' %}">cart</a>
+
+    <a href="{% url 'usinfo' %}">View my order</a>
+
+
+
+
+{% endblock content %}
+
+<script type="text/javascript" src="{% static 'js/car2t.js' %}"></script>
+</body>
+</html>

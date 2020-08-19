@@ -5,6 +5,11 @@ from . import views
 
 urlpatterns =[
 
-    path('rege/',views.CustomerRegiser,name='register'),
-    path('usinfo/',views.Cusinfo,name='register')
-]
+    path('store/',views.Store,name='store'),
+    path('update_item/',views.updateItem,name='updateItem'),
+    path('cart/',views.cart,name='cart'),
+    path('',views.index),
+    path('BookJob.html/',views.BookJob)
+
+
+    ]
