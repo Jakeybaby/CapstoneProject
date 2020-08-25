@@ -9,7 +9,11 @@ urlpatterns =[
     path('update_item/',views.updateItem,name='updateItem'),
     path('cart/',views.cart,name='cart'),
     path('',views.index),
-    path('BookJob.html/',views.BookJob)
-
+    path('Index', views.index, name='index'),
+    path('BookJob',views.BookJob, name='BookJob'),
+    path('Contact',views.BookJob, name='contact'),
+    path('security',views.BookJob, name='security'),
+    path('HireEquipment', views.HireEquipment, name='HireEquipment'),
+    path('About', views.about, name='About')
 
     ]
