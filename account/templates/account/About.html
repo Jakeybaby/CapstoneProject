@@ -11,7 +11,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
     </head>
     <body>
-      
         <div class="header">
             <a href="{% url 'index'%}"><img src="{% static 'Images/logo.png'%}" style="height:250px;"></a>
 
@@ -31,91 +30,43 @@
             </div>
             <a href="#"><button type="button" class="button">Property Management</button></a>
             <a href="{% url 'HireEquipment'%}"><button type="button" class="button">Hire Equipement</button></a>
+           
             <a href="{% url 'contact'%}"><button type="button" class="button">Contact us</button></a>
             <a href="{% url 'BookJob'%}"><button type="button" class="button">Book a job</button></a>
               
         </div>
         <div class="container-md sm">
             <h3 class="heading">About us</h3><br>
-            <img class="team" src="{% static 'Images/team.png'%}" style="height: 250px; width: 250px;">
+            <img class="team" src="{% static 'Images/team.png' %}" style="height: 250px; width: 250px;">
             <p>
                 Tolerably earnestly middleton extremely distrusts she boy now not. Add and offered prepare how cordial two promise. Greatly who affixed suppose but enquire compact prepare all put. Added forth chief trees but rooms think may. Wicket do manner others seemed enable rather in. Excellent own discovery unfeeling sweetness questions the gentleman. Chapter shyness matters mr parlors if mention thought. 
                 Built purse maids cease her ham new seven among and. Pulled coming wooded tended it answer remain me be. So landlord by we unlocked sensible it. Fat cannot use denied excuse son law. Wisdom happen suffer common the appear ham beauty her had. Or belonging zealously existence as by resources. 
                 Believing neglected so so allowance existence departure in. 
             </p>
             <br>
-            <h3>Our Services</h3>
-            <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
-                </div>
-              </div>
-
-            <h3>Our Customer Testimonials </h3>
-
-            <div class="row">
-            <div class="card border-primary mb-3" style="max-width: 20rem;">
-                <div class="card-header"><strong>Service Type</strong></div>
-                <div class="card-body">
-                  <h5 class="card-title">Customer Name</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-              
-              <div class="card border-primary mb-3" style="max-width: 20rem;">
-                <div class="card-header"><strong>Service Type</strong></div>
-                <div class="card-body">
-                  <h5 class="card-title">Customer Name</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-              <div class="card border-primary mb-3" style="max-width: 20rem;">
-                <div class="card-header"><strong>Service Type</strong></div>
-                <div class="card-body">
-                  <h5 class="card-title">Customer Name</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-            </div>
+            
+            
         </div>
         <footer style="padding-left: 100px;">
-            <div id="grid-container">
+            <div id="quicklinks">
                 <h5 style="text-decoration: underline;">Quick Links<br></h5>
                 
-                <li><a href="Security.html" style="text-decoration: none;color: white;">Security</a></li>
-                <li><a href="HireEquipement.html" style="text-decoration: none;color: white;">Hire Equipement</a></li>
-                <li><a href="BookJob.html" style="text-decoration: none;color: white;">Book a job</a></li>
+                <li><a href="{% url 'security'%}" style="text-decoration: none;color: white;">Security</a></li>
+                <li><a href="{% url 'HireEquipment'%}" style="text-decoration: none;color: white;">Hire Equipement</a></li>
+                <li><a href="{% url 'BookJob'%}" style="text-decoration: none;color: white;">Book a job</a></li>
             
-           
-            
+            </div>
+            <!--<div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">@example.com</span>
+                </div>
+            </div>-->
                 <br>
             <div id="footer-right">
                 
                 &#169;2020 Kaipara Security Services Ltd.
-                </div>
-            </div>
+            
         </footer>
         <!-- Icons made by 
             <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>

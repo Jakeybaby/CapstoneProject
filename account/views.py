@@ -12,6 +12,19 @@ def index(request):
     return render(request, 'account/Index.html')
 
 
+def about(request):
+    return render(request, 'account/About.html')
+
+def HireEquipment(request):
+    return render(request, 'account/HireEquipment.html')
+
+def contact(request):
+        return render(request, 'account/Contact.html')
+
+def security(request):
+    return render(request, 'account/security.html')
+
+
 
 def Orderlist(request):
 
