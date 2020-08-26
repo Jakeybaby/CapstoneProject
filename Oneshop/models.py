@@ -1,6 +1,8 @@
 from django.db import models
 from account.models import *
 from django.utils import timezone
+from django.urls import reverse
+
 
 
 class SecurityServices(models.Model):
@@ -33,7 +35,8 @@ class Order(models.Model):
     cus_order = models.ForeignKey(CustomerProfile, on_delete=models.SET_NULL, null=True, blank=False)
     employee_order = models.ForeignKey(EmployeeProfile, on_delete=models.SET_NULL, null=True, blank=False)
     date_order = models.DateTimeField(default=timezone.now)
-    complete = models.BooleanField(default=False, null=True, blank=False)
+    complete = models.BooleanField(default=False)
+    assigned = models.BooleanField(default=False)
     feedbackETC = models.CharField(max_length=255, null=True, blank=True)
     feedbackCTE = models.CharField(max_length=255, null=True, blank=True)
 
@@ -48,6 +51,12 @@ class Order(models.Model):
         cartitems = self.cartitem_set.all()
         total = sum([item.get_total for item in cartitems])
         return total
+
+    def get_absolute_url(self):
+        return reverse('account:orderdetail',kwargs={"pk":self.id})
+
+    def accpet_job_url(self):
+        return reverse('account:accpet_job', kwargs={"pk":self.id})
 
     def __str__(self):
         return str(self.cus_order.cus_user.username + "'s order")

@@ -26,14 +26,14 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="box-element">
-                <a href="{% url 'store' %}">Continue shopping</a>
+                <a href="{% url 'account:store' %}">Continue shopping</a>
                 <br>
                 <table class="table">
                     <tr>
                         <th><h5>Items</h5><strong>{{ order.get_cart_items }}</strong></th>
                         <th><h5>Total</h5><strong>${{ order.get_cart_total }}</strong></th>
                         <th>
-                            <a style="float: right;margin: 5px" href="{% url 'cart' %}">checkout</a>
+                            <a style="float: right;margin: 5px" href="{% url 'account:cart' %}">checkout</a>
                         </th>
                     </tr>
                 </table>
@@ -48,7 +48,7 @@
 					<div style="flex:1"><strong>Quantity</strong></div>
 					<div style="flex:1"><strong>Total</strong></div>
 				</div>
-                {% for item in equipment %}
+                {% for item in equipments %}
                 <div class="cart-row">
 					<div style="flex:2">{{ item.equipment.name }}</div>
 					<div style="flex:1">{{ item.equipment.price }}</div>
@@ -56,6 +56,7 @@
                         <div><button data-equipment="{{ item.equipment.id }}" data-action="add"  class="update-cart">+</button></div>
                         {{ item.quantity }}
                         <div><button data-equipment="{{ item.equipment.id }}" data-action="remove"  class="update-cart">-</button></div>
+                        <div><button data-equipment="{{ item.equipment.id }}" data-action="delete"  class="update-cart">remove</button></div>
                     </div>
 					<div style="flex:1"><p>{{ item.get_total }}</p></div>
 				</div>
