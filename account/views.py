@@ -15,6 +15,9 @@ def index(request):
 def about(request):
     return render(request, 'account/About.html')
 
+def BookJob(request):
+    return render(request, 'account/BookJob.html')
+
 def HireEquipment(request):
     return render(request, 'account/HireEquipment.html')
 
