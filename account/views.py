@@ -97,7 +97,7 @@ def Store(request):
         'equipments': equipment,
         'order': order,
     }
-    return render(request, 'account/store.html', context)
+    return render(request, 'account/HireEquipment.html', context)
 
 
 def cart(request):
@@ -119,8 +119,8 @@ def updateItem(request):
     customer = request.user.customerprofile
     equipment = Equipment.objects.get(id=equipmentID)
     order, created = Order.objects.get_or_create(cus_order=customer)
-
     cartItem, created = CartItem.objects.get_or_create(order=order, equipment=equipment)
+    # cartItem, created = CartItem.objects.get_or_create(equipment=equipment)
 
     if action == 'add':
         if equipment.stock <= 0:
@@ -143,3 +143,23 @@ def updateItem(request):
         cartItem.delete()
 
     return JsonResponse('Item added', safe=False)
+
+
+def servicebook(request):
+    services = SecurityServices.objects.all()
+    context ={
+        'services':services
+    }
+    return render(request,'account/servicebooking.html',context)
+
+def addservicebook_form(request):
+
+    service_id = request.POST['servicename']
+    service_notes = request.POST['description']
+    service_date = request.POST['servicedate']
+    service_user = request.user.customerprofile
+    service_name = SecurityServices.objects.get(id=service_id)
+    order, created = Order.objects.get_or_create(cus_order=service_user)
+    securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name, description=service_notes, date_required=service_date)
+    securityorder.save()
+    return render(request,'account/servicebooking.html')

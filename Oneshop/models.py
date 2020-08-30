@@ -25,6 +25,7 @@ class Equipment(models.Model):
     name = models.TextField(max_length=50, null=True, blank=True)
     stock = models.IntegerField(null=True, blank=True)
     price = models.IntegerField(null=True, blank=True)
+    pic = models.ImageField(null=True,blank=True)
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -65,7 +66,8 @@ class Order(models.Model):
 class SecurityOrder(models.Model):
     security_service = models.ForeignKey(SecurityServices, on_delete=models.SET_NULL, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
-    data_added = models.DateTimeField(auto_now_add=True)
+    date_required = models.DateTimeField(default=datetime.now,blank=True)
+    description = models.TextField(max_length=100,blank=True)
 
     def __str__(self):
         return str(self.security_service.name)
@@ -74,7 +76,8 @@ class SecurityOrder(models.Model):
 class PropertyOrder(models.Model):
     property_service = models.ForeignKey(PropetyServices, on_delete=models.SET_NULL, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
-    data_added = models.DateTimeField(auto_now_add=True)
+    date_required = models.DateTimeField(default=datetime.now, blank=True)
+    description = models.TextField(max_length=100, blank=True)
 
     def __str__(self):
         return self.property_service.name

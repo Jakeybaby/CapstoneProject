@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 {% load static %}
+{% block content %}
+
 <html>
     <head>
         <link href="{% static 'Images/logo.png'%}" rel="icon" sizes="32x32" type="image/gif">
         <title>Kaipara Security Services Ltd.</title>
         <link href="{% static 'css/Style.css'%}" rel="stylesheet" type="text/css">
-        <link href="EquipStyle.css" rel="stylesheet" type="text/css">
-        <script src="store.js"></script>
+        <link href="{% static 'css/Equipment.css' %}" rel="stylesheet" type="text/css">
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            var user = '{{ request.user }}'
+
+            function getToken(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = cookies[i].trim();
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                var csrftoken = getToken('csrftoken')
+        </script>
     </head>
     <body>
         <div class="header">
@@ -21,7 +44,7 @@
             <h3 class="header-contact"><img src="{% static 'Images/mail.png' %}" style="height: 25px; padding-right: 5px;">admin@onestopshop.com</h3>
           </div>
           <div id="navbar">
-            <a href="{% url 'about'%}"><button type="button" class="button">About us</button></a>
+            <a href="{% url 'account:About'%}"><button type="button" class="button">About us</button></a>
             <div class="dropdown">
                 <button class="button dropbtn">Security</button>
                 <div class="dropdown-content">
@@ -31,10 +54,10 @@
                 </div>
             </div>
             <a href="#"><button type="button" class="button">Property Management</button></a>
-            <a href="{% url 'HireEquipment'%}"><button type="button" class="button">Hire Equipement</button></a>
+            <a href="{% url 'account:HireEquipment'%}"><button type="button" class="button">Hire Equipement</button></a>
            
-            <a href="{% url 'contact'%}"><button type="button" class="button">Contact us</button></a>
-            <a href="{% url 'BookJob'%}"><button type="button" class="button">Book a job</button></a>
+            <a href="{% url 'account:contact'%}"><button type="button" class="button">Contact us</button></a>
+            <a href="{% url 'account:BookJob'%}"><button type="button" class="button">Book a job</button></a>
               
         </div>
         <div class="container-lg">
@@ -50,78 +73,69 @@
               </div>
             <section class="container content-section">
                 <h2 class="section-header">Lawn Mowing Equipements</h2>
-                <div class="shop-items">
-                    <div class="shop-item">
-                        <span class="shop-item-title">Item 1</span>
-                        <img class="shop-item-image" src="Images/HireEquipment/ergonomic-shovel.jpg">
-                        <div class="shop-item-details">
-                            <span class="shop-item-price">$12.99</span>
-                            <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
-                        </div>
-                    </div>
-                    <div class="shop-item">
-                        <span class="shop-item-title">Item 2</span>
-                        <img class="shop-item-image" src="Images/HireEquipment/lawnmover1.jpeg">
-                        <div class="shop-item-details">
-                            <span class="shop-item-price">$14.99</span>
-                            <button class="btn btn-primary shop-item-button"type="button">ADD TO CART</button>
-                        </div>
-                    </div>
-                    <div class="shop-item">
-                        <span class="shop-item-title">Item 3</span>
-                        <img class="shop-item-image" src="Images/HireEquipment/lawnmower2.jpg">
-                        <div class="shop-item-details">
 
-                            <span class="shop-item-price">$9.99</span>
-                            <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
-                        </div>
-                    </div>
-                    <div class="shop-item">
-                        <span class="shop-item-title">Item 4</span>
-                        <img class="shop-item-image" src="Images/Album 4.png">
-                        <div class="shop-item-details">
-                            <span class="shop-item-price">$19.99</span>
-                            <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="container content-section">
-                <h2 class="section-header">Farming machines & Equipements</h2>
+
                 <div class="shop-items">
+                    {% for equipment in products %}
                     <div class="shop-item">
-                        <span class="shop-item-title"></span>
-                        <img class="shop-item-image" src="Images/Shirt.png">
+                        <span class="shop-item-title">{{ equipment.name }}</span>
+
+                        <img src="{{ equipment.pic.url }}" class="shop-item-image">
                         <div class="shop-item-details">
-                            <span class="shop-item-price">$19.99</span>
-                            <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                            <span class="shop-item-price">${{ equipment.price }}</span>
+                            <button data-equipment="{{ equipment.id }}" data-action="add" class="btn btn-primary shop-item-button update-cart" type="button">ADD TO CART</button>
                         </div>
+
                     </div>
-                    <div class="shop-item">
-                        <span class="shop-item-title"></span>
-                        <img class="shop-item-image" src="Images/Cofee.png">
-                        <div class="shop-item-details">
-                            <span class="shop-item-price">$6.99</span>
-                            <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
-                        </div>
-                    </div>
+                    {% endfor %}
+
                 </div>
+
             </section>
-            <section class="container content-section">
-                <h2 class="section-header">CART</h2>
+
+        <div class="row">
+        <div class="col-lg-12">
+            <div class="box-element">
+{#                <a href="{% url 'account:store' %}">Continue shopping</a>#}
+                <br>
+                <table class="table">
+                    <tr>
+                        <th><h5>Items</h5><strong>{{ order.get_cart_items }}</strong></th>
+                        <th><h5>Total</h5><strong>${{ order.get_cart_total }}</strong></th>
+                        <th>
+                            <a style="float: right;margin: 5px" href="{% url 'account:cart' %}">checkout</a>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+
+            <br>
+
+            <div class="box-element">
                 <div class="cart-row">
-                    <span class="cart-item cart-header cart-column">ITEM</span>
-                    <span class="cart-price cart-header cart-column">PRICE</span>
-                    <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+					<div style="flex:2"><strong>Item</strong></div>
+					<div style="flex:1"><strong>Price</strong></div>
+					<div style="flex:1"><strong>Quantity</strong></div>
+					<div style="flex:1"><strong>Total</strong></div>
+				</div>
+                {% for item in equipments %}
+                <div class="cart-row">
+					<div style="flex:2">{{ item.equipment.name }}</div>
+					<div style="flex:1">{{ item.equipment.price }}</div>
+					<div style="flex:1">
+                        <div><button data-equipment="{{ item.equipment.id }}" data-action="add"  class="update-cart">+</button></div>
+                        {{ item.quantity }}
+                        <div><button data-equipment="{{ item.equipment.id }}" data-action="remove"  class="update-cart">-</button></div>
+                        <div><button data-equipment="{{ item.equipment.id }}" data-action="delete"  class="update-cart">remove</button></div>
+                    </div>
+					<div style="flex:1"><p>{{ item.get_total }}</p></div>
+				</div>
+                {% endfor %}
+
                 </div>
-                <div class="cart-items">
-                </div>
-                <div class="cart-total">
-                    <strong class="cart-total-title">Total</strong>
-                    <span class="cart-total-price">$0</span>
-                </div>
-                <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
-            </section>
+            </div>
+        </div>
+    </div>
            
         </div>
         <footer>
@@ -141,5 +155,7 @@
             <a href="https://www.flaticon.com/authors/prosymbols" title="Prosymbols">Prosymbols</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
             <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
         -->
+    <script type="text/javascript" src="{% static 'js/car2t.js' %}"></script>
     </body>
 </html>
+{% endblock %}

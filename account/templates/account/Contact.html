@@ -14,14 +14,14 @@
     <body>
        
         <div class="header">
-            <a href="{% url 'index'%}"><img src="{% static 'Images/logo.png'%}" style="height:250px;"></a>
+            <a href="{% url 'account:index'%}"><img src="{% static 'Images/logo.png'%}" style="height:250px;"></a>
 
             <h3 class="header-contact"><img src="{% static 'Images/Call.png' %}" style="height: 25px;">0800 123 4567</h3>
 
             <h3 class="header-contact"><img src="{% static 'Images/mail.png' %}" style="height: 25px; padding-right: 5px;">admin@onestopshop.com</h3>
           </div>
           <div id="navbar">
-            <a href="{% url 'about'%}"><button type="button" class="button">About us</button></a>
+            <a href="{% url 'account:About'%}"><button type="button" class="button">About us</button></a>
             <div class="dropdown">
                 <button class="button dropbtn">Security</button>
                 <div class="dropdown-content">
@@ -31,10 +31,10 @@
                 </div>
             </div>
             <a href="#"><button type="button" class="button">Property Management</button></a>
-            <a href="{% url 'HireEquipment'%}"><button type="button" class="button">Hire Equipement</button></a>
+            <a href="{% url 'account:HireEquipment'%}"><button type="button" class="button">Hire Equipement</button></a>
            
-            <a href="{% url 'contact'%}"><button type="button" class="button">Contact us</button></a>
-            <a href="{% url 'BookJob'%}"><button type="button" class="button">Book a job</button></a>
+            <a href="{% url 'account:contact'%}"><button type="button" class="button">Contact us</button></a>
+            <a href="{% url 'account:BookJob'%}"><button type="button" class="button">Book a job</button></a>
               
         </div>
         <div class="container-lg">

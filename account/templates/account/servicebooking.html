@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form class="form-control" method="post" action="/service_form/">
+{% csrf_token %}
+    service name:
+    <select name="servicename">
+        {% for i in services %}
+        <option value="{{ i.id }}">
+            {{ i.name }}
+        </option>
+        {% endfor %}
+    </select>
+    <br>
+    date:
+    <input type="datetime-local" name="servicedate">
+    <br>
+    note:
+    <input type="text" name="description">
+
+    <button type="submit">Add</button>
+
+
+</form>
+</body>
+</html>
