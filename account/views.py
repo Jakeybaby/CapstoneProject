@@ -25,6 +25,10 @@ def security(request):
     return render(request, 'account/security.html')
 
 
+def propertyMaintenance(request):
+    return render(request, 'account/PropertyMaintenance.html')
+
+
 
 def Orderlist(request):
 
