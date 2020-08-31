@@ -19,13 +19,17 @@ def BookJob(request):
     return render(request, 'account/BookJob.html')
 
 def HireEquipment(request):
-    return render(request, 'account/HireEquipment.html')
+    return render(request, 'account/HireEquipement.html')
 
 def contact(request):
         return render(request, 'account/Contact.html')
 
 def security(request):
     return render(request, 'account/security.html')
+
+
+def propertyMaintenance(request):
+    return render(request, 'account/PropertyMaintenance.html')
 
 
 
@@ -97,7 +101,7 @@ def Store(request):
         'equipments': equipment,
         'order': order,
     }
-    return render(request, 'account/HireEquipment.html', context)
+    return render(request, 'account/HireEquipement.html', context)
 
 
 def cart(request):

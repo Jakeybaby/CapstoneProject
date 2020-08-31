@@ -21,6 +21,7 @@ urlpatterns =[
     path('HireEquipment/', views.Store, name='HireEquipment'),
     path('About/', views.about, name='About'),
     path('service/', views.servicebook, name='ss'),
-    path('service_form/',views.addservicebook_form,name='addservicebook_form')
+    path('service_form/',views.addservicebook_form,name='addservicebook_form'),
+    path('PropertyMaintenance/', views.propertyMaintenance, name='PropertyMaintenance'),
 
     ]
