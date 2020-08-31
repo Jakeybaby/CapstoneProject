@@ -15,8 +15,11 @@ def index(request):
 def about(request):
     return render(request, 'account/About.html')
 
-def HireEquipment(request):
-    return render(request, 'account/HireEquipment.html')
+def BookJob(request):
+    return render(request, 'account/BookJob.html')
+
+def HireEquipement(request):
+    return render(request, 'account/HireEquipement.html')
 
 def contact(request):
         return render(request, 'account/Contact.html')
@@ -24,11 +27,8 @@ def contact(request):
 def security(request):
     return render(request, 'account/security.html')
 
-
 def propertyMaintenance(request):
     return render(request, 'account/PropertyMaintenance.html')
-
-
 
 def Orderlist(request):
 

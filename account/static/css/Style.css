@@ -7,15 +7,62 @@ body{
     min-height: 100%;
     flex-direction: column;
 }
-.header{
+.wrappers{
     height: 280px;
     width: 100%;
     background-color: #5DA9E9;
     color: #312F2F;
-    padding-left: 150px;
-    padding-right: 150px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+.cardss{
+  margin: 20px;
+  width: auto;
+  border: 0.5px solid lightgray;
+  box-shadow: 5px 10px cadetblue;
+  
+  
+}
+.col-md-6{
+  margin-left: 50px;
 }
 
+.col-sm-2{
+  text-align: right;
+}
+
+.list{
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  margin: 50px 100px 20px 200px;
+  list-style: none;
+}
+.email{
+  background: url("/static/Images/send.png") no-repeat left top;
+  height: 24px;
+  padding-left: 30px;
+}
+.phone{
+  background: url('/static/Images/phone.png') no-repeat left top;
+  height: 24px;
+  padding-left: 30px;
+}
+
+
+.four{
+  grid-column: 1/3;
+  grid-row: 1;
+  margin-left: 100px;
+}
+.five{
+  grid-column: 3;
+  grid-row: 1; 
+  text-decoration: none;
+  margin-left: 100px;
+}
 .container-lg{
     position: relative;
 }
@@ -59,10 +106,81 @@ form .submit{
   margin-top: 20px;
 }
 
+#mc_embed_signup { 
+  border: none; 
+  text-align: center; 
+  width: 100%; 
+} /* Signup form container */
 
-#navbar{
+.mc-field-group { 
+  display: inline-block; 
+} /* positions input field horizontally */
+
+#mce-EMAIL { 
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+  font-size: 1em; 
+  border: 2px solid #ABB0B2 ; 
+  color: #343434; 
+  background-color: #fff; 
+  padding: .7em 9em .7em 1em; 
+  -webkit-border-radius: 3px; 
+  -moz-border-radius: 3px; 
+  border-radius: 3px; 
+  display: inline-block; 
+  margin: 0; } /* Input Styles */
+
+.clear { 
+  display: inline-block; 
+} /* positions button horizontally in line with input */
+
+.buttonn { 
+  font-family: 'Helvetica Neue', Helvetica,  Arial, sans-serif; 
+  font-size: 1em; 
+  letter-spacing: .03em; 
+  color: #fff; 
+  background-color: #2386C8 ; 
+  padding: .7em 2em; 
+  border: 2px solid #2386C8 ; 
+  -webkit-border-radius: 3px; 
+  -moz-border-radius: 3px; 
+  border-radius: 3px; 
+  display: inline-block; 
+  margin: 0; 
+} /* Button Styles */
+
+:-webkit-input-placeholder { color: #ABB0B2 ; } /* WebKit browsers */ 
+:-moz-placeholder { color: #ABB0B2 ; } /* Mozilla Firefox 4 to 18 */
+::-moz-placeholder { color: #ABB0B2 ; } /* Mozilla Firefox 19+ */
+:-ms-input-placeholder { color: #ABB0B2 ; } /* Internet Explorer 10+ */
+
+@media (max-width: 768px) { 
+  /* positions input field and button underneath each other with 100% width for tablet and mobile */
+  
+.mc-field-group { display: block; max-width: 100%; }
+#mce-EMAIL { padding: .7em 0 .7em 1em; width: 96%; margin: 0; }
+.clear { display: block; width: 100% }
+.button { width: 100%; margin: .5em 0 0 0; }
+  
+}
+.cards {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  float: left;
+  
+  
+}
+
+.card--content {
+  padding: 0 15px 0 15px;
+  height: auto;
+}
+
+#navbar{ 
 
     padding-left: 150px;
+    float: left;
+  display: block;
 }
 .jumbotron{
   color: #312F2F;
@@ -70,6 +188,27 @@ form .submit{
 .a-link{
   text-decoration: none;
 
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+  
+}
+
+.one {
+  grid-column: 1/3;
+  grid-row: 1;
+}
+.two {
+  grid-column: 3;
+  grid-row: 1;
+
+}
+.three {
+  grid-column: 3;
+  grid-row: 2;
 }
 
 #contact-header{
@@ -112,8 +251,10 @@ form .submit{
     cursor: pointer;
   }
 .card{
-  margin: 25px;
-}
+  width: 200px;
+  display: flex;
+  
+  }
 
 footer{
     background-color: #42464D;
