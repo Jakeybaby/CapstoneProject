@@ -5,7 +5,8 @@
       <link href="{% static 'Images/logo.png'%}" rel="icon" sizes="32x32" type="image/gif">
       <title>Kaipara Security Services Ltd.</title>
       <link href="{% static 'css/Style.css'%}" rel="stylesheet" type="text/css">
-        
+        <link href="bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="bootstrap.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -14,7 +15,7 @@
     <body>
       <div class="wrappers">
         <div class="four">
-          <a href="{% url 'account:index' %}"><img src="{% static 'Images/logo.png'%}" style="height:250px;"></a>
+          <a href="{% url 'account:index' %}"><img src="{% static 'Images/logo.png' %}" style="height:250px;"></a>
         </div>
           <div class="five">
             <ul class="list">
@@ -47,18 +48,54 @@
             <a href="#"><button type="button" class="button" style="float: right;margin-right:150px ;">Login</button></a>
       </div>
         <div class="container-lg">
-            <h3 class="heading">Contact us</h3><br>
-            <main> 
-                <h1>Feel free to contact us</h1>
-                <form id="contact-form" action="mail.php" method="post">
-                   <input name="name" type="text" class="form-control" placeholder="Your Name" required>
-
-                   <input name="email" type="text" class="form-control" placeholder="Email" required>
-
-                   <textarea name="message" type="text" class="form-control" placeholder="Enter Message" row="5" required></textarea>
-                        <input type="submit" class="form-control submit" value="Send Message">
-                </form>
-            </main>
+            <h3 class="heading">Book Property Maintenance Services</h3>
+            <form>
+              <fieldset>
+                <div class="form-group row">
+                  <label class="col-sm-2"for="exampleInputName">Full Name:</label>
+                  <input type="text" class="form-control col-md-6 " id="exampleInputName" placeholder="Enter your full name">
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2"for="exampleInputEmail">Email:</label>
+                  <input type="Email" class="form-control col-md-6" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter your e-mail">
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2" for="exampleInputAddress">Address:</label>
+                  <textarea class="form-control col-md-6" id="exampleTextarea" rows="3" placeholder="Address"></textarea>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2" for="exampleInputPhone">Mobile Number:</label>
+                  <input type="text" class="form-control col-md-6 " id="exampleInputName" placeholder="+64">
+                </div>
+                
+                <form action="/action_page.php" class="row" style="padding-bottom: 50px;">
+                  <label for="bookingdate" class="col-sm-2">Booking date:</label>
+                  <input class="col-md-6" type="datetime-local" id="bookingdate" name="bookingdate">
+                  <!--<input type="submit">-->
+                </form><br>
+                <div class="form-group row" style="padding: 50px;">
+                  <label for="exampleSelect1" class="col-sm-2">Types of services:</label>
+                  <select class="form-control col-md-6 " id="exampleSelect1">
+                    <option>Mowing lawns</option>
+                    <option>Pruning and maintaining trees and plants</option>
+                    <option>House washing</option>
+                    <option>Gutter Cleaning</option>
+                    <option>Cleaning Chimney</option>
+                    <option>Window Cleaning</option>
+                    <option>Outside house paint work</option>
+                    <option>Roof Work</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="exampleTextarea" class="col-sm-3">Additional Comments:</label>
+                  <textarea class="form-control col-md-8" id="exampleTextarea" rows="3" placeholder="Comments" style=""></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="margin-bottom: 80px;">Submit</button>
+              </fieldset>
+            </form>
+            
 
         </div>
         <footer class="wrapper" style="padding-left: 100px;margin-bottom:0">
@@ -91,8 +128,18 @@
         <a href='https://pngtree.com/so/team-icons'>team-icons png from pngtree.com</a>
         Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
       -->
-        <!--<div>Icons made by <a href="https://www.flaticon.com/authors/prosymbols" title="Prosymbols">Prosymbols</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-            Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>-->
-         
-        </body>
+    <!-- Icons made by 
+      <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+        <a href="https://www.flaticon.com/authors/prosymbols" title="Prosymbols">Prosymbols</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+        <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+        <a href='https://pngtree.com/so/team-icons'>team-icons png from pngtree.com</a>
+        Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+      -->
+        <!-- Icons made by 
+            <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+            <a href="https://www.flaticon.com/authors/prosymbols" title="Prosymbols">Prosymbols</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+            <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+        -->
+    </body>
 </html>
