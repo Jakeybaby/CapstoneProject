@@ -128,15 +128,17 @@
                         <div><button data-equipment="{{ item.equipment.id }}" data-action="remove"  class="update-cart">-</button></div>
                         <div><button data-equipment="{{ item.equipment.id }}" data-action="delete"  class="update-cart">remove</button></div>
                     </div>
+
 					<div style="flex:1"><p>{{ item.get_total }}</p></div>
 				</div>
-                {% endfor %}
 
+                {% endfor %}
+                 <button>checkout</button>
                 </div>
             </div>
         </div>
     </div>
-           
+
         </div>
         <footer>
             <div id="quicklinks">
