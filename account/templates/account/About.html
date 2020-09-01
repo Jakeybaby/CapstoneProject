@@ -2,39 +2,49 @@
 {% load static %}
 <html>
     <head>
-        <link href="{% static 'Images/logo.png'%}" rel="icon" sizes="32x32" type="image/gif">
-        <title>Kaipara Security Services Ltd.</title>
-        <link href="{% static 'css/Style.css'%}" rel="stylesheet" type="text/css">
+      <link href="{% static 'Images/logo.png' %}" rel="icon" sizes="32x32" type="image/gif">
+      <title>Kaipara Security Services Ltd.</title>
+      <link href="{% static 'css/Style.css'%}" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="header">
-            <a href="{% url 'account:index'%}"><img src="{% static 'Images/logo.png'%}" style="height:250px;"></a>
-
-            <h3 class="header-contact"><img src="{% static 'Images/Call.png' %}" style="height: 25px;">0800 123 4567</h3>
-
-            <h3 class="header-contact"><img src="{% static 'Images/mail.png' %}" style="height: 25px; padding-right: 5px;">admin@onestopshop.com</h3>
-          </div>
-          <div id="navbar">
-            <a href="{% url 'account:About'%}"><button type="button" class="button">About us</button></a>
-            <div class="dropdown">
-                <button class="button dropbtn">Security</button>
-                <div class="dropdown-content">
-                  <a  class="a-link" href="#">Event Security</a>
-                  <a class="a-link" href="#">Personal Security</a>
-                  <a class="a-link" href="#">Concierge Services</a>
-                </div>
-            </div>
-            <a href="#"><button type="button" class="button">Property Management</button></a>
-            <a href="{% url 'account:HireEquipment'%}"><button type="button" class="button">Hire Equipement</button></a>
-           
-            <a href="{% url 'account:contact'%}"><button type="button" class="button">Contact us</button></a>
-            <a href="{% url 'account:BookJob'%}"><button type="button" class="button">Book a job</button></a>
-              
+      <div class="wrappers">
+        <div class="four">
+          <a href="{% url 'account:index' %}"><img src="{% static 'Images/logo.png' %}" style="height:250px;"></a>
         </div>
+          <div class="five">
+            <ul class="list">
+              <li class="email"><a  href="mailto:admin@kaipara.co.nz">admin@kaipara.co.nz</a></li></br>
+              <li class="phone"><a href="tel:+64 800 524 7272">+64 0800 524 7272</a></li>
+            </ul>
+        </div>
+      </div>
+        <div id="navbar">
+          <a href="{% url 'account:About' %}"><button type="button" class="button">About us</button></a>
+          <div class="dropdown">
+              <a href="{% url 'account:Security' %}"><button class="button dropbtn">Security</button></a>
+              <div class="dropdown-content">
+                <a  class="a-link" href="{% url 'account:About' %}">Event Security</a>
+                <a class="a-link" href="#">Personal Security</a>
+                <a class="a-link" href="#">Concierge Services</a>
+              </div>
+          </div>
+          <a href="#"><button type="button" class="button">Property Management</button></a>
+          <a href="{% url 'account:HireEquipement'%}"><button type="button" class="button">Hire Equipement</button></a>
+         
+          <a href="{% url 'account:contact'%}"><button type="button" class="button">Contact us</button></a>
+          <div class="dropdown">
+            <button class="button dropbtn">Book a service</button>
+            <div class="dropdown-content">
+              <a  class="a-link" href="{% url 'account:BookJob'%}">Security Job</a>
+              <a class="a-link" href="{% url 'account:PropertyMaintenance'%}">Property Management</a>
+            </div>
+        </div>
+            <a href="#"><button type="button" class="button" style="float: right;margin-right:150px ;">Login</button></a>
+      </div>
         <div class="container-md sm">
             <h3 class="heading">About us</h3><br>
             <img class="team" src="{% static 'Images/team.png' %}" style="height: 250px; width: 250px;">
@@ -44,30 +54,58 @@
                 Believing neglected so so allowance existence departure in. 
             </p>
             <br>
-            
-            
+            <h3 id="services1"style="color: teal;">Services we offer!</h3>
+
+              <p>Affronting imprudence do he he everything. Sex lasted dinner wanted indeed wished out law. Far advanced settling say finished raillery. Offered chiefly farther of my no colonel shyness. Such on help ye some door if in. Laughter proposal laughing any son law consider. Needed except up piqued an.</p>
+
+              <p>Perceived end knowledge certainly day sweetness why cordially. Ask quick six seven offer see among. Handsome met debating sir dwelling age material. As style lived he worse dried. Offered related so visitor we private removed. Moderate do subjects to distance.</p>
+
+              <p>An sincerity so extremity he additions. Her yet there truth merit. Mrs all projecting favourable now unpleasing. Son law garden chatty temper. Oh children provided to mr elegance marriage strongly. Off can admiration prosperous now devonshire diminution law.</p>
+            <h3 id="services2">Personal Services</h3>
+              <p>At ourselves direction believing do he departure. Celebrated her had sentiments understood are projection set. Possession ye no mr unaffected remarkably at. Wrote house in never fruit up. Pasture imagine my garrets an he. However distant she request behaved see nothing. Talking settled at pleased an of me brother weather.</p>
+
+              <p>Advantage old had otherwise sincerity dependent additions. It in adapted natural hastily is justice. Six draw you him full not mean evil. Prepare garrets it expense windows shewing do an. She projection advantages resolution son indulgence. Part sure on no long life am at ever. In songs above he as drawn to. Gay was outlived peculiar rendered led six.</p>
+
+              <p>Started earnest brother believe an exposed so. Me he believing daughters if forfeited at furniture. Age again and stuff downs spoke. Late hour new nay able fat each sell. Nor themselves age introduced frequently use unsatiable devonshire get. They why quit gay cold rose deal park. One same they four did ask busy. Reserved opinions fat him nay position. Breakfast as zealously incommode do agreeable furniture. One too nay led fanny allow plate.</p>
+              <h3 id="services3">Personal Services</h3>
+              <p>Gave read use way make spot how nor. In daughter goodness an likewise oh consider at procured wandered. Songs words wrong by me hills heard timed. Happy eat may doors songs. Be ignorant so of suitable dissuade weddings together. Least whole timed we is. An smallness deficient discourse do newspaper be an eagerness continued. Mr my ready guest ye after short at.</p>
+
+              <p>Its had resolving otherwise she contented therefore. Afford relied warmth out sir hearts sister use garden. Men day warmth formed admire former simple. Humanity declared vicinity continue supplied no an. He hastened am no property exercise of. Dissimilar comparison no terminated devonshire no literature on. Say most yet head room such just easy.</p>
+
+              <p>He share of first to worse. Weddings and any opinions suitable smallest nay. My he houses or months settle remove ladies appear. Engrossed suffering supposing he recommend do eagerness. Commanded no of depending extremity recommend attention tolerably. Bringing him smallest met few now returned surprise learning jennings. Objection delivered eagerness he exquisite at do in. Warmly up he nearer mr merely me.</p>
+
+
         </div>
-        <footer style="padding-left: 100px;">
-            <div id="quicklinks">
-                <h5 style="text-decoration: underline;">Quick Links<br></h5>
-                
-                <li><a href="{% url 'account:security'%}" style="text-decoration: none;color: white;">Security</a></li>
-                <li><a href="{% url 'account:HireEquipment'%}" style="text-decoration: none;color: white;">Hire Equipement</a></li>
-                <li><a href="{% url 'account:BookJob'%}" style="text-decoration: none;color: white;">Book a job</a></li>
+        <footer class="wrapper" style="padding-left: 100px;margin-bottom:0">
+          
+          <div class="one">
+            <h5 style="text-decoration: underline;color: white;">Quick Links<br></h5>
             
-            </div>
-            <!--<div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                  <span class="input-group-text" id="basic-addon2">@example.com</span>
-                </div>
-            </div>-->
-                <br>
-            <div id="footer-right">
-                
-                &#169;2020 Kaipara Security Services Ltd.
+            <li><a href="{% url 'account:Security'%}" style="text-decoration: none;color: white;">Security</a></li>
+            <li><a href="{% url 'account:HireEquipement' %}" style="text-decoration: none;color: white;">Hire Equipement</a></li>
+            <li><a href="{% url 'account:BookJob' %}" style="text-decoration: none;color: white;">Book a job</a></li>
+        
+        </div>
+       <div class="two">
+         <h3 style="color: white;text-align: center;">You can download our app via Playstore!</h3>
+         <img src="{% static 'Images/Google.png'%}" style="width: 200px;justify-content: center;"/>
+       </div>
+            <br>
+        <div class="three">
             
-        </footer>
+            &#169;2020 Kaipara Security Services Ltd.
+        
+      </div>
+   
+    </footer>
+    <!-- Icons made by 
+      <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+        <a href="https://www.flaticon.com/authors/prosymbols" title="Prosymbols">Prosymbols</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+        <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+        <a href='https://pngtree.com/so/team-icons'>team-icons png from pngtree.com</a>
+        Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+      -->
         <!-- Icons made by 
             <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
             <a href="https://www.flaticon.com/authors/prosymbols" title="Prosymbols">Prosymbols</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>

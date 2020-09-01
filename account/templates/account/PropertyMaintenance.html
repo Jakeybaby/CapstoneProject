@@ -27,7 +27,7 @@
         <div id="navbar">
           <a href="{% url 'account:About' %}"><button type="button" class="button">About us</button></a>
           <div class="dropdown">
-              <a href="{% url 'account:security' %}"><button class="button dropbtn">Security</button></a>
+              <a href="{% url 'account:Security' %}"><button class="button dropbtn">Security</button></a>
               <div class="dropdown-content">
                 <a  class="a-link" href="{% url 'account:About' %}">Event Security</a>
                 <a class="a-link" href="#">Personal Security</a>
@@ -35,7 +35,7 @@
               </div>
           </div>
           <a href="#"><button type="button" class="button">Property Management</button></a>
-          <a href="{% url 'account:HireEquipment'%}"><button type="button" class="button">Hire Equipement</button></a>
+          <a href="{% url 'account:HireEquipement'%}"><button type="button" class="button">Hire Equipement</button></a>
          
           <a href="{% url 'account:contact'%}"><button type="button" class="button">Contact us</button></a>
           <div class="dropdown">
@@ -75,16 +75,13 @@
                 </form><br>
                 <div class="form-group row" style="padding: 50px;">
                   <label for="exampleSelect1" class="col-sm-2">Types of services:</label>
+
                   <select class="form-control col-md-6 " id="exampleSelect1">
-                    <option>Mowing lawns</option>
-                    <option>Pruning and maintaining trees and plants</option>
-                    <option>House washing</option>
-                    <option>Gutter Cleaning</option>
-                    <option>Cleaning Chimney</option>
-                    <option>Window Cleaning</option>
-                    <option>Outside house paint work</option>
-                    <option>Roof Work</option>
+                      {% for i in services %}
+                        <option value="{{ i.id }}">{{ i.name }}</option>
+                      {% endfor %}
                   </select>
+
                 </div>
                 
                 <div class="form-group">
@@ -103,8 +100,8 @@
           <div class="one">
             <h5 style="text-decoration: underline;color: white;">Quick Links<br></h5>
             
-            <li><a href="{% url 'account:security'%}" style="text-decoration: none;color: white;">Security</a></li>
-            <li><a href="{% url 'account:HireEquipment' %}" style="text-decoration: none;color: white;">Hire Equipement</a></li>
+            <li><a href="{% url 'account:Security'%}" style="text-decoration: none;color: white;">Security</a></li>
+            <li><a href="{% url 'account:HireEquipement' %}" style="text-decoration: none;color: white;">Hire Equipement</a></li>
             <li><a href="{% url 'account:BookJob' %}" style="text-decoration: none;color: white;">Book a job</a></li>
         
         </div>

@@ -13,15 +13,18 @@ urlpatterns =[
     path('order/', views.Orderlist, name='order'),
     path('order/<int:pk>/', views.OrderDetailView.as_view(), name='orderdetail'),
     path('acceptorder/<int:pk>/', accpet_job, name='accpet_job'),
-    path('assigned/', views.Employee_assigned_order, name='assigned'),
+    path('Employee_assigned_order/', views.Employee_assigned_order, name='assigned'),
+
+
     path('Index/', views.index, name='index'),
     path('BookJob/',views.BookJob, name='BookJob'),
     path('Contact/',views.contact, name='contact'),
-    path('security/',views.security, name='security'),
-    path('HireEquipment/', views.Store, name='HireEquipment'),
+    path('security/',views.security, name='Security'),
+    path('HireEquipment/', views.Store, name='HireEquipement'),
     path('About/', views.about, name='About'),
     path('service/', views.servicebook, name='ss'),
     path('service_form/',views.addservicebook_form,name='addservicebook_form'),
-    path('PropertyMaintenance/', views.propertyMaintenance, name='PropertyMaintenance'),
+    path('PropertyMaintenance/', views.servicebook, name='PropertyMaintenance'),
+
 
     ]

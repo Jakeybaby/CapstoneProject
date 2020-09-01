@@ -1,11 +1,11 @@
 * {
     box-sizing: border-box;
-    font-family: Raleway;
-    color: #777;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #333;
 }
 
 .content-section {
-    margin: 1em;
+    margin: 0;
 }
 
 .container {
@@ -21,7 +21,13 @@
     margin: 15px;
     border-radius: 50%;
 }
-
+.shop-item-title{
+    float: right;
+}
+.shop-item-image{
+    -ms-flex-item-align: left;
+    margin: 15px;
+}
 .btn {
     text-align: center;
     vertical-align: middle;
@@ -101,29 +107,37 @@
 .tour-btn {
     max-width: 19%;
 }
+.card-subtitle {
+    float: right;
+  }
+  .card-text {
+    float: left;
+  }
 
 .shop-item {
-    margin: 30px;
+    width: auto;
 }
 
 .shop-item-title {
-    display: block;
+    display: flex;
     width: 100%;
     text-align: center;
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: #333;
-    margin-bottom: 15px;
 }
 
 .shop-item-image {
-    height: 250px;
+    height: 150px;
+    display: flex;
 }
 
 .shop-item-details {
     display: flex;
     align-items: center;
     padding: 5px;
+
+
 }
 
 .shop-item-price {

@@ -19,7 +19,7 @@ def BookJob(request):
     return render(request, 'account/BookJob.html')
 
 def HireEquipment(request):
-    return render(request, 'account/HireEquipement.html')
+    return render(request, 'account/preHire.html')
 
 def contact(request):
         return render(request, 'account/Contact.html')
@@ -33,13 +33,6 @@ def propertyMaintenance(request):
 
 
 
-def Orderlist(request):
-
-    order = Order.objects.all()
-    context = {
-        'orders': order
-    }
-    return render(request, 'account/orderlist.html', context)
 
 def Employee_assigned_order(request):
 
@@ -66,7 +59,13 @@ class OrderDetailView(DetailView):
     model = Order
     template_name = "account/orderdetail.html"
 
+def Orderlist(request):
 
+    order = Order.objects.all()
+    context = {
+        'orders': order
+    }
+    return render(request, 'account/orderlist.html', context)
 
 def accpet_job(request,pk):
 
@@ -77,18 +76,18 @@ def accpet_job(request,pk):
 
     return redirect('account:order')
 
-
-def CustomerRegiser(request):
-    if request.method == "POST":
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-
-    else:
-        form = UserRegisterForm()
-
-    context = {'form': form}
-    return render(request, 'account/userregister.html', context)
+#
+# def CustomerRegiser(request):
+#     if request.method == "POST":
+#         form = UserRegisterForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#
+#     else:
+#         form = UserRegisterForm()
+#
+#     context = {'form': form}
+#     return render(request, 'account/userregister.html', context)
 
 
 def Store(request):
@@ -150,11 +149,11 @@ def updateItem(request):
 
 
 def servicebook(request):
-    services = SecurityServices.objects.all()
+    services = PropetyServices.objects.all()
     context ={
         'services':services
     }
-    return render(request,'account/servicebooking.html',context)
+    return render(request,'account/PropertyMaintenance.html',context)
 
 def addservicebook_form(request):
 
@@ -163,7 +162,9 @@ def addservicebook_form(request):
     service_date = request.POST['servicedate']
     service_user = request.user.customerprofile
     service_name = SecurityServices.objects.get(id=service_id)
+
     order, created = Order.objects.get_or_create(cus_order=service_user)
     securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name, description=service_notes, date_required=service_date)
+
     securityorder.save()
     return render(request,'account/servicebooking.html')
