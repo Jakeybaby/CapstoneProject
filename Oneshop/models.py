@@ -53,6 +53,10 @@ class Order(models.Model):
         total = sum([item.get_total for item in cartitems])
         return total
 
+
+    def checkout(self):
+        return reverse('account:checkout')
+
     def get_absolute_url(self):
         return reverse('account:orderdetail',kwargs={"pk":self.id})
 
@@ -61,6 +65,9 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.cus_order.cus_user.username + "'s order")
+
+
+
 
 
 class SecurityOrder(models.Model):

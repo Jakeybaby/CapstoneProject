@@ -67,6 +67,7 @@ def Orderlist(request):
     }
     return render(request, 'account/orderlist.html', context)
 
+
 def accpet_job(request,pk):
 
     ins = get_object_or_404(Order, pk=pk)
@@ -75,6 +76,16 @@ def accpet_job(request,pk):
     ins.save()
 
     return redirect('account:order')
+
+
+def checkout(request):
+
+    customer = request.user.customerprofile
+    order = get_object_or_404(Order, cus_order=customer,complete=False)
+    order.complete = True
+    order.save()
+    return redirect('account:HireEquipement')
+
 
 #
 # def CustomerRegiser(request):
@@ -148,38 +159,7 @@ def updateItem(request):
     return JsonResponse('Item added', safe=False)
 
 
-def checkout(request):
 
-    data = json.loads(request.body)
-    equipmentID = data['equipmentID']
-    action = data['action']
-
-    customer = request.user.customerprofile
-    equipment = Equipment.objects.get(id=equipmentID)
-    order, created = Order.objects.get_or_create(cus_order=customer)
-    cartItem, created = CartItem.objects.get_or_create(order=order, equipment=equipment)
-    # cartItem, created = CartItem.objects.get_or_create(equipment=equipment)
-
-    if action == 'add':
-        if equipment.stock <= 0:
-            print('not enough stocking')
-        else:
-            cartItem.quantity = (cartItem.quantity + 1)
-            equipment.stock = equipment.stock - 1
-            equipment.save()
-            cartItem.save()
-
-    elif action == 'remove':
-        cartItem.quantity = (cartItem.quantity - 1)
-        cartItem.save()
-    elif action == 'delete':
-        cartItem.delete()
-
-
-    if cartItem.quantity <= 0:
-        cartItem.delete()
-
-    return JsonResponse('Item added', safe=False)
 
 
 def servicebook(request):
