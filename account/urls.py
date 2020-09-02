@@ -15,6 +15,7 @@ urlpatterns =[
     path('acceptorder/<int:pk>/', accpet_job, name='accpet_job'),
     path('Employee_assigned_order/', views.Employee_assigned_order, name='assigned'),
     path('checkout/', views.checkout, name='checkout'),
+    path('customerOrder/', views.customerOrder, name='customerOrder'),
 
     path('Index/', views.index, name='index'),
     path('BookJob/',views.BookJob, name='BookJob'),

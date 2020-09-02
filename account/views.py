@@ -83,6 +83,7 @@ def checkout(request):
     customer = request.user.customerprofile
     order = get_object_or_404(Order, cus_order=customer,complete=False)
     order.complete = True
+    order.isHiring = True
     order.save()
     return redirect('account:HireEquipement')
 
@@ -142,8 +143,6 @@ def updateItem(request):
             print('not enough stocking')
         else:
             cartItem.quantity = (cartItem.quantity + 1)
-            # equipment.stock = equipment.stock - 1
-            equipment.save()
             cartItem.save()
 
     elif action == 'remove':
@@ -163,11 +162,11 @@ def updateItem(request):
 
 
 def servicebook(request):
-    services = PropetyServices.objects.all()
+    services = SecurityServices.objects.all()
     context ={
         'services':services
     }
-    return render(request,'account/PropertyMaintenance.html',context)
+    return render(request,'account/servicebooking.html',context)
 
 def addservicebook_form(request):
 
@@ -177,8 +176,17 @@ def addservicebook_form(request):
     service_user = request.user.customerprofile
     service_name = SecurityServices.objects.get(id=service_id)
 
-    order, created = Order.objects.get_or_create(cus_order=service_user)
+    order = Order.objects.create(cus_order=service_user, complete=True, isService=True)
     securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name, description=service_notes, date_required=service_date)
 
     securityorder.save()
     return render(request,'account/servicebooking.html')
+
+def customerOrder(request):
+
+    customer = request.user.customerprofile
+    order = Order.objects.filter(cus_order=customer)
+    context={
+        'orders':order
+    }
+    return render(request,'account/UserPage.html',context)

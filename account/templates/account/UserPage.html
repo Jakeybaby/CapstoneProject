@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>{{ request.user }} order</h1>
+
+
+<p>For Hiring order:</p>
+{% for i in orders %}
+    {% if i.complete == True and i.isHiring == True %}
+    Order ID: {{ i.id }}
+    <br>
+    {% for item in i.cartitem_set.all %}
+        {{ item }} | number of item {{ item.quantity }}
+        <br>
+    {% endfor %}
+    <hr>
+    {% endif %}
+{% endfor %}
+
+
+<p>For sercurity order:</p>
+{% for i in orders %}
+    {% if i.complete == True and i.isService == True %}
+    Order ID: {{ i.id }}
+    {% for job in i.securityorder_set.all %}
+
+        {{ job }}
+        <br>
+    {% endfor %}
+        <hr>
+    {% endif %}
+{% endfor %}
+</body>
+</html>

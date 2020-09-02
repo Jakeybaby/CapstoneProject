@@ -4,7 +4,6 @@ from django.utils import timezone
 from django.urls import reverse
 
 
-
 class SecurityServices(models.Model):
     name = models.TextField(max_length=50, null=True, blank=True)
     price = models.IntegerField(null=True, blank=False)
@@ -36,8 +35,13 @@ class Order(models.Model):
     cus_order = models.ForeignKey(CustomerProfile, on_delete=models.SET_NULL, null=True, blank=False)
     employee_order = models.ForeignKey(EmployeeProfile, on_delete=models.SET_NULL, null=True, blank=False)
     date_order = models.DateTimeField(default=timezone.now)
+
     complete = models.BooleanField(default=False)
     assigned = models.BooleanField(default=False)
+    isHiring = models.BooleanField(default=False)
+    isService = models.BooleanField(default=False)
+    isPropety = models.BooleanField(default=False)
+
     feedbackETC = models.CharField(max_length=255, null=True, blank=True)
     feedbackCTE = models.CharField(max_length=255, null=True, blank=True)
 
