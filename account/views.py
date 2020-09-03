@@ -15,14 +15,18 @@ def index(request):
 def about(request):
     return render(request, 'account/About.html')
 
+
 def BookJob(request):
     return render(request, 'account/BookJob.html')
+
 
 def HireEquipment(request):
     return render(request, 'account/preHire.html')
 
+
 def contact(request):
-        return render(request, 'account/Contact.html')
+    return render(request, 'account/Contact.html')
+
 
 def security(request):
     return render(request, 'account/security.html')
@@ -80,6 +84,9 @@ def accpet_job(request,pk):
 
 def checkout(request):
 
+    data = json.loads(request.body)
+    equipmentID = data['equipmentID']
+
     customer = request.user.customerprofile
     order = get_object_or_404(Order, cus_order=customer,complete=False)
     order.complete = True
@@ -136,7 +143,7 @@ def updateItem(request):
     equipment = Equipment.objects.get(id=equipmentID)
     order, created = Order.objects.get_or_create(cus_order=customer, complete=False)
     cartItem, created = CartItem.objects.get_or_create(order=order, equipment=equipment)
-    # cartItem, created = CartItem.objects.get_or_create(equipment=equipment)
+
 
     if action == 'add':
         if equipment.stock <= 0:
@@ -168,6 +175,7 @@ def servicebook(request):
     }
     return render(request,'account/servicebooking.html',context)
 
+
 def addservicebook_form(request):
 
     service_id = request.POST['servicename']
@@ -181,6 +189,7 @@ def addservicebook_form(request):
 
     securityorder.save()
     return render(request,'account/servicebooking.html')
+
 
 def customerOrder(request):
 
