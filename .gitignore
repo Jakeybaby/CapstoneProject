@@ -418,3 +418,8 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,django,node
 get-pip.py
+*.pyc
+CapstoneProject/__pycache__/__init__.cpython-38.pyc
+CapstoneProject/__pycache__/settings.cpython-38.pyc
+CapstoneProject/__pycache__/urls.cpython-38.pyc
+CapstoneProject/__pycache__/wsgi.cpython-38.pyc
