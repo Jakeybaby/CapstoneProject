@@ -50,26 +50,42 @@ def Employee_assigned_order(request):
     return render(request,'account/assigned.html',context)
 
 
-def Orderdetail(request,id):
+def ServiceOrderdetail(request,pk):
 
-    ins = get_object_or_404(Order, id=id)
+    ins = get_object_or_404(Order, pk=pk)
     context = {
-        'orderdetail': ins
+        'object': ins
     }
-    return render(request, 'account/orderdetail.html', context)
+    return render(request, 'account/serviceorderdetail.html', context)
 
 
-class OrderDetailView(DetailView):
-    model = Order
-    template_name = "account/orderdetail.html"
+def HiringOrderdetail(request,pk):
 
-def Orderlist(request):
+    ins = get_object_or_404(HiringOrder, pk=pk)
+    context = {
+        'object': ins
+    }
+    return render(request, 'account/Hiringorderdetail.html', context)
+
+
+def ServiceOrderlist(request):
 
     order = Order.objects.all()
+
     context = {
-        'orders': order
+        'orders': order,
+
     }
-    return render(request, 'account/orderlist.html', context)
+    return render(request, 'account/serviceorderlist.html', context)
+
+def HiringOrderlist(request):
+
+
+    hiringorder = HiringOrder.objects.all()
+    context = {
+        'orders':hiringorder
+    }
+    return render(request, 'account/hiringorderlist.html', context)
 
 
 def accpet_job(request,pk):
@@ -84,13 +100,9 @@ def accpet_job(request,pk):
 
 def checkout(request):
 
-    data = json.loads(request.body)
-    equipmentID = data['equipmentID']
-
     customer = request.user.customerprofile
-    order = get_object_or_404(Order, cus_order=customer,complete=False)
+    order = get_object_or_404(HiringOrder, cus_order=customer,complete=False)
     order.complete = True
-    order.isHiring = True
     order.save()
     return redirect('account:HireEquipement')
 
@@ -112,7 +124,7 @@ def checkout(request):
 def Store(request):
     products = Equipment.objects.all()
     customer = request.user.customerprofile
-    order, created = Order.objects.get_or_create(cus_order=customer, complete=False)
+    order, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
     equipment = order.cartitem_set.all()
     context = {
         "products": products,
@@ -124,7 +136,7 @@ def Store(request):
 
 def cart(request):
     customer = request.user.customerprofile
-    order, created = Order.objects.get_or_create(cus_order=customer,complete=False)
+    order, created = HiringOrder.objects.get_or_create(cus_order=customer,complete=False)
     equipment = order.cartitem_set.all()
     context = {
         'equipments': equipment,
@@ -141,7 +153,7 @@ def updateItem(request):
 
     customer = request.user.customerprofile
     equipment = Equipment.objects.get(id=equipmentID)
-    order, created = Order.objects.get_or_create(cus_order=customer, complete=False)
+    order, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
     cartItem, created = CartItem.objects.get_or_create(order=order, equipment=equipment)
 
 
@@ -188,14 +200,17 @@ def addservicebook_form(request):
     securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name, description=service_notes, date_required=service_date)
 
     securityorder.save()
-    return render(request,'account/servicebooking.html')
+
+    return redirect('account:ss')
 
 
 def customerOrder(request):
 
     customer = request.user.customerprofile
     order = Order.objects.filter(cus_order=customer)
+    hiringorder = HiringOrder.objects.filter(cus_order=customer)
     context={
-        'orders':order
+        'orders':order,
+        'hiringorders':hiringorder
     }
     return render(request,'account/UserPage.html',context)

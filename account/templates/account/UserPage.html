@@ -8,9 +8,24 @@
 <h1>{{ request.user }} order</h1>
 
 
-<p>For Hiring order:</p>
-{% for i in orders %}
-    {% if i.complete == True and i.isHiring == True %}
+<h1>For Hiring order(Assigned):</h1>
+{% for i in hiringorders %}
+    {% if i.complete == True and i.assigned == True %}
+    Order ID: {{ i.id }}
+    <br>
+    {% for item in i.cartitem_set.all %}
+        {{ item }} | number of item {{ item.quantity }}
+        <br>
+    {% endfor %}
+
+        Order leash date :{{ i.leash_date }}<br>
+        Order return date :{{ i.return_date }}
+    {% endif %}
+{% endfor %}
+
+<h1>For Hiring order(unassigned):</h1>
+{% for i in hiringorders %}
+    {% if i.complete == True and i.assigned == False %}
     Order ID: {{ i.id }}
     <br>
     {% for item in i.cartitem_set.all %}
@@ -22,9 +37,25 @@
 {% endfor %}
 
 
-<p>For sercurity order:</p>
+<h1>For sercurity order(assigned):</h1>
 {% for i in orders %}
-    {% if i.complete == True and i.isService == True %}
+    {% if i.complete == True and i.isService == True and i.assigned == True %}
+    Order ID: {{ i.id }}
+        <br>
+    {% for job in i.securityorder_set.all %}
+
+        {{ job }}
+        <br>
+        Job Required Date:{{ job.date_required }}
+        <br>
+    {% endfor %}
+        <hr>
+    {% endif %}
+{% endfor %}
+
+<h1>For sercurity order(unassigned):</h1>
+{% for i in orders %}
+    {% if i.complete == True and i.isService == True and i.assigned == False %}
     Order ID: {{ i.id }}
     {% for job in i.securityorder_set.all %}
 
@@ -34,5 +65,6 @@
         <hr>
     {% endif %}
 {% endfor %}
+
 </body>
 </html>

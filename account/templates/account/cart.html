@@ -30,7 +30,7 @@
                 <br>
                 <table class="table">
                     <tr>
-                        <th><h5>Items</h5><strong>{{ order.get_cart_items }}</strong></th>
+                        <th><h5>Items</h5><strong>{{ order.get_absolute_url }}</strong></th>
                         <th><h5>Total</h5><strong>${{ order.get_cart_total }}</strong></th>
                         <th>
 {#                            <a style="float: right;margin: 5px" href="{% url 'account:cart' %}">checkout</a>#}
@@ -55,7 +55,10 @@
 					<div style="flex:1">{{ item.equipment.price }}</div>
 					<div style="flex:1">
                         <div><button data-equipment="{{ item.equipment.id }}" data-action="add"  class="update-cart">+</button></div>
-                        {{ item.quantity }}
+
+                        <textarea id="w3review" name="w3review" rows="4" cols="50">
+                                {{ item.quantity }}
+                        </textarea>
                         <div><button data-equipment="{{ item.equipment.id }}" data-action="remove"  class="update-cart">-</button></div>
                         <div><button data-equipment="{{ item.equipment.id }}" data-action="delete"  class="update-cart">remove</button></div>
                     </div>

@@ -1,0 +1,17 @@
+{% block content %}
+    <h1>Hiring job order</h1>
+    {% for order in orders %}
+            {% if order.complete == True and order.assigned == False %}
+                Order ID:{{ order.id }}
+                <br>
+                {{ order.cus_order }}
+                <br>
+                <a href="{{ order.get_absolute_url }}">View detail</a>
+            {% else %}
+
+            {% endif %}
+        <br>
+    {% endfor %}
+
+
+{% endblock content %}

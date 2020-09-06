@@ -38,10 +38,45 @@ class Order(models.Model):
 
     complete = models.BooleanField(default=False)
     assigned = models.BooleanField(default=False)
-    isHiring = models.BooleanField(default=False)
     isService = models.BooleanField(default=False)
     isPropety = models.BooleanField(default=False)
 
+    feedbackETC = models.CharField(max_length=255, null=True, blank=True)
+    feedbackCTE = models.CharField(max_length=255, null=True, blank=True)
+
+    # @property
+    # def get_cart_items(self):
+    #     cartitems = self.cartitem_set.all()
+    #     total = sum([item.quantity for item in cartitems])
+    #     return total
+    #
+    # @property
+    # def get_cart_total(self):
+    #     cartitems = self.cartitem_set.all()
+    #     total = sum([item.get_total for item in cartitems])
+    #     return total
+
+
+    def checkout(self):
+        return reverse('account:checkout')
+
+    def get_absolute_url(self):
+        return reverse('account:ServiceOrderdetail',kwargs={"pk":self.id})
+
+    def accpet_job_url(self):
+        return reverse('account:accpet_job', kwargs={"pk":self.id})
+
+    def __str__(self):
+        return str(self.id)
+
+class HiringOrder(models.Model):
+    cus_order = models.ForeignKey(CustomerProfile, on_delete=models.SET_NULL, null=True, blank=False)
+    employee_order = models.ForeignKey(EmployeeProfile, on_delete=models.SET_NULL, null=True, blank=False)
+    date_order = models.DateTimeField(default=timezone.now)
+    complete = models.BooleanField(default=False)
+    assigned = models.BooleanField(default=False)
+    leash_date = models.DateTimeField(null=True,blank=True)
+    return_date = models.DateTimeField(null=True, blank=True)
     feedbackETC = models.CharField(max_length=255, null=True, blank=True)
     feedbackCTE = models.CharField(max_length=255, null=True, blank=True)
 
@@ -62,15 +97,13 @@ class Order(models.Model):
         return reverse('account:checkout')
 
     def get_absolute_url(self):
-        return reverse('account:orderdetail',kwargs={"pk":self.id})
+        return reverse('account:HiringOrderdetail',kwargs={"pk":self.id})
 
     def accpet_job_url(self):
         return reverse('account:accpet_job', kwargs={"pk":self.id})
 
     def __str__(self):
-        return str(self.cus_order.cus_user.username + "'s order")
-
-
+        return str(self.id)
 
 
 
@@ -118,10 +151,10 @@ class ShippingAddress(models.Model):
 
 
 class CartItem(models.Model):
-    order = models.ForeignKey('Order', null=True, blank=True, on_delete=models.CASCADE)
+    order = models.ForeignKey('HiringOrder', null=True, blank=True, on_delete=models.CASCADE)
     equipment = models.ForeignKey(Equipment, null=True, blank=True, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+
 
     @property
     def get_total(self):

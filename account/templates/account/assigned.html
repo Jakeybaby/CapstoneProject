@@ -1,4 +1,9 @@
+{{ request.user }}
+<h1>Staff job assigned page</h1>
+
 {% for i in order %}
-    {{ i }}
+    {% for a in i.securityorder_set.all %}
+        {{ a }}
+        {% endfor %}
     <br>
 {% endfor %}
