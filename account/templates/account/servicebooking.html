@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,23 +9,29 @@
 <form class="form-control" method="post" action="/service_form/">
 {% csrf_token %}
     service name:
-    <select name="servicename">
+    <select name="servicename" id="serviceoptions">
+     <option disabled selected value> -- select an option -- </option>
         {% for i in services %}
-        <option value="{{ i.id }}">
+
+            <option value="{{ i.id }}" data-price="{{ i.price }}">
             {{ i.name }}
         </option>
         {% endfor %}
     </select>
+
     <br>
     date:
     <input type="datetime-local" name="servicedate">
     <br>
     note:
-    <input type="text" name="description">
+    <input type="text" name="description"><br>
+    price:
+    <span id="serviceprice"></span><br>
 
     <button type="submit">Add</button>
 
 
 </form>
+<script type="text/javascript" src="{% static 'js/service.js' %}"></script>
 </body>
 </html>

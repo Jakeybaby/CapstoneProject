@@ -88,23 +88,70 @@ def HiringOrderlist(request):
     return render(request, 'account/hiringorderlist.html', context)
 
 
-def accpet_job(request,pk):
+def accpet_HiringOrder(request,pk):
+
+    ins = get_object_or_404(HiringOrder, pk=pk)
+    ins.employee_order = request.user.employeeprofile
+    ins.assigned = True
+    ins.save()
+
+    return redirect('account:HiringOrderlist')
+
+
+def accpet_ServiceOrder(request,pk):
 
     ins = get_object_or_404(Order, pk=pk)
     ins.employee_order = request.user.employeeprofile
     ins.assigned = True
     ins.save()
 
-    return redirect('account:order')
+    return redirect('account:ServiceOrderlist')
 
 
 def checkout(request):
 
+    leashdate = request.POST['ld']
+    returndate = request.POST['rd']
+
     customer = request.user.customerprofile
-    order = get_object_or_404(HiringOrder, cus_order=customer,complete=False)
-    order.complete = True
-    order.save()
+    hiringorder, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
+    hiringorder.complete = True
+    hiringorder.leash_date = leashdate
+    hiringorder.return_date = returndate
+    hiringorder.save()
+
     return redirect('account:HireEquipement')
+
+
+
+
+def addservicebook_form(request):
+
+    service_id = request.POST['servicename']
+    service_notes = request.POST['description']
+    service_date = request.POST['servicedate']
+    service_user = request.user.customerprofile
+    service_name = SecurityServices.objects.get(id=service_id)
+
+    order = Order.objects.create(cus_order=service_user, complete=True, isService=True)
+    securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name, description=service_notes, date_required=service_date)
+
+    securityorder.save()
+
+    return redirect('account:ss')
+
+def cart(request):
+
+
+    customer = request.user.customerprofile
+    order, created = HiringOrder.objects.get_or_create(cus_order=customer,complete=False)
+
+    equipment = order.cartitem_set.all()
+    context = {
+        'equipments': equipment,
+        'order':order,
+    }
+    return render(request, 'account/cart.html', context)
 
 
 #
@@ -134,15 +181,7 @@ def Store(request):
     return render(request, 'account/HireEquipement.html', context)
 
 
-def cart(request):
-    customer = request.user.customerprofile
-    order, created = HiringOrder.objects.get_or_create(cus_order=customer,complete=False)
-    equipment = order.cartitem_set.all()
-    context = {
-        'equipments': equipment,
-        'order':order,
-    }
-    return render(request, 'account/cart.html', context)
+
 
 
 def updateItem(request):
@@ -188,20 +227,7 @@ def servicebook(request):
     return render(request,'account/servicebooking.html',context)
 
 
-def addservicebook_form(request):
 
-    service_id = request.POST['servicename']
-    service_notes = request.POST['description']
-    service_date = request.POST['servicedate']
-    service_user = request.user.customerprofile
-    service_name = SecurityServices.objects.get(id=service_id)
-
-    order = Order.objects.create(cus_order=service_user, complete=True, isService=True)
-    securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name, description=service_notes, date_required=service_date)
-
-    securityorder.save()
-
-    return redirect('account:ss')
 
 
 def customerOrder(request):

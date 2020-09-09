@@ -1,7 +1,7 @@
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
-from .views import accpet_job
+
 
 app_name = 'account'
 
@@ -12,11 +12,10 @@ urlpatterns =[
     path('cart/',views.cart,name='cart'),
     path('ServiceOrderlist/', views.ServiceOrderlist, name='ServiceOrderlist'),
     path('ServiceOrderlist/<int:pk>/', views.ServiceOrderdetail, name='ServiceOrderdetail'),
-
-    path('HiringOrderlist/', views.HiringOrderlist, name='HiringOrderdetail'),
+    path('HiringOrderlist/', views.HiringOrderlist, name='HiringOrderlist'),
     path('HiringOrderlist/<int:pk>/', views.HiringOrderdetail, name='HiringOrderdetail'),
-
-    path('acceptorder/<int:pk>/', accpet_job, name='accpet_job'),
+    path('acceptorder/<int:pk>/', views.accpet_HiringOrder, name='accpet_HiringOrder'),
+    path('acceptserviceorder/<int:pk>/', views.accpet_ServiceOrder, name='accpet_ServiceOrder'),
     path('Employee_assigned_order/', views.Employee_assigned_order, name='assigned'),
     path('checkout/', views.checkout, name='checkout'),
     path('customerOrder/', views.customerOrder, name='customerOrder'),

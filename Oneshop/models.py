@@ -32,6 +32,7 @@ class Equipment(models.Model):
 
 
 class Order(models.Model):
+
     cus_order = models.ForeignKey(CustomerProfile, on_delete=models.SET_NULL, null=True, blank=False)
     employee_order = models.ForeignKey(EmployeeProfile, on_delete=models.SET_NULL, null=True, blank=False)
     date_order = models.DateTimeField(default=timezone.now)
@@ -64,19 +65,23 @@ class Order(models.Model):
         return reverse('account:ServiceOrderdetail',kwargs={"pk":self.id})
 
     def accpet_job_url(self):
-        return reverse('account:accpet_job', kwargs={"pk":self.id})
+        return reverse('account:accpet_ServiceOrder', kwargs={"pk":self.id})
 
     def __str__(self):
         return str(self.id)
+
 
 class HiringOrder(models.Model):
     cus_order = models.ForeignKey(CustomerProfile, on_delete=models.SET_NULL, null=True, blank=False)
     employee_order = models.ForeignKey(EmployeeProfile, on_delete=models.SET_NULL, null=True, blank=False)
     date_order = models.DateTimeField(default=timezone.now)
+
     complete = models.BooleanField(default=False)
     assigned = models.BooleanField(default=False)
+
     leash_date = models.DateTimeField(null=True,blank=True)
     return_date = models.DateTimeField(null=True, blank=True)
+
     feedbackETC = models.CharField(max_length=255, null=True, blank=True)
     feedbackCTE = models.CharField(max_length=255, null=True, blank=True)
 
@@ -100,7 +105,7 @@ class HiringOrder(models.Model):
         return reverse('account:HiringOrderdetail',kwargs={"pk":self.id})
 
     def accpet_job_url(self):
-        return reverse('account:accpet_job', kwargs={"pk":self.id})
+        return reverse('account:accpet_HiringOrder', kwargs={"pk":self.id})
 
     def __str__(self):
         return str(self.id)
