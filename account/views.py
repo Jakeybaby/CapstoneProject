@@ -5,6 +5,7 @@ from .form import UserRegisterForm
 from .models import *
 from Oneshop.models import *
 from django.http import JsonResponse
+from .form import *
 import json
 
 
@@ -36,6 +37,52 @@ def propertyMaintenance(request):
     return render(request, 'account/PropertyMaintenance.html')
 
 
+def adminpage(request):
+
+    order = Order.objects.all()
+    context = {
+        'object': order
+    }
+    return render(request,'account/adminorder.html',context)
+
+def adminOrder(request,pk):
+    order = Order.objects.get(id=pk)
+    form = adminform(instance=order)
+
+    if request.method == 'POST':
+        form = adminform(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+
+
+    context ={'form':form}
+    return render(request, 'account/adminorderdetail.html', context)
+
+def customerorderfeedback(request,pk):
+
+    order = Order.objects.get(id=pk)
+    form = orderfeedback(instance=order)
+    if request.method == 'POST':
+        form = orderfeedback(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('/customerOrder/')
+
+    context = {'form':form}
+    return render(request,'account/customerorderfeedback.html',context)
+
+def employeeorderfeedback(request,pk):
+
+    order = Order.objects.get(id=pk)
+    form = orderfeedbackETC(instance=order)
+    if request.method == 'POST':
+        form = orderfeedbackETC(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('/ServiceOrderlist/')
+
+    context = {'form':form}
+    return render(request,'account/customerorderfeedback.html',context)
 
 
 def Employee_assigned_order(request):
@@ -48,6 +95,15 @@ def Employee_assigned_order(request):
     }
 
     return render(request,'account/assigned.html',context)
+
+def employee_order_job_done(request,pk):
+
+    ins = get_object_or_404(Order, pk=pk)
+    ins.isDone = True
+    ins.save()
+
+    return redirect('account:ServiceOrderlist')
+
 
 
 def ServiceOrderdetail(request,pk):
@@ -69,8 +125,9 @@ def HiringOrderdetail(request,pk):
 
 
 def ServiceOrderlist(request):
-
-    order = Order.objects.all()
+    user = request.user.employeeprofile
+    order = Order.objects.filter(employee_order=user)
+    # order = Order.objects.all()
 
     context = {
         'orders': order,
@@ -101,8 +158,17 @@ def accpet_HiringOrder(request,pk):
 def accpet_ServiceOrder(request,pk):
 
     ins = get_object_or_404(Order, pk=pk)
-    ins.employee_order = request.user.employeeprofile
+    # ins.employee_order = request.user.employeeprofile
     ins.assigned = True
+    ins.save()
+
+    return redirect('account:ServiceOrderlist')
+
+
+def decline_ServiceOrder(request,pk):
+
+    ins = get_object_or_404(Order, pk=pk)
+    ins.employee_order = None
     ins.save()
 
     return redirect('account:ServiceOrderlist')
@@ -133,8 +199,8 @@ def addservicebook_form(request):
     service_user = request.user.customerprofile
     service_name = SecurityServices.objects.get(id=service_id)
 
-    order = Order.objects.create(cus_order=service_user, complete=True, isService=True)
-    securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name, description=service_notes, date_required=service_date)
+    order = Order.objects.create(cus_order=service_user, complete=True, isService=True, server_date=service_date)
+    securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name, notes=service_notes, date_required=service_date)
 
     securityorder.save()
 

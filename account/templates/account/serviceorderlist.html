@@ -1,13 +1,40 @@
 {% block content %}
     <h1>Service job order</h1>
+    <h1>waitting to accept</h1>
     {% for order in orders %}
             {% if order.complete == True and order.assigned == False %}
+
                 Order ID:{{ order.id }}
                 <br>
                 {{ order.cus_order }}
                 <br>
                 <a href="{{ order.get_absolute_url }}">View detail</a>
-            {% else %}
+
+            {% endif %}
+
+    {% endfor %}
+    <h1>on going jobs</h1>
+    {% for order in orders %}
+            {% if order.complete == True and order.assigned == True and order.isDone == False%}
+
+                Order ID:{{ order.id }}
+                <br>
+                {{ order.cus_order }}
+                <br>
+                <a href="{{ order.done_job_url }}">Confirm job done</a>
+
+            {% endif %}
+        <br>
+    {% endfor %}
+    <h1>Jobs has done</h1>
+    {% for order in orders %}
+            {% if order.complete == True and order.assigned == True and order.isDone == True%}
+
+                Order ID:{{ order.id }}
+                <br>
+                {{ order.cus_order }}
+                <br>
+                <a href="{{ order.employee_feedback_url }}">Add Feedback</a>
 
             {% endif %}
         <br>

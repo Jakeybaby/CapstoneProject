@@ -16,10 +16,15 @@ urlpatterns =[
     path('HiringOrderlist/<int:pk>/', views.HiringOrderdetail, name='HiringOrderdetail'),
     path('acceptorder/<int:pk>/', views.accpet_HiringOrder, name='accpet_HiringOrder'),
     path('acceptserviceorder/<int:pk>/', views.accpet_ServiceOrder, name='accpet_ServiceOrder'),
+    path('doneorder/<int:pk>/', views.employee_order_job_done, name='employee_order_job_done'),
+    path('declineserviceorder/<int:pk>/', views.decline_ServiceOrder, name='decline_ServiceOrder'),
     path('Employee_assigned_order/', views.Employee_assigned_order, name='assigned'),
     path('checkout/', views.checkout, name='checkout'),
     path('customerOrder/', views.customerOrder, name='customerOrder'),
-
+    path('adminorderlist/', views.adminpage, name='adminpage'),
+    path('adminOrder/<str:pk>/', views.adminOrder, name='adminOrder'),
+    path('customerorderfeedback/<str:pk>/', views.customerorderfeedback, name='customerorderfeedback'),
+    path('employeeorderfeedback/<str:pk>/', views.employeeorderfeedback, name='employeeorderfeedback'),
 
     path('Index/', views.index, name='index'),
     path('BookJob/',views.BookJob, name='BookJob'),

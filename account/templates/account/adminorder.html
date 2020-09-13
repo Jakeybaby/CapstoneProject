@@ -1,0 +1,10 @@
+{% for i in object %}
+    {% if i.employee_order  %}
+    ORDERID:{{ i }} isassigned
+    <a href="{{ i.admin_get_absolute_url }}">View detail</a><br>
+
+        {% else %}
+        ORDERID:{{ i }} notassigned
+    <a href="{{ i.admin_get_absolute_url }}">View detail</a><br>
+    {% endif %}
+{% endfor %}
