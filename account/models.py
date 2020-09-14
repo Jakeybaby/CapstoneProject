@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django_google_maps import fields as map_fields
 # Create your models here.
 
 class CustomerProfile(models.Model):
@@ -24,6 +25,11 @@ class EmployeeProfile(models.Model):
 
     def __str__(self):
         return self.employee_user.username
+
+
+class Rental(models.Model):
+    address = map_fields.AddressField(max_length=200)
+    geolocation = map_fields.GeoLocationField(max_length=100)
 
 
 # class TimeSheet(models.Model):

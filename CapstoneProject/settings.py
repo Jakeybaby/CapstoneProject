@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_google_maps',
+
 
 
 ]
@@ -130,3 +132,5 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+GOOGLE_MAPS_API_KEY = 'AIzaSyCvTF4JKso7zjNZqQbpQugNRMmOUcnoiKQ'

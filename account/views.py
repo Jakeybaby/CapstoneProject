@@ -53,7 +53,7 @@ def adminOrder(request,pk):
         form = adminform(request.POST, instance=order)
         if form.is_valid():
             form.save()
-
+            return redirect('account:adminpage')
 
     context ={'form':form}
     return render(request, 'account/adminorderdetail.html', context)
