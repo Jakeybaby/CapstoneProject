@@ -1,4 +1,14 @@
+{% load static %}
 {% block content %}
+
+
+
+{{ form.media }}
+    <link href="{% static 'css/google-map-admin.css'%}" rel="stylesheet" type="text/css">
+{#<style>#}
+{#.map_canvas_wrapper{margin-left: 0px}#}
+{##map_canvas{width: 20%;height: 20em}#}
+{#</style>#}
 
 
 <div class="row">
@@ -8,6 +18,8 @@
 			<form action="" method="POST">
 				{% csrf_token %}
 				{{form.as_p}}
+
+
 
 				<input type="submit" name="Submit">
 			</form>

@@ -71,6 +71,11 @@ def customerorderfeedback(request,pk):
     context = {'form':form}
     return render(request,'account/customerorderfeedback.html',context)
 
+
+
+
+
+
 def employeeorderfeedback(request,pk):
 
     order = Order.objects.get(id=pk)
@@ -191,20 +196,6 @@ def checkout(request):
 
 
 
-def addservicebook_form(request):
-
-    service_id = request.POST['servicename']
-    service_notes = request.POST['description']
-    service_date = request.POST['servicedate']
-    service_user = request.user.customerprofile
-    service_name = SecurityServices.objects.get(id=service_id)
-
-    order = Order.objects.create(cus_order=service_user, complete=True, isService=True, server_date=service_date)
-    securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name, notes=service_notes, date_required=service_date)
-
-    securityorder.save()
-
-    return redirect('account:ss')
 
 def cart(request):
 
@@ -287,13 +278,30 @@ def updateItem(request):
 
 def servicebook(request):
     services = SecurityServices.objects.all()
+    form = servicebook_form()
     context ={
-        'services':services
+        'services':services,
+        'form':form
     }
     return render(request,'account/servicebooking.html',context)
 
 
+def addservicebook_form(request):
 
+    service_id = request.POST['servicename']
+    service_notes = request.POST['description']
+    service_date = request.POST['servicedate']
+    service_user = request.user.customerprofile
+    service_name = SecurityServices.objects.get(id=service_id)
+    service_address = request.POST['address']
+    service_geo = request.POST['geolocation']
+
+    order = Order.objects.create(cus_order=service_user, complete=True, isService=True, server_date=service_date,address=service_address,geolocation=service_geo)
+    securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name, notes=service_notes, date_required=service_date)
+
+    securityorder.save()
+    print('ok')
+    return redirect('account:ss')
 
 
 def customerOrder(request):

@@ -39,7 +39,7 @@ class Order(models.Model):
     employee_order = models.ForeignKey(EmployeeProfile, on_delete=models.SET_NULL, null=True, blank=False)
     date_order = models.DateTimeField(default=timezone.now)
 
-    order_location = models.CharField(max_length=255,null=True,blank=True)
+
     server_date = models.DateTimeField(null=True,blank=True)
 
     complete = models.BooleanField(default=False)
@@ -47,6 +47,9 @@ class Order(models.Model):
     isService = models.BooleanField(default=False)
     isPropety = models.BooleanField(default=False)
     isDone = models.BooleanField(default=False)
+
+    address = map_fields.AddressField(max_length=200,null=True)
+    geolocation = map_fields.GeoLocationField(max_length=100,null=True)
 
     feedbackETC = models.CharField(max_length=255, null=True, blank=True)
     feedbackCTE = models.CharField(max_length=255, null=True, blank=True)

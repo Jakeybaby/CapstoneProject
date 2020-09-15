@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from .models import User
 from Oneshop.models import *
+from django_google_maps.widgets import GoogleMapsAddressWidget
 
 class UserRegisterForm(UserCreationForm):
 
@@ -15,8 +16,18 @@ class UserRegisterForm(UserCreationForm):
 class adminform(ModelForm):
     class Meta:
         model = Order
-        fields = ['employee_order','cus_order']
+        fields = ['employee_order','cus_order','address','geolocation']
+        widgets = {
+            "address": GoogleMapsAddressWidget(attrs={'data-map-type': 'roadmap'}),
+        }
 
+class servicebook_form(ModelForm):
+    class Meta:
+        model = Order
+        fields = ['address','geolocation']
+        widgets = {
+            "address": GoogleMapsAddressWidget(attrs={'data-map-type': 'roadmap'}),
+        }
 
 class orderfeedback(ModelForm):
     class Meta:
