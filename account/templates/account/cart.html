@@ -16,40 +16,40 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="wrappers">
-          <div class="four">
-            <a href="{% url 'account:index' %}"><img src="{% static 'Images/logo.png'%}" style="height:250px;"></a>
-          </div>
-            <div class="five">
-              <ul class="list">
-                <li class="email"><a  href="mailto:admin@kaipara.co.nz">admin@kaipara.co.nz</a></li></br>
-                <li class="phone"><a href="tel:+64 800 524 7272">+64 0800 524 7272</a></li>
-              </ul>
-          </div>
-        </div>
-          <div id="navbar">
-            <a href="{% url 'account:About' %}"><button type="button" class="button">About us</button></a>
-            <div class="dropdown">
-                <a href="{% url 'account:Security' %}"><button class="button dropbtn">Security</button></a>
-                <div class="dropdown-content">
-                  <a  class="a-link" href="{% url 'account:About' %}">Event Security</a>
-                  <a class="a-link" href="#">Personal Security</a>
-                  <a class="a-link" href="#">Concierge Services</a>
-                </div>
-            </div>
-            <a href="#"><button type="button" class="button">Property Management</button></a>
-            <a href="{% url 'account:preHire'%}"><button type="button" class="button">Hire Equipement</button></a>
-           
-            <a href="{% url 'account:contact'%}"><button type="button" class="button">Contact us</button></a>
-            <div class="dropdown">
-              <button class="button dropbtn">Book a service</button>
-              <div class="dropdown-content">
-                <a  class="a-link" href="{% url 'account:BookJob'%}">Security Job</a>
-                <a class="a-link" href="{% url 'account:PropertyMaintenance'%}">Property Management</a>
-              </div>
-          </div>
-              <a href="#"><button type="button" class="button" style="float: right;margin-right:150px ;">Login</button></a>
-        </div><br><br>
+{#        <div class="wrappers">#}
+{#          <div class="four">#}
+{#            <a href="{% url 'account:index' %}"><img src="{% static 'Images/logo.png'%}" style="height:250px;"></a>#}
+{#          </div>#}
+{#            <div class="five">#}
+{#              <ul class="list">#}
+{#                <li class="email"><a  href="mailto:admin@kaipara.co.nz">admin@kaipara.co.nz</a></li></br>#}
+{#                <li class="phone"><a href="tel:+64 800 524 7272">+64 0800 524 7272</a></li>#}
+{#              </ul>#}
+{#          </div>#}
+{#        </div>#}
+{#          <div id="navbar">#}
+{#            <a href="{% url 'account:About' %}"><button type="button" class="button">About us</button></a>#}
+{#            <div class="dropdown">#}
+{#                <a href="{% url 'account:Security' %}"><button class="button dropbtn">Security</button></a>#}
+{#                <div class="dropdown-content">#}
+{#                  <a  class="a-link" href="{% url 'account:About' %}">Event Security</a>#}
+{#                  <a class="a-link" href="#">Personal Security</a>#}
+{#                  <a class="a-link" href="#">Concierge Services</a>#}
+{#                </div>#}
+{#            </div>#}
+{#            <a href="#"><button type="button" class="button">Property Management</button></a>#}
+{#            <a href="{% url 'account:preHire'%}"><button type="button" class="button">Hire Equipement</button></a>#}
+{#           #}
+{#            <a href="{% url 'account:contact'%}"><button type="button" class="button">Contact us</button></a>#}
+{#            <div class="dropdown">#}
+{#              <button class="button dropbtn">Book a service</button>#}
+{#              <div class="dropdown-content">#}
+{#                <a  class="a-link" href="{% url 'account:BookJob'%}">Security Job</a>#}
+{#                <a class="a-link" href="{% url 'account:PropertyMaintenance'%}">Property Management</a>#}
+{#              </div>#}
+{#          </div>#}
+{#              <a href="#"><button type="button" class="button" style="float: right;margin-right:150px ;">Login</button></a>#}
+{#        </div><br><br>#}
 <script type="text/javascript">
     var user = '{{ request.user }}'
 

@@ -7,7 +7,7 @@
         <link href="{% static 'Images/logo.png'%}" rel="icon" sizes="32x32" type="image/gif">
         <title>Kaipara Security Services Ltd.</title>
         <link href="{% static 'css/Style.css'%}" rel="stylesheet" type="text/css">
-        <link href="{% static 'css/Equipement.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'css/Equipment.css' %}" rel="stylesheet" type="text/css">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <a href="#"><button type="button" class="button">Property Management</button></a>
-            <a href="{% url 'account:HireEquipement'%}"><button type="button" class="button">Hire Equipement</button></a>
+            <a href="{% url 'account:HireEquipment'%}"><button type="button" class="button">Hire Equipement</button></a>
            
             <a href="{% url 'account:contact'%}"><button type="button" class="button">Contact us</button></a>
             <a href="{% url 'account:BookJob'%}"><button type="button" class="button">Book a job</button></a>
@@ -79,7 +79,6 @@
                     {% for equipment in products %}
                     <div class="shop-item">
                         <span class="shop-item-title">{{ equipment.name }}</span>
-                        stock:{{ equipment.stock }}
 
                         <img src="{{ equipment.pic.url }}" class="shop-item-image">
                         <div class="shop-item-details">
@@ -96,9 +95,21 @@
 
         <div class="row">
         <div class="col-lg-12">
-            
+            <div class="box-element">
+{#                <a href="{% url 'account:store' %}">Continue shopping</a>#}
+                <br>
+                <table class="table">
+                    <tr>
+                        <th><h5>Items</h5><strong>{{ order.get_cart_items }}</strong></th>
+                        <th><h5>Total</h5><strong>${{ order.get_cart_total }}</strong></th>
+                        <th>
+                            <a style="float: right;margin: 5px" href="{% url 'account:cart' %}">checkout</a>
+                        </th>
+                    </tr>
+                </table>
+            </div>
 
-            
+            <br>
 
             <div class="box-element">
                 <div class="cart-row">
@@ -108,42 +119,24 @@
 					<div style="flex:1"><strong>Total</strong></div>
 				</div>
                 {% for item in equipments %}
-
                 <div class="cart-row">
 					<div style="flex:2">{{ item.equipment.name }}</div>
 					<div style="flex:1">{{ item.equipment.price }}</div>
 					<div style="flex:1">
-
                         <div><button data-equipment="{{ item.equipment.id }}" data-action="add"  class="update-cart">+</button></div>
                         {{ item.quantity }}
                         <div><button data-equipment="{{ item.equipment.id }}" data-action="remove"  class="update-cart">-</button></div>
                         <div><button data-equipment="{{ item.equipment.id }}" data-action="delete"  class="update-cart">remove</button></div>
                     </div>
-
 					<div style="flex:1"><p>{{ item.get_total }}</p></div>
 				</div>
-
                 {% endfor %}
-               
-                </div>
-                <div class="box-element">
-{#                <a href="{% url 'account:store' %}">Continue shopping</a>#}
-                <br>
-                <table class="table">
-                    <tr>
-                        <th><h5>Items</h5><strong>{{ order.get_cart_items }}</strong></th>
-                        <th><h5>Total</h5><strong>${{ order.get_cart_total }}</strong></th>
-                        <th>
-                            <a style="float: right;margin: 5px" href="{% url 'account:cart' %}">continue</a>
 
-                        </th>
-                    </tr>
-                </table>
-            </div>
+                </div>
             </div>
         </div>
     </div>
-
+           
         </div>
         <footer>
             <div id="quicklinks">

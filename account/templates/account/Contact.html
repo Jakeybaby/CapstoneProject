@@ -1,98 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 {% load static %}
 <html>
-    <head>
-      <link href="{% static 'Images/logo.png'%}" rel="icon" sizes="32x32" type="image/gif">
-      <title>Kaipara Security Services Ltd.</title>
-      <link href="{% static 'css/Style.css'%}" rel="stylesheet" type="text/css">
-        
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
-    </head>
-    <body>
-      <div class="wrappers">
-        <div class="four">
-          <a href="{% url 'account:index' %}"><img src="{% static 'Images/logo.png'%}" style="height:250px;"></a>
-        </div>
-          <div class="five">
-            <ul class="list">
-              <li class="email"><a  href="mailto:admin@kaipara.co.nz">admin@kaipara.co.nz</a></li></br>
-              <li class="phone"><a href="tel:+64 800 524 7272">+64 0800 524 7272</a></li>
-            </ul>
-        </div>
-      </div>
-        <div id="navbar">
-          <a href="{% url 'account:About' %}"><button type="button" class="button">About us</button></a>
-          <div class="dropdown">
-              <a href="{% url 'account:Security' %}"><button class="button dropbtn">Security</button></a>
-              <div class="dropdown-content">
-                <a  class="a-link" href="{% url 'account:About' %}">Event Security</a>
-                <a class="a-link" href="#">Personal Security</a>
-                <a class="a-link" href="#">Concierge Services</a>
-              </div>
-          </div>
-          <a href="#"><button type="button" class="button">Property Management</button></a>
-          <a href="{% url 'account:HireEquipement'%}"><button type="button" class="button">Hire Equipement</button></a>
-         
-          <a href="{% url 'account:contact'%}"><button type="button" class="button">Contact us</button></a>
-          <div class="dropdown">
-            <button class="button dropbtn">Book a service</button>
-            <div class="dropdown-content">
-              <a  class="a-link" href="{% url 'account:BookJob'%}">Security Job</a>
-              <a class="a-link" href="{% url 'account:PropertyMaintenance'%}">Property Management</a>
-            </div>
-        </div>
-            <a href="#"><button type="button" class="button" style="float: right;margin-right:150px ;">Login</button></a>
-      </div>
-        <div class="container-lg">
-            <h3 class="heading">Contact us</h3><br>
-            <main> 
-                <h1>Feel free to contact us</h1>
-                <form id="contact-form" action="mail.php" method="post">
-                   <input name="name" type="text" class="form-control" placeholder="Your Name" required>
-
-                   <input name="email" type="text" class="form-control" placeholder="Email" required>
-
-                   <textarea name="message" type="text" class="form-control" placeholder="Enter Message" row="5" required></textarea>
-                        <input type="submit" class="form-control submit" value="Send Message">
-                </form>
-            </main>
-
-        </div>
-        <footer class="wrapper" style="padding-left: 100px;margin-bottom:0">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--Different Fonts ## refer to css file -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+    <title>Kaipara Security Services Ltd.</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </head>      
+  <body>
+    
+    
+    <nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top navbar-dark bg-dark">
+      
+        <a class="navbar-brand" href="{% url 'account:index'%}">
+          <img src="{% static 'Images/Logo11.png' %}" width="110" height="110" class="d-inline-block align-top" alt="" loading="lazy">
           
-          <div class="one">
-            <h5 style="text-decoration: underline;color: white;">Quick Links<br></h5>
-            
-            <li><a href="{% url 'account:Security'%}" style="text-decoration: none;color: white;">Security</a></li>
-            <li><a href="{% url 'account:HireEquipement' %}" style="text-decoration: none;color: white;">Hire Equipement</a></li>
-            <li><a href="{% url 'account:BookJob' %}" style="text-decoration: none;color: white;">Book a job</a></li>
-        
-        </div>
-       <div class="two">
-         <h3 style="color: white;text-align: center;">You can download our app via Playstore!</h3>
-         <img src="{% static 'Images/Google.png'%}" style="width: 200px;justify-content: center;"/>
-       </div>
-            <br>
-        <div class="three">
-            
-            &#169;2020 Kaipara Security Services Ltd.
-        
+        </a>
+      
+      <!--<a class="navbar-brand" href="#">Company Name</a>-->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'account:index' %}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'account:About' %}">About Us</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{% url 'account:Services'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Services
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'account:PropertyMaintenance'%}">Property Maintenance</a>
+              <a class="dropdown-item" href="{% url 'account:security'%}">Security</a>
+             
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account:HireEquipement'%}">Hire Equipments</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account:contact'%}">Contact Us</a>
+          </li>
+        </ul>
+        <span class="form-inline my-2 my-lg-0">
+         <a href="{% url 'account:login' %}">
+          <button class="btn btn-link my-2 my-sm-0"  type="submit">Login</button>
+        </a>
+          <a href="{% url 'account:cart' %}"><button class="btn btn-link my-2 my-sm-0"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+          </svg></button></a>
+        </span>
       </div>
-   
+    </nav>
+
+      
+      
+      
+   <div class="container">  
+    <h2>Contact Us</h2>
+  
+    
+        <form action="/action_page.php">
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" name="firstname" placeholder="Your name.."><br>
+      
+          <label for="lname">Last Name</label>
+          <input type="text" id="lname" name="lastname" placeholder="Your last name.."><br>
+      
+          <label for="country">Country</label>
+          <select id="country" name="country">
+            <option value="australia">Australia</option>
+            <option value="canada">Canada</option>
+            <option value="usa">USA</option>
+          </select><br>
+      
+          <label for="subject">Subject</label>
+          <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea><br>
+      
+          <input type="submit" value="Submit">
+        </form>
+      
+      <h2 style="padding-top: 60px;">Head Office</h2>
+      <hr class="my-4">
+        
+    </div>
+    <footer class="grid-container">
+      <div class="grid-item item1">
+        <h5 style="text-decoration: underline;">Quick Links<br></h5>
+        
+        <li style="list-style-type: none;"><a href="{% url 'account:security' %}" style="text-decoration: none;">Security</a></li>
+        <li style="list-style-type: none;"><a href="{% url 'account:HireEquipement'%}" style="text-decoration: none;">Hire Equipement</a></li>
+        <li style="list-style-type: none;"><a href="{%url 'account:PropertyMaintenance'%}" style="text-decoration: none;">Property Maintenance</a></li>
+      </div>
+      <div class="grid-item item2">
+        <h5 style="text-decoration: underline;">Contact Us<br></h5>
+        Address
+        <br>
+        <a href="#" class="fa fa-twitter"></a>
+        <a href="#" class="fa fa-instagram"></a>
+        <a href="#" class="fa fa-youtube"></a>
+        <a href="#" class="fa fa-facebook"></a>
+      </div>
+      <div class="grid-item item3">
+        You can download our App <br>
+        <img src="{% static 'Images/Apps copy.png' %}" style="height: 40px;"><br>
+        <img src="{% static 'Images/Apps.png' %}" style="height: 50px;padding-top: 10px;">
+      </div>  
+      <div class="grid-item item4">&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </div>
     </footer>
-    <!-- Icons made by 
-      <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-        <a href="https://www.flaticon.com/authors/prosymbols" title="Prosymbols">Prosymbols</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-        <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
-        <a href='https://pngtree.com/so/team-icons'>team-icons png from pngtree.com</a>
-        Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
-      -->
-        <!--<div>Icons made by <a href="https://www.flaticon.com/authors/prosymbols" title="Prosymbols">Prosymbols</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-            Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>-->
-         
-        </body>
+  
+</body>
 </html>

@@ -1,0 +1,401 @@
+* {box-sizing: border-box;}
+      
+      body { 
+        margin: 0;
+        font-family: 'Baloo Tammudu 2', cursive;
+        background-color: #EEF0F2;
+      }
+     
+     .collapse{
+        font-size: 20px;
+        color: #34987a;
+        
+     }
+     .collapse li:hover a:hover{
+         color: #34987a;
+     }
+      .btn{
+          color: white;
+          text-decoration: none;
+          margin-right: 10px;
+          padding-bottom: 0px;
+          font-size: 20px;
+          
+      }
+      .img-fluid{
+          width: 100%;
+          height: 600px;
+      }
+      .btn:hover{
+          text-decoration: none;
+          color: white;
+          background-color: #34987a;
+      }
+      .jumbotron{
+          background-color: #EEF0F2;
+      }
+      .jumbotron p{
+          color: black;
+          margin: 0;
+          padding: 0;
+          
+      }
+      
+      
+      .jumbotron img{
+        margin-bottom: 30px;
+        padding: 0;
+      }
+
+      .jumbotron .btn{
+        background-color: transparent;
+      }
+      
+      .jumbotron .btn:hover{
+          background-color: transparent;
+      }
+      .display-5{
+          text-align: center;
+      }
+      
+      .grid-container {
+        display: grid;
+        background-color: #333b3f;
+        color: white;
+        font-size: small;
+      }
+      
+      .grid-item {
+        background-color: #333b3f;
+        text-align: left;
+        padding: 20px;
+        font-size: 30px;
+      }
+      
+      .item1 {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        font-size: medium;
+        text-align: left;
+        padding-left: 50px;
+
+      }
+
+      
+      .item2 {
+        grid-column: 2 ;
+        grid-row: 1 /span  2;
+        font-size: medium;
+        text-align: center;
+      }
+      .item3 {
+        grid-column: 3 ;
+        grid-row: 1 / span 2;
+        font-size: medium;
+        text-align: center;
+        padding-right: 30px;
+      }
+      .item4 {
+        grid-column: 1 / span 3;
+        grid-row: 3;
+        text-align: center;
+        font-size: 15px;
+        padding: 5px;
+      }
+
+    li a{
+        color: white;
+        
+    }
+
+    li a:hover{
+        color: #49C19D;
+    }
+     
+.container{
+    padding-top: 40px;
+    color: black;
+    background-color: #EEF0F2;
+}
+
+.card{
+    margin: 15px;
+}
+
+.equip{
+    color: black;
+}
+.equip:hover{
+    text-decoration: none;
+    color: black;
+}
+
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 50%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #EEF0F2;
+  padding: 20px;
+  font-size: 20px;
+}
+
+.row a{
+  color: #49C19D;
+  
+}
+
+.Hire_items:hover{
+  text-decoration: none;
+  color: black;
+}
+.breadcrumb{
+  font-size: medium;
+}
+.breadcrumb a{
+  color: black;
+}
+
+.col-md-5 img{
+  width: 100%;
+  height: 300px;
+  margin: 0;
+  padding: 0;
+}
+.fa {
+  padding: 10px 10px;
+  font-size: 30px;
+  width: 30px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 5px;
+  border-radius: 50%;
+}
+
+.fa:hover {
+  opacity: 0.7;
+  text-decoration: none;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+.fa-instagram {
+  background: #125688;
+  color: white;
+}
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+.fa-youtube {
+  background: #bb0000;
+  color: white;
+}
+.hoverr{
+  float: right;
+  text-decoration: none;
+  
+}
+
+.hoverr .btn{
+  text-decoration: none;
+  color: green;
+}
+.hoverr .btn:hover{
+  color:white;
+}
+
+.cartt{
+  padding-top:60px;
+  
+}
+.cartt .btn{
+  color: #333b3f;
+  float:right;
+}
+.cartt .btn:hover{
+  color: white;
+}
+.item5 {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  
+  
+  
+
+}
+.item6 {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  font-size: medium;
+  text-align: left;
+  padding-left: 30px;
+
+}
+.item7{
+  grid-column: 1/ span 2;
+  grid-row: 2/ span 2;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 15px;
+}
+
+td, th {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.equip{
+  height: 400px;
+  width: auto;
+  margin-left: 60px;
+  display: flex;
+}
+
+.zoom {
+  background-color: green;
+  transition: transform .2s;
+  margin: 0 auto;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.5); 
+}
+
+.PM .btn{
+  color: #45a049;
+  float: right;
+  margin: 20px;
+}
+
+.PM .btn:hover{
+  color: white;
+}
+
+.text-muted{
+  font-size: 18px;
+}
+.text-muted:hover{
+  text-decoration: none;
+}
+
+.main-head{
+  height: 150px;
+  background: #FFF;
+ 
+}
+
+.sidenav {
+  height: 100%;
+  background-color:#34987a;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+
+.main {
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+}
+
+@media screen and (max-width: 450px) {
+  .login-form{
+      margin-top: 10%;
+  }
+
+  .register-form{
+      margin-top: 10%;
+  }
+}
+
+@media screen and (min-width: 768px){
+  .main{
+      margin-left: 40%; 
+  }
+
+  .sidenav{
+      width: 40%;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+  }
+
+  .login-form{
+      margin-top: 80%;
+  }
+
+  .register-form{
+      margin-top: 20%;
+  }
+}
+
+
+.login-main-text{
+  margin-top: 20%;
+  padding: 60px;
+  color: #fff;
+}
+
+.login-main-text h2{
+  font-weight: 300;
+}
+
+.btn-black{
+  background-color: #000 !important;
+  color: #fff;
+}
+
+
+#login{
+  margin: 150px 80px;
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+}
+#login:hover{
+  text-decoration: none;
+}
+#login img{
+  height: 60px;
+}
+

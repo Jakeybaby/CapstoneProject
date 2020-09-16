@@ -4,6 +4,7 @@ from django.views.generic import DetailView
 from .form import UserRegisterForm
 from .models import *
 from Oneshop.models import *
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .form import *
 import json
@@ -14,7 +15,7 @@ def index(request):
 
 
 def about(request):
-    return render(request, 'account/About.html')
+    return render(request, 'account/AboutUs.html')
 
 
 def BookJob(request):
@@ -22,7 +23,7 @@ def BookJob(request):
 
 
 def HireEquipment(request):
-    return render(request, 'account/preHire.html')
+    return render(request, 'account/Hire_Equipments.html')
 
 
 def contact(request):
@@ -35,6 +36,28 @@ def security(request):
 
 def propertyMaintenance(request):
     return render(request, 'account/PropertyMaintenance.html')
+
+
+
+
+
+def login(request):
+    return render(request, 'account/Login.html')
+
+def Security(request):
+    return render(request, 'account/Security.html')
+
+def Services(request):
+    return render(request, 'account/Services.html')
+
+
+
+def Hire_Equip(request):
+
+        return render(request, 'account/Hire_Equipments.html')
+
+
+
 
 
 def adminpage(request):
@@ -90,16 +113,16 @@ def employeeorderfeedback(request,pk):
     return render(request,'account/customerorderfeedback.html',context)
 
 
-def Employee_assigned_order(request):
-
-    staff = request.user.employeeprofile
-    assigned_order = staff.order_set.all()
-
-    context = {
-        'order':assigned_order
-    }
-
-    return render(request,'account/assigned.html',context)
+# def Employee_assigned_order(request):
+#
+#     staff = request.user.employeeprofile
+#     assigned_order = staff.order_set.all()
+#
+#     context = {
+#         'order':assigned_order
+#     }
+#
+#     return render(request,'account/assigned.html',context)
 
 def employee_order_job_done(request,pk):
 
@@ -141,11 +164,10 @@ def ServiceOrderlist(request):
     return render(request, 'account/serviceorderlist.html', context)
 
 def HiringOrderlist(request):
-
-
-    hiringorder = HiringOrder.objects.all()
+    user = request.user.employeeprofile
+    order = HiringOrder.objects.filter(employee_order=user)
     context = {
-        'orders':hiringorder
+        'orders':order
     }
     return render(request, 'account/hiringorderlist.html', context)
 
@@ -235,7 +257,7 @@ def Store(request):
         'equipments': equipment,
         'order': order,
     }
-    return render(request, 'account/HireEquipement.html', context)
+    return render(request, 'account/Hire_Equipments.html', context)
 
 
 
