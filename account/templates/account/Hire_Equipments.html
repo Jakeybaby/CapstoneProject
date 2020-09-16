@@ -90,15 +90,16 @@
     <div class="container">  
       
       <h2 style="margin: 20px;">Hire Equipments</h2>
-        {% for equipment in products %}
+
       <div class="row">
+          {% for equipment in products %}
           <a class="Hire_items" href="#" style="color:black;">
             <div class="card shadow p-3 mb-5 rounded" style="width: 18rem;">
-                <img src="{% static 'Images/HireEquipments/ergonomic-shovel.jpg'%}" class="card-img-top" alt="..." height="250px">
+                <img src="{{equipment.pic.url}}" class="card-img-top" alt="..." height="250px">
 
                 <div class="card-body">
                     <h5 class="card-title">{{equipment.name}}</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p><br>
+                    <p class="card-text">{{equipment.description}}</p><br>
                     <a style="float: left;" class="text-muted">${{ equipment.price }}</a>
                     <a data-equipment="{{ equipment.id }}" data-action = "add" class="btn btn-link update-cart" style="float: right;">Add to Cart</a><!--Link to add straight to cart--> <!--update : done -->
                 </div>
