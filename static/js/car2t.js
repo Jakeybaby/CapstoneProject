@@ -1,24 +1,5 @@
 var updatebtns = document.getElementsByClassName('update-cart')
-//
-// var inputMyDate = document.querySelector('input#leashdate');
-//
-// inputMyDate.addEventListener('input', function() {
-//     var current = this.value;
-//     var today = new Date();
-//     var dd = today.getDate();
-//     var mm = today.getMonth()+1;
-//     var yyyy = today.getFullYear();
-//     if(dd<10){
-//         dd='0'+dd;
-//     }
-//     if(mm<10){
-//         mm='0'+mm;
-//     }
-//     var today = yyyy+'-'+mm+'-'+dd;
-//     if (current < today){
-//         document.getElementById('leashdate').value = today;
-//     }
-// });
+
 
 for (i=0;i<updatebtns.length;i++){
     updatebtns[i].addEventListener('click',function (){
@@ -59,3 +40,22 @@ function updateUserOrder(equipmentID,action){
              location.reload()
         })
 }
+
+var user = '{{ request.user }}'
+
+            function getToken(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = cookies[i].trim();
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                var csrftoken = getToken('csrftoken')

@@ -22,10 +22,6 @@ def BookJob(request):
     return render(request, 'account/BookJob.html')
 
 
-def HireEquipment(request):
-    return render(request, 'account/Hire_Equipments.html')
-
-
 def contact(request):
     return render(request, 'account/Contact.html')
 
@@ -38,26 +34,16 @@ def propertyMaintenance(request):
     return render(request, 'account/PropertyMaintenance.html')
 
 
-
-
-
 def login(request):
     return render(request, 'account/Login.html')
+
 
 def Security(request):
     return render(request, 'account/Security.html')
 
+
 def Services(request):
     return render(request, 'account/Services.html')
-
-
-
-def Hire_Equip(request):
-
-        return render(request, 'account/Hire_Equipments.html')
-
-
-
 
 
 def adminpage(request):
@@ -67,6 +53,7 @@ def adminpage(request):
         'object': order
     }
     return render(request,'account/adminorder.html',context)
+
 
 def adminOrder(request,pk):
     order = Order.objects.get(id=pk)
@@ -80,6 +67,7 @@ def adminOrder(request,pk):
 
     context ={'form':form}
     return render(request, 'account/adminorderdetail.html', context)
+
 
 def customerorderfeedback(request,pk):
 
@@ -95,10 +83,6 @@ def customerorderfeedback(request,pk):
     return render(request,'account/customerorderfeedback.html',context)
 
 
-
-
-
-
 def employeeorderfeedback(request,pk):
 
     order = Order.objects.get(id=pk)
@@ -112,17 +96,6 @@ def employeeorderfeedback(request,pk):
     context = {'form':form}
     return render(request,'account/customerorderfeedback.html',context)
 
-
-# def Employee_assigned_order(request):
-#
-#     staff = request.user.employeeprofile
-#     assigned_order = staff.order_set.all()
-#
-#     context = {
-#         'order':assigned_order
-#     }
-#
-#     return render(request,'account/assigned.html',context)
 
 def employee_order_job_done(request,pk):
 
@@ -216,12 +189,7 @@ def checkout(request):
     return redirect('account:HireEquipement')
 
 
-
-
-
 def cart(request):
-
-
     customer = request.user.customerprofile
     order, created = HiringOrder.objects.get_or_create(cus_order=customer,complete=False)
 
@@ -233,7 +201,7 @@ def cart(request):
     return render(request, 'account/cart.html', context)
 
 
-#
+
 # def CustomerRegiser(request):
 #     if request.method == "POST":
 #         form = UserRegisterForm(request.POST)
@@ -260,9 +228,6 @@ def Store(request):
     return render(request, 'account/Hire_Equipments.html', context)
 
 
-
-
-
 def updateItem(request):
 
     data = json.loads(request.body)
@@ -273,7 +238,6 @@ def updateItem(request):
     equipment = Equipment.objects.get(id=equipmentID)
     order, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
     cartItem, created = CartItem.objects.get_or_create(order=order, equipment=equipment)
-
 
     if action == 'add':
         if equipment.stock <= 0:
@@ -287,8 +251,6 @@ def updateItem(request):
         cartItem.save()
     elif action == 'delete':
         cartItem.delete()
-
-
     if cartItem.quantity <= 0:
         cartItem.delete()
 
