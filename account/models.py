@@ -27,9 +27,7 @@ class EmployeeProfile(models.Model):
         return self.employee_user.username
 
 
-class Rental(models.Model):
-    address = map_fields.AddressField(max_length=200)
-    geolocation = map_fields.GeoLocationField(max_length=100)
+
 
 
 # class TimeSheet(models.Model):

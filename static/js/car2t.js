@@ -1,5 +1,22 @@
 var updatebtns = document.getElementsByClassName('update-cart')
-
+// var user = '{{ request.user }}'
+//
+//             function getToken(name) {
+//                     var cookieValue = null;
+//                     if (document.cookie && document.cookie !== '') {
+//                         var cookies = document.cookie.split(';');
+//                         for (var i = 0; i < cookies.length; i++) {
+//                             var cookie = cookies[i].trim();
+//                             // Does this cookie string begin with the name we want?
+//                             if (cookie.substring(0, name.length + 1) === (name + '=')) {
+//                                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+//                                 break;
+//                             }
+//                         }
+//                     }
+//                     return cookieValue;
+//                 }
+//                 var csrftoken = getToken('csrftoken')
 
 for (i=0;i<updatebtns.length;i++){
     updatebtns[i].addEventListener('click',function (){
@@ -8,13 +25,18 @@ for (i=0;i<updatebtns.length;i++){
         console.log("equipmentID:",equipmentID, 'action：',action)
 
         console.log('USER:',user)
-        if(user == 'AnonymousUser'){
+        if(user === 'AnonymousUser'){
             console.log('user is not auth')
+            needlogin()
         }else {
             updateUserOrder(equipmentID,action)
         }
 
     })
+}
+
+function needlogin() {
+    window.location.href = '/logintest/'
 }
 
 function updateUserOrder(equipmentID,action){
@@ -41,21 +63,3 @@ function updateUserOrder(equipmentID,action){
         })
 }
 
-var user = '{{ request.user }}'
-
-            function getToken(name) {
-                    var cookieValue = null;
-                    if (document.cookie && document.cookie !== '') {
-                        var cookies = document.cookie.split(';');
-                        for (var i = 0; i < cookies.length; i++) {
-                            var cookie = cookies[i].trim();
-                            // Does this cookie string begin with the name we want?
-                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                break;
-                            }
-                        }
-                    }
-                    return cookieValue;
-                }
-                var csrftoken = getToken('csrftoken')

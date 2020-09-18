@@ -1,3 +1,4 @@
+import json
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -12,13 +13,23 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email','first_name','last_name','password1','password2']
 
+class EmployeeRegisterForm(UserCreationForm):
+
+    class Meta:
+        model = User
+        fields = ['username', 'email','first_name','last_name','password1','password2','is_staff']
 
 class adminform(ModelForm):
     class Meta:
         model = Order
         fields = ['employee_order','cus_order','address','geolocation']
         widgets = {
-            "address": GoogleMapsAddressWidget(attrs={'data-map-type': 'roadmap'}),
+            "address": GoogleMapsAddressWidget(attrs={
+            'data-map-type': 'roadmap',
+            'data-autocomplete-options': json.dumps({ 'types': ['geocode','establishment'],
+            'componentRestrictions': {'country': 'NZ'}
+            })
+         }),
         }
 
 class servicebook_form(ModelForm):
@@ -26,7 +37,12 @@ class servicebook_form(ModelForm):
         model = Order
         fields = ['address','geolocation']
         widgets = {
-            "address": GoogleMapsAddressWidget(attrs={'data-map-type': 'roadmap'}),
+            "address": GoogleMapsAddressWidget(attrs={
+                'data-map-type': 'roadmap',
+                'data-autocomplete-options': json.dumps({'types': ['geocode','establishment'],
+                'componentRestrictions': {'country': 'NZ'}
+                })
+            }),
         }
 
 class orderfeedback(ModelForm):

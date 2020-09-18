@@ -24,6 +24,11 @@ urlpatterns =[
     path('customerorderfeedback/<str:pk>/', views.customerorderfeedback, name='customerorderfeedback'),
     path('employeeorderfeedback/<str:pk>/', views.employeeorderfeedback, name='employeeorderfeedback'),
 
+    path('register/', views.CustomerRegiser,name='register'),
+    path('staffregister/', views.EmployeeRegiser,name='staffregister'),
+    path('logintest/',views.testlogin,name='login'),
+    path('staff/',views.staffLogin,name='stafflogin'),
+    path('logout/',views.logoutpage,name='logout'),
 
     path('BookJob/',views.BookJob, name='BookJob'),
     path('Contact/',views.contact, name='contact'),
@@ -34,7 +39,7 @@ urlpatterns =[
     path('PropertyMaintenance/', views.servicebook, name='PropertyMaintenance'),
     path('Security/',views.Security, name='security'),
     path('HireEquipment/', views.Store, name='HireEquipement'),
-    path('Login/', views.login, name='login'),
+    # path('Login/', views.login, name='login'),
     path('Services/', views.Services, name='Services'),
     path('PropertyMaintenance/', views.propertyMaintenance, name='PropertyMaintenance'),
 

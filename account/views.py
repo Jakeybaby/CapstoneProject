@@ -7,6 +7,7 @@ from Oneshop.models import *
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .form import *
+from django.contrib.auth import login, authenticate, logout
 import json
 
 
@@ -34,7 +35,7 @@ def propertyMaintenance(request):
     return render(request, 'account/PropertyMaintenance.html')
 
 
-def login(request):
+def loginpage(request):
     return render(request, 'account/Login.html')
 
 
@@ -46,6 +47,11 @@ def Services(request):
     return render(request, 'account/Services.html')
 
 
+
+
+
+
+
 def adminpage(request):
 
     order = Order.objects.all()
@@ -54,7 +60,7 @@ def adminpage(request):
     }
     return render(request,'account/adminorder.html',context)
 
-
+# to see the detail of each order
 def adminOrder(request,pk):
     order = Order.objects.get(id=pk)
     form = adminform(instance=order)
@@ -125,16 +131,20 @@ def HiringOrderdetail(request,pk):
     return render(request, 'account/Hiringorderdetail.html', context)
 
 
+
 def ServiceOrderlist(request):
-    user = request.user.employeeprofile
-    order = Order.objects.filter(employee_order=user)
-    # order = Order.objects.all()
+    if request.user.is_staff and not request.user.is_superuser:
+        user = request.user.employeeprofile
+        order = Order.objects.filter(employee_order=user)
 
-    context = {
-        'orders': order,
+        context = {
+            'orders': order,
 
-    }
-    return render(request, 'account/serviceorderlist.html', context)
+        }
+        return render(request, 'account/serviceorderlist.html', context)
+    else:
+        return HttpResponse('You are not staff')
+
 
 def HiringOrderlist(request):
     user = request.user.employeeprofile
@@ -188,46 +198,125 @@ def checkout(request):
 
     return redirect('account:HireEquipement')
 
-
+@login_required(login_url='account:login')
 def cart(request):
-    customer = request.user.customerprofile
-    order, created = HiringOrder.objects.get_or_create(cus_order=customer,complete=False)
+    if not request.user.is_staff and not request.user.is_superuser:
+        customer = request.user.customerprofile
+        order, created = HiringOrder.objects.get_or_create(cus_order=customer,complete=False)
 
-    equipment = order.cartitem_set.all()
-    context = {
-        'equipments': equipment,
-        'order':order,
-    }
-    return render(request, 'account/cart.html', context)
+        equipment = order.cartitem_set.all()
+        context = {
+            'equipments': equipment,
+            'order':order,
+        }
+        return render(request, 'account/cart.html', context)
+    else:
+        return HttpResponse("You are not a customer user account")
 
 
 
-# def CustomerRegiser(request):
-#     if request.method == "POST":
-#         form = UserRegisterForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#
-#     else:
-#         form = UserRegisterForm()
-#
-#     context = {'form': form}
-#     return render(request, 'account/userregister.html', context)
+def CustomerRegiser(request):
+    if request.method == "POST":
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UserRegisterForm()
+
+    context = {'form': form}
+    return render(request, 'account/userregister.html', context)
+
+def EmployeeRegiser(request):
+    if request.method == "POST":
+        form = EmployeeRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('account:stafflogin')
+    else:
+        form = EmployeeRegisterForm(initial={'is_staff':True})
+
+    context = {'form': form}
+    return render(request, 'account/employeeregister.html', context)
+
+# this is just for user login
+def testlogin(request):
+
+    if request.user.is_authenticated:
+        return redirect('account:index')
+    else:
+        if request.method == "POST":
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                if not request.user.is_superuser and not request.user.is_staff:
+                    cusprofile, created = CustomerProfile.objects.get_or_create(cus_user=user)
+                    cusprofile.save()
+                    return redirect('account:HireEquipement')
+                else:
+                    logout(request)
+                    return HttpResponse("please login a user account")
+    context ={}
+    return render(request, 'account/Login.html',context)
+
+
+def logoutpage(request):
+    logout(request)
+    return redirect('account:index')
+
+
+def staffLogin(request):
+    if request.user.is_authenticated and request.user.is_staff and not request.user.is_superuser:
+        return redirect('account:ServiceOrderlist')
+    elif request.user.is_superuser:
+        return redirect('account:adminpage')
+    else:
+        if request.method == "POST":
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                if not request.user.is_superuser and request.user.is_staff:
+                    eploprofile, created = EmployeeProfile.objects.get_or_create(employee_user=user)
+                    eploprofile.save()
+                    return redirect('account:ServiceOrderlist')
+                elif request.user.is_superuser:
+                    return redirect('account:adminpage')
+                else:
+                    logout(request)
+                    return HttpResponse("you are not staff")
+    context = {}
+    return render(request, 'account/stafflogintest.html', context)
 
 
 def Store(request):
-    products = Equipment.objects.all()
-    customer = request.user.customerprofile
-    order, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
-    equipment = order.cartitem_set.all()
-    context = {
-        "products": products,
-        'equipments': equipment,
-        'order': order,
-    }
-    return render(request, 'account/Hire_Equipments.html', context)
+    if request.user.is_authenticated and not request.user.is_staff and not request.user.is_superuser:
+        products = Equipment.objects.all()
+        customer = request.user.customerprofile
+        order, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
+        equipment = order.cartitem_set.all()
+        cartItem = order.get_cart_items
 
+        context = {
+            "products": products,
+            'equipments': equipment,
+            'order': order,
+            'cartItem':cartItem
+        }
+        return render(request, 'account/Hire_Equipments.html', context)
+    else:
+        products = Equipment.objects.all()
+        context = {
+            "products": products,
 
+        }
+        return render(request, 'account/Hire_Equipments.html', context)
+
+@login_required(login_url='account:login')
 def updateItem(request):
 
     data = json.loads(request.body)

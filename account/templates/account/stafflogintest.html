@@ -18,22 +18,22 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-  </head>      
+  </head>
   <body>
-    
+
     <!--
     <nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top navbar-dark bg-dark">
-      
+
         <a class="navbar-brand" href="{% url 'account:index'%}">
           <img src="{% static 'Images/Logo11.png' %}" width="110" height="110" class="d-inline-block align-top" alt="" loading="lazy">
-          
+
         </a>
-      
-    
+
+
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-    
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
@@ -49,7 +49,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'account:PropertyMaintenance'%}">Property Maintenance</a>
               <a class="dropdown-item" href="{% url 'account:security'%}">Security</a>
-             
+
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'account:HireEquipement'%}">Hire Equipments</a>
@@ -69,16 +69,16 @@
       </div>
     </nav>
   -->
-      
-      
-      
-   < class="container">  
-  
+
+
+
+   < class="container">
+
     <div class="sidenav">
       <a id="login" href="{% url 'account:index'%}"><img src="{% static 'Images/Home.png'%}">Go Back</a>
       <div class="login-main-text">
-        
-         <h2>Application<br> Login Page</h2>
+
+         <h2>Application<br>Staff Login Page</h2>
          <p>Login or register from here to access.</p>
       </div>
    </div>
@@ -96,18 +96,18 @@
                   <input type="password" class="form-control" placeholder="Password" name="password">
                </div>
                <button type="submit" class="btn btn-black">Login</button>
-               <button class="btn btn-secondary"><a href="{% url 'account:register' %}">Register</a></button>
+               <button class="btn btn-secondary"><a href="{% url 'account:staffregister' %}">Register</a></button>
             </form>
          </div>
       </div>
    </div>
     </>
- 
+
 <!--
 <footer class="grid-container">
   <div class="grid-item item1">
     <h5 style="text-decoration: underline;">Quick Links<br></h5>
-    
+
     <li style="list-style-type: none;"><a href="{% url 'account:security' %}" style="text-decoration: none;">Security</a></li>
     <li style="list-style-type: none;"><a href="{% url 'account:HireEquipement'%}" style="text-decoration: none;">Hire Equipement</a></li>
     <li style="list-style-type: none;"><a href="{%url 'account:PropertyMaintenance'%}" style="text-decoration: none;">Property Maintenance</a></li>
@@ -125,10 +125,10 @@
     You can download our App <br>
     <img src="{% static 'Images/Apps copy.png' %}" style="height: 40px;"><br>
     <img src="{% static 'Images/Apps.png' %}" style="height: 50px;padding-top: 10px;">
-  </div>  
+  </div>
   <div class="grid-item item4">&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </div>
 </footer>
-  
+
 -->
   </body>
 </html>
