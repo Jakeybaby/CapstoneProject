@@ -8,5 +8,6 @@ from django_google_maps import fields as map_fields
 admin.site.register(CustomerProfile)
 admin.site.register(EmployeeProfile)
 
+admin.site.register(GroupEmployee)
 # admin.site.register(TimeSheet)
 

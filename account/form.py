@@ -20,6 +20,10 @@ class EmployeeRegisterForm(UserCreationForm):
         fields = ['username', 'email','first_name','last_name','password1','password2','is_staff']
 
 class adminform(ModelForm):
+
+    employee_order = forms.ModelChoiceField(
+        queryset=EmployeeProfile.objects.all().order_by('group__name', 'employee_user')
+    )
     class Meta:
         model = Order
         fields = ['employee_order','cus_order','address','geolocation']
@@ -31,6 +35,11 @@ class adminform(ModelForm):
             })
          }),
         }
+
+class adminManageEmployeeform(ModelForm):
+    class Meta:
+        model = EmployeeProfile
+        fields = '__all__'
 
 class servicebook_form(ModelForm):
     class Meta:
@@ -55,3 +64,5 @@ class orderfeedbackETC(ModelForm):
     class Meta:
         model = Order
         fields = ['feedbackETC']
+
+

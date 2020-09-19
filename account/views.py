@@ -47,23 +47,35 @@ def Services(request):
     return render(request, 'account/Services.html')
 
 
-
-
-
-
-
 def adminpage(request):
-
     order = Order.objects.all()
     context = {
         'object': order
     }
-    return render(request,'account/adminorder.html',context)
+    return render(request, 'account/adminorder.html', context)
+
+def adminemployeepage(request):
+    memeber = EmployeeProfile.objects.all()
+
+    context = {'member':memeber}
+    return render(request,'account/adminemployeepage.html',context)
 
 # to see the detail of each order
-def adminOrder(request,pk):
+def adminOrder(request, pk):
     order = Order.objects.get(id=pk)
     form = adminform(instance=order)
+    form.fields['employee_order'].choices = list()
+    for k in GroupEmployee.objects.all():
+        # Append the tuple of OptGroup Name, Organism.
+        form.fields['employee_order'].choices.append(
+            (
+                k.name,  # First tuple part is the optgroup name/label
+                list(  # Second tuple part is a list of tuples for each option.
+                    (o.id, o.employee_user) for o in EmployeeProfile.objects.filter(group=k).order_by('employee_user')
+                    # Each option itself is a tuple of id and name for the label.
+                )
+            )
+        )
 
     if request.method == 'POST':
         form = adminform(request.POST, instance=order)
@@ -71,12 +83,22 @@ def adminOrder(request,pk):
             form.save()
             return redirect('account:adminpage')
 
-    context ={'form':form}
+    context = {'form': form}
     return render(request, 'account/adminorderdetail.html', context)
 
+# admin to manage employee account and profile
+def adminManageEmployee(request,pk):
+    emp = EmployeeProfile.objects.get(id=pk)
+    form = adminManageEmployeeform(instance=emp)
+    if request.method == 'POST':
+        form = adminManageEmployeeform(request.POST, instance=emp)
+        if form.is_valid():
+            form.save()
 
-def customerorderfeedback(request,pk):
+    context = {'form':form}
+    return render(request,'account/adminManageEmployee.html',context)
 
+def customerorderfeedback(request, pk):
     order = Order.objects.get(id=pk)
     form = orderfeedback(instance=order)
     if request.method == 'POST':
@@ -85,12 +107,11 @@ def customerorderfeedback(request,pk):
             form.save()
             return redirect('/customerOrder/')
 
-    context = {'form':form}
-    return render(request,'account/customerorderfeedback.html',context)
+    context = {'form': form}
+    return render(request, 'account/customerorderfeedback.html', context)
 
 
-def employeeorderfeedback(request,pk):
-
+def employeeorderfeedback(request, pk):
     order = Order.objects.get(id=pk)
     form = orderfeedbackETC(instance=order)
     if request.method == 'POST':
@@ -99,12 +120,11 @@ def employeeorderfeedback(request,pk):
             form.save()
             return redirect('/ServiceOrderlist/')
 
-    context = {'form':form}
-    return render(request,'account/customerorderfeedback.html',context)
+    context = {'form': form}
+    return render(request, 'account/customerorderfeedback.html', context)
 
 
-def employee_order_job_done(request,pk):
-
+def employee_order_job_done(request, pk):
     ins = get_object_or_404(Order, pk=pk)
     ins.isDone = True
     ins.save()
@@ -112,9 +132,7 @@ def employee_order_job_done(request,pk):
     return redirect('account:ServiceOrderlist')
 
 
-
-def ServiceOrderdetail(request,pk):
-
+def ServiceOrderdetail(request, pk):
     ins = get_object_or_404(Order, pk=pk)
     context = {
         'object': ins
@@ -122,14 +140,12 @@ def ServiceOrderdetail(request,pk):
     return render(request, 'account/serviceorderdetail.html', context)
 
 
-def HiringOrderdetail(request,pk):
-
+def HiringOrderdetail(request, pk):
     ins = get_object_or_404(HiringOrder, pk=pk)
     context = {
         'object': ins
     }
     return render(request, 'account/Hiringorderdetail.html', context)
-
 
 
 def ServiceOrderlist(request):
@@ -150,13 +166,12 @@ def HiringOrderlist(request):
     user = request.user.employeeprofile
     order = HiringOrder.objects.filter(employee_order=user)
     context = {
-        'orders':order
+        'orders': order
     }
     return render(request, 'account/hiringorderlist.html', context)
 
 
-def accpet_HiringOrder(request,pk):
-
+def accpet_HiringOrder(request, pk):
     ins = get_object_or_404(HiringOrder, pk=pk)
     ins.employee_order = request.user.employeeprofile
     ins.assigned = True
@@ -165,8 +180,7 @@ def accpet_HiringOrder(request,pk):
     return redirect('account:HiringOrderlist')
 
 
-def accpet_ServiceOrder(request,pk):
-
+def accpet_ServiceOrder(request, pk):
     ins = get_object_or_404(Order, pk=pk)
     # ins.employee_order = request.user.employeeprofile
     ins.assigned = True
@@ -175,8 +189,7 @@ def accpet_ServiceOrder(request,pk):
     return redirect('account:ServiceOrderlist')
 
 
-def decline_ServiceOrder(request,pk):
-
+def decline_ServiceOrder(request, pk):
     ins = get_object_or_404(Order, pk=pk)
     ins.employee_order = None
     ins.save()
@@ -185,7 +198,6 @@ def decline_ServiceOrder(request,pk):
 
 
 def checkout(request):
-
     leashdate = request.POST['ld']
     returndate = request.POST['rd']
 
@@ -198,21 +210,21 @@ def checkout(request):
 
     return redirect('account:HireEquipement')
 
+
 @login_required(login_url='account:login')
 def cart(request):
     if not request.user.is_staff and not request.user.is_superuser:
         customer = request.user.customerprofile
-        order, created = HiringOrder.objects.get_or_create(cus_order=customer,complete=False)
+        order, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
 
         equipment = order.cartitem_set.all()
         context = {
             'equipments': equipment,
-            'order':order,
+            'order': order,
         }
         return render(request, 'account/cart.html', context)
     else:
         return HttpResponse("You are not a customer user account")
-
 
 
 def CustomerRegiser(request):
@@ -226,6 +238,7 @@ def CustomerRegiser(request):
     context = {'form': form}
     return render(request, 'account/userregister.html', context)
 
+
 def EmployeeRegiser(request):
     if request.method == "POST":
         form = EmployeeRegisterForm(request.POST)
@@ -233,14 +246,14 @@ def EmployeeRegiser(request):
             form.save()
             return redirect('account:stafflogin')
     else:
-        form = EmployeeRegisterForm(initial={'is_staff':True})
+        form = EmployeeRegisterForm(initial={'is_staff': True})
 
     context = {'form': form}
     return render(request, 'account/employeeregister.html', context)
 
+
 # this is just for user login
 def testlogin(request):
-
     if request.user.is_authenticated:
         return redirect('account:index')
     else:
@@ -258,8 +271,8 @@ def testlogin(request):
                 else:
                     logout(request)
                     return HttpResponse("please login a user account")
-    context ={}
-    return render(request, 'account/Login.html',context)
+    context = {}
+    return render(request, 'account/Login.html', context)
 
 
 def logoutpage(request):
@@ -305,7 +318,7 @@ def Store(request):
             "products": products,
             'equipments': equipment,
             'order': order,
-            'cartItem':cartItem
+            'cartItem': cartItem
         }
         return render(request, 'account/Hire_Equipments.html', context)
     else:
@@ -316,9 +329,9 @@ def Store(request):
         }
         return render(request, 'account/Hire_Equipments.html', context)
 
+
 @login_required(login_url='account:login')
 def updateItem(request):
-
     data = json.loads(request.body)
     equipmentID = data['equipmentID']
     action = data['action']
@@ -346,21 +359,17 @@ def updateItem(request):
     return JsonResponse('Item added', safe=False)
 
 
-
-
-
 def servicebook(request):
     services = SecurityServices.objects.all()
     form = servicebook_form()
-    context ={
-        'services':services,
-        'form':form
+    context = {
+        'services': services,
+        'form': form
     }
-    return render(request,'account/servicebooking.html',context)
+    return render(request, 'account/servicebooking.html', context)
 
 
 def addservicebook_form(request):
-
     service_id = request.POST['servicename']
     service_notes = request.POST['description']
     service_date = request.POST['servicedate']
@@ -369,8 +378,10 @@ def addservicebook_form(request):
     service_address = request.POST['address']
     service_geo = request.POST['geolocation']
 
-    order = Order.objects.create(cus_order=service_user, complete=True, isService=True, server_date=service_date,address=service_address,geolocation=service_geo)
-    securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name, notes=service_notes, date_required=service_date)
+    order = Order.objects.create(cus_order=service_user, complete=True, isService=True, server_date=service_date,
+                                 address=service_address, geolocation=service_geo)
+    securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name,
+                                                                 notes=service_notes, date_required=service_date)
 
     securityorder.save()
     print('ok')
@@ -378,12 +389,14 @@ def addservicebook_form(request):
 
 
 def customerOrder(request):
-
     customer = request.user.customerprofile
     order = Order.objects.filter(cus_order=customer)
     hiringorder = HiringOrder.objects.filter(cus_order=customer)
-    context={
-        'orders':order,
-        'hiringorders':hiringorder
+    context = {
+        'orders': order,
+        'hiringorders': hiringorder
     }
-    return render(request,'account/UserPage.html',context)
+    return render(request, 'account/UserPage.html', context)
+
+
+
