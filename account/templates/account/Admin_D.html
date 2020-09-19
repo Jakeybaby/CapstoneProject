@@ -1,0 +1,140 @@
+<!doctype html>
+{% load static %}
+<html xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'Images/Logo11.png'%}" rel="icon" sizes="32x32" type="image/gif">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="{% static 'css/Profiles_style.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--Different Fonts ## refer to css file -->
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Kaipara Security Services Ltd.</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </head>
+  <body>
+
+<nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top navbar-dark bg-dark">
+
+        <a class="navbar-brand" href="{% url 'account:admin_dashboard'%}">
+          <img src="{% static 'Images/Logo11.png' %}" width="110" height="110" class="d-inline-block align-top" alt="" loading="lazy">
+
+        </a>
+
+      <!--<a class="navbar-brand" href="#">Company Name</a>-->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'account:admin_dashboard' %}">Dashboard <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'account:assignedOrders' %}">Assigned Jobs</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account:HireEquipement'%}">Manage Timesheets</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account:contact'%}">Equip Delivery</a>
+          </li>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{% url 'account:Services'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              More
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'account:PropertyMaintenance'%}">Manage Employee</a>
+              <a class="dropdown-item" href="{% url 'account:security'%}">Manage Leaves</a>
+                <a class="dropdown-item" href="{% url 'account:managePortal'%}">Learning Portal</a>
+                <a class="dropdown-item" href="{% url 'account:security'%}">Manage Equipments</a>
+                <a class="dropdown-item" href="{% url 'account:security'%}">Manage Services</a>
+
+
+            </li>
+        </ul>
+        <span class="form-inline my-2 my-lg-0">
+          <a href="{% url 'account:index'%}">
+            <button class="btn btn-link my-2 my-sm-0"  type="submit">Back to Mainpage</button>
+          </a>
+         <a href="#">
+          <button class="btn btn-link my-2 my-sm-0"  type="submit"><img src="{% static 'Images/logout.png'%}" height="45px;"></button>
+        </a>
+         <!-- <a href="{% url 'account:cart' %}"><button class="btn btn-link my-2 my-sm-0"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+          </svg></button></a>-->
+        </span>
+      </div>
+    </nav>
+   <div class="container">
+<h2 style="padding: 30px 0px;">Dashboard</h2>
+       <h4 style="padding-bottom: 20px;">New Jobs</h4>
+       <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="{% static 'Images/HireEquipments/gardening-forks (1).png'%}" class="card-img" alt="..." height="180px">
+            </div>
+        <div class="col-md-8">
+        <div class="card-body">
+            <h5 class="card-title">Ergonomical Shovel</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Date & time:</small></p>
+             <p class="card-text"><small class="text-muted">Payment: <span class="text-success">Paid</span> / <span class="text-warning">Pending</span></small></p>
+            <p class="card-text"><small class="text-muted">Additional Comments:</small></p>
+            <a href="#"><button class="btn text-danger">Cancel Job</button></a>
+            <a href="#"> <button class="btn text-primary">More Details</button></a>
+        </div>
+        </div>
+        </div>
+        </div>
+       <div class="card mb-3 shadow p-3 mb-5 rounded w-75 border border-success">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="{% static 'Images/HireEquipments/gardening-forks (1).png'%}" class="card-img" alt="..." height="180px">
+            </div>
+        <div class="col-md-8">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Date & time:</small></p>
+            <p class="card-text"><small class="text-muted">Payment: <span class="text-success">Paid</span> / <span class="text-warning">Pending</span></small></p>
+            <p class="card-text"><small class="text-muted">Additional Comments:</small></p>
+            <a href="#"><button class="btn text-danger">Cancel Job</button></a>
+            <a href="#"> <button class="btn text-primary">More Details</button></a>
+        </div>
+        </div>
+        </div>
+        </div>
+       <h4 style="padding-bottom: 20px;">Leave Requests</h4>
+          <div class="col-sm w-75 ">
+              <div class="card border border-secondary">
+                  <div class="card-body">
+                      <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-link">Decline</a>
+                      <a href="#" class="btn btn-link">Accept</a>
+                  </div>
+              </div>
+            </div>
+         <div class="col-sm w-75">
+              <div class="card border border-secondary">
+                  <div class="card-body">
+                      <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-link">Decline</a>
+                      <a href="#" class="btn btn-link">Accept</a>
+                  </div>
+              </div>
+            </div>
+</div>
+  <footer class="footer bg-dark">
+      <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!doctype html>
+{% load static %}
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--Different Fonts ## refer to css file -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+    <title>Kaipara Security Services Ltd.</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </head>      
+  <body>
+    
+    
+  <nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top navbar-dark bg-dark">
+      
+        <a class="navbar-brand" href="{% url 'account:index'%}">
+          <img src="{% static 'Images/Logo11.png' %}" width="110" height="110" class="d-inline-block align-top" alt="" loading="lazy">
+          
+        </a>
+      
+      <!--<a class="navbar-brand" href="#">Company Name</a>-->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'account:index' %}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'account:AboutUs' %)">About Us</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{% url 'account:Services'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Services
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'account:PropertyMaintenance'%}">Property Maintenance</a>
+              <a class="dropdown-item" href="{% url 'account:security'%}">Security</a>
+             
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account:Hire_Equipments'%}">Hire Equipments</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account:contact'%}">Contact Us</a>
+          </li>
+        </ul>
+        <span class="form-inline my-2 my-lg-0">
+         <a href="{% url 'account:login' %}">
+          <button class="btn btn-link my-2 my-sm-0"  type="submit">Login</button>
+        </a>
+          <button class="btn btn-link my-2 my-sm-0" type="submit"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+          </svg></button>
+        </span>
+      </div>
+  </nav>
+    
+    
+  <div class="container-lg">
+    <h3 class="heading" style="padding: 50px 0px;">Book a security job</h3>
+      <form>
+        <fieldset>
+          <div class="form-group row">
+            <label class="col-sm-3"for="exampleInputName" style="float: right;">Full Name:</label>
+            <input type="text" class="form-control col-md-6 " id="exampleInputName" placeholder="Enter your full name">
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3"for="exampleInputEmail" style="float: right;">Email:</label>
+            <input type="Email" class="form-control col-md-6" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter your e-mail">
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3" for="exampleInputAddress" style="float: right;">Address:</label>
+            <textarea class="form-control col-md-6" id="exampleTextarea" rows="3" placeholder="Address"></textarea>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3" for="exampleInputPhone" style="float: right;">Mobile Number:</label>
+            <input type="text" class="form-control col-md-6 " id="exampleInputName" placeholder="+64">
+          </div>
+            
+          <form action="/action_page.php" class="row" style="padding-bottom: 50px;">
+            <label for="bookingdate" class="col-sm-3">Booking date:</label>
+            <input class="col-md-6" type="datetime-local" id="bookingdate" name="bookingdate">
+            <!--<input type="submit">-->
+          </form><br>
+          <div class="form-group row" style="padding: 50px;">
+            <label for="exampleSelect1" class="col-sm-3" style="float: right;">Types of services:</label>
+            <select class="form-control col-md-6 " id="exampleSelect1">
+              <option>Event Security</option>
+              <option>Concierge Services</option>
+              <option>Alarm Response</option>
+              <option>Mobile Patrol</option>
+              <option>Covert Security</option>
+              <option>Construction Site Security</option>
+              <option>...</option>
+            </select>
+          </div>
+            
+          <div class="form-group row">
+            <label class="col-sm-3" for="exampleTextarea" style="float: right;">Additional Comments</label>
+            <textarea class="form-control col-md-6" id="exampleTextarea" rows="3" placeholder="Comments" ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </fieldset> 
+           
+            
+      </form>
+    </div>
+            
+            
+                  
+  
+                  
+ <footer class="grid-container">
+  <div class="grid-item item1">
+    <h5 style="text-decoration: underline;">Quick Links<br></h5>
+    
+    <li style="list-style-type: none;"><a href="{% url 'account:security' %}" style="text-decoration: none;">Security</a></li>
+    <li style="list-style-type: none;"><a href="{% url 'account:Hire_Equipments'%}" style="text-decoration: none;">Hire Equipement</a></li>
+    <li style="list-style-type: none;"><a href="{%url 'account:PropertyMaintenance'%}" style="text-decoration: none;">Property Maintenance</a></li>
+  </div>
+  <div class="grid-item item2">
+    <h5 style="text-decoration: underline;">Contact Us<br></h5>
+    Address
+    <br>
+    <a href="#" class="fa fa-twitter"></a>
+        <a href="#" class="fa fa-instagram"></a>
+        <a href="#" class="fa fa-youtube"></a>
+        <a href="#" class="fa fa-facebook"></a>
+  </div>
+  <div class="grid-item item3">
+    You can download our App <br>
+    <img src="{% static 'Images/Apps copy.png' %}" style="height: 40px;"><br>
+    <img src="{% static 'Images/Apps.png' %}" style="height: 50px;padding-top: 10px;">
+  </div>  
+  <div class="grid-item item4">&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </div>
+</footer>
+</body>
+</html>

@@ -46,13 +46,35 @@ def Security(request):
 def Services(request):
     return render(request, 'account/Services.html')
 
+def BookPM(request):
+    return render(request, 'account/BookPropertyMaintenance.html')
+
+def BookSecurity(request):
+    return render(request, 'account/BookSecurity.html')
+def Admin_D(request):
+    return render(request, 'account/Admin_D.html')
+
+def employeeDashboard(request):
+    return render(request, 'account/Employee_Dash.html')
+
+def assignedOrders(request):
+    return render(request, 'account/Admin_manageOrders.html')
+
+def managePortal(request):
+    return render(request, 'account/ManagePortal.html')
+
+def employeeJobs(request):
+    return render(request, 'account/Employee_Jobs.html')
+
+def employeeTimesheet(request):
+    return render(request, 'account/Timesheet.html')
 
 def adminpage(request):
     order = Order.objects.all()
     context = {
         'object': order
     }
-    return render(request, 'account/adminorder.html', context)
+    return render(request, 'account/Admin_D.html', context)
 
 def adminemployeepage(request):
     memeber = EmployeeProfile.objects.all()
@@ -81,7 +103,7 @@ def adminOrder(request, pk):
         form = adminform(request.POST, instance=order)
         if form.is_valid():
             form.save()
-            return redirect('account:adminpage')
+            return redirect('account:admin_dashboard')
 
     context = {'form': form}
     return render(request, 'account/adminorderdetail.html', context)
@@ -284,7 +306,7 @@ def staffLogin(request):
     if request.user.is_authenticated and request.user.is_staff and not request.user.is_superuser:
         return redirect('account:ServiceOrderlist')
     elif request.user.is_superuser:
-        return redirect('account:adminpage')
+        return redirect('account:admin_dashboard')
     else:
         if request.method == "POST":
             username = request.POST.get('username')
@@ -298,7 +320,7 @@ def staffLogin(request):
                     eploprofile.save()
                     return redirect('account:ServiceOrderlist')
                 elif request.user.is_superuser:
-                    return redirect('account:adminpage')
+                    return redirect('account:admin_dashboard')
                 else:
                     logout(request)
                     return HttpResponse("you are not staff")

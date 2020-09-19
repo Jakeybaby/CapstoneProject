@@ -19,10 +19,11 @@ urlpatterns =[
     path('declineserviceorder/<int:pk>/', views.decline_ServiceOrder, name='decline_ServiceOrder'),
     path('checkout/', views.checkout, name='checkout'),
     path('customerOrder/', views.customerOrder, name='customerOrder'),
-    path('adminorderlist/', views.adminpage, name='adminpage'),
+    path('adminorderlist/', views.adminpage, name='admin_dashboard'),
     path('adminOrder/<str:pk>/', views.adminOrder, name='adminOrder'),
     path('customerorderfeedback/<str:pk>/', views.customerorderfeedback, name='customerorderfeedback'),
     path('employeeorderfeedback/<str:pk>/', views.employeeorderfeedback, name='employeeorderfeedback'),
+
 
     path('register/', views.CustomerRegiser,name='register'),
     path('staffregister/', views.EmployeeRegiser,name='staffregister'),
@@ -30,6 +31,7 @@ urlpatterns =[
     path('staff/',views.staffLogin,name='stafflogin'),
     path('logout/',views.logoutpage,name='logout'),
     path('wtf/',views.adminemployeepage,name='adminemployeepage'),
+
 
     path('BookJob/',views.BookJob, name='BookJob'),
     path('Contact/',views.contact, name='contact'),
@@ -43,6 +45,16 @@ urlpatterns =[
     # path('Login/', views.login, name='login'),
     path('Services/', views.Services, name='Services'),
     path('PropertyMaintenance/', views.propertyMaintenance, name='PropertyMaintenance'),
+
+
+    path('BookPropertyMaintenance/', views.BookPM, name='BookPM'),
+    path('BookSecurity/', views.BookSecurity, name='BookSecurity'),
+    path('Admin_D/', views.Admin_D, name='admin_dashboard'),
+    path('Employee_Dash/', views.employeeDashboard, name='employee_dashboard'),
+    path('ManagePortal/', views.managePortal, name='managePortal'),
+    path('Admin_manageOrders/', views.assignedOrders, name='assignedOrders'),
+    path('Employee_Jobs/', views.employeeJobs, name='employeeJobs'),
+    path('Timesheet/', views.employeeTimesheet, name='employeeTimesheet'),
 
 
 
