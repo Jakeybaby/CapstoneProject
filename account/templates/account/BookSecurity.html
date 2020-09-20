@@ -15,7 +15,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-  </head>      
+
+      {{ form.media }}
+  </head>
   <body>
     
     
@@ -37,7 +39,7 @@
             <a class="nav-link" href="{% url 'account:index' %}">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{%url 'account:AboutUs' %)">About Us</a>
+            <a class="nav-link" href="{%url 'account:About' %}">About Us</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="{% url 'account:Services'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -46,10 +48,10 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'account:PropertyMaintenance'%}">Property Maintenance</a>
               <a class="dropdown-item" href="{% url 'account:security'%}">Security</a>
-             
+            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'account:Hire_Equipments'%}">Hire Equipments</a>
+            <a class="nav-link" href="{% url 'account:HireEquipement'%}">Hire Equipments</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'account:contact'%}">Contact Us</a>
@@ -69,7 +71,8 @@
     
   <div class="container-lg">
     <h3 class="heading" style="padding: 50px 0px;">Book a security job</h3>
-      <form>
+      <form  method="post" action="/service_form/">
+          {% csrf_token %}
         <fieldset>
           <div class="form-group row">
             <label class="col-sm-3"for="exampleInputName" style="float: right;">Full Name:</label>
@@ -79,10 +82,10 @@
             <label class="col-sm-3"for="exampleInputEmail" style="float: right;">Email:</label>
             <input type="Email" class="form-control col-md-6" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter your e-mail">
           </div>
-          <div class="form-group row">
-            <label class="col-sm-3" for="exampleInputAddress" style="float: right;">Address:</label>
-            <textarea class="form-control col-md-6" id="exampleTextarea" rows="3" placeholder="Address"></textarea>
-          </div>
+{#          <div class="form-group row">#}
+{#            <label class="col-sm-3" for="exampleInputAddress" style="float: right;">Address:</label>#}
+{#            <textarea class="form-control col-md-6" id="exampleTextarea" rows="3" placeholder="Address"></textarea>#}
+{#          </div>#}
           <div class="form-group row">
             <label class="col-sm-3" for="exampleInputPhone" style="float: right;">Mobile Number:</label>
             <input type="text" class="form-control col-md-6 " id="exampleInputName" placeholder="+64">
@@ -90,26 +93,32 @@
             
           <form action="/action_page.php" class="row" style="padding-bottom: 50px;">
             <label for="bookingdate" class="col-sm-3">Booking date:</label>
-            <input class="col-md-6" type="datetime-local" id="bookingdate" name="bookingdate">
+            <input class="col-md-6" type="datetime-local" id="servicedate" name="servicedate">
             <!--<input type="submit">-->
           </form><br>
           <div class="form-group row" style="padding: 50px;">
             <label for="exampleSelect1" class="col-sm-3" style="float: right;">Types of services:</label>
-            <select class="form-control col-md-6 " id="exampleSelect1">
-              <option>Event Security</option>
-              <option>Concierge Services</option>
-              <option>Alarm Response</option>
-              <option>Mobile Patrol</option>
-              <option>Covert Security</option>
-              <option>Construction Site Security</option>
-              <option>...</option>
+            <select class="form-control col-md-6 " id="serviceoptions" name="servicename">
+            <option disabled selected value> -- select an option -- </option>
+                {% for i in services %}
+                    <option value="{{ i.id }}" data-price="{{ i.price }}">{{i.name}}</option>
+                {% endfor %}
             </select>
           </div>
-            
+            <div class="form-group row">
+            <label class="col-sm-3" for="exampleTextarea" style="float: right;">Price</label>
+                <span id="serviceprice"></span>
+
+          </div>
           <div class="form-group row">
             <label class="col-sm-3" for="exampleTextarea" style="float: right;">Additional Comments</label>
-            <textarea class="form-control col-md-6" id="exampleTextarea" rows="3" placeholder="Comments" ></textarea>
+            <textarea class="form-control col-md-6" id="exampleTextarea" rows="3" placeholder="Comments" name="description"></textarea>
           </div>
+        <label>Address:</label>
+        {{ form.address }}
+        {{ form.geolocation.as_hidden }}
+
+        <link href="{% static 'css/google-map-admin.css'%}" rel="stylesheet" type="text/css">
           <button type="submit" class="btn btn-primary">Submit</button>
         </fieldset> 
            
@@ -126,7 +135,7 @@
     <h5 style="text-decoration: underline;">Quick Links<br></h5>
     
     <li style="list-style-type: none;"><a href="{% url 'account:security' %}" style="text-decoration: none;">Security</a></li>
-    <li style="list-style-type: none;"><a href="{% url 'account:Hire_Equipments'%}" style="text-decoration: none;">Hire Equipement</a></li>
+    <li style="list-style-type: none;"><a href="{% url 'account:HireEquipement'%}" style="text-decoration: none;">Hire Equipement</a></li>
     <li style="list-style-type: none;"><a href="{%url 'account:PropertyMaintenance'%}" style="text-decoration: none;">Property Maintenance</a></li>
   </div>
   <div class="grid-item item2">
@@ -145,5 +154,6 @@
   </div>  
   <div class="grid-item item4">&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </div>
 </footer>
+  <script type="text/javascript" src="{% static 'js/service.js' %}"></script>
 </body>
 </html>

@@ -1,5 +1,11 @@
 <form method="POST">
 {% csrf_token %}
-{{ form.as_p }}
+    username:{{ form.username }}<br>
+    email:{{ form.email }}<br>
+    firstname{{ form.first_name }}<br>
+    firstname{{ form.last_name }}<br>
+    pw1{{ form.password1 }}<br>
+        pw2{{ form.password2 }}<br>
+        {{ form.is_staff.as_hidden }}
 <button type="submit">Sign up</button>
 </form>

@@ -69,44 +69,42 @@
       </div>
     </nav>
    <div class="container">
-       <h4 style="padding-bottom: 20px;">New Jobs</h4>
+       <h4 style="padding-bottom: 20px;">Assigned Jobs</h4>
+       {% for i in object %}
+           {% if i.employee_order %}
+                {#               loop for securityorder #}
+               {% for a in i.securityorder_set.all %}
        <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
         <img src="{% static 'Images/PropertyMaintenance/Pruning.jpg'%}" class="card-img-top" style="height: 300px;" alt="...">
         <div class="card-body">
-          <h5 class="card-title">Service Name</h5>
-          <p class="card-text" style="padding-bottom: 10px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          <h5 class="card-title">{{ a }}</h5>
+           <p class="card-text">Customer :{{i.cus_order.cus_user}}</p>
           <p class="card-text"><small class="text-muted">Date & time:</small></p>
           <p class="card-text"><small class="text-muted">Payment: <span class="text-success">Paid</span></small></p>
          <p class="card-text"><small class="text-muted">Additional Comments:</small></p>
          <p class="card-text"><small class="text-muted">Assigned To: Employee Name</small></p>
-         <a href="#"><button class="btn text-danger">Cancel Job</button></a>
+         <a href="{% url 'account:admindeleteorder' i.id %}"><button class="btn text-danger">Cancel Job</button></a>
         </div>
       </div>
-      <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
-        <img src="{% static 'Images/SecurityJobs/security-cameras.jpg'%}" class="card-img-top" style="height: 300px;" alt="...">
+               {% endfor %}
+               {#               loop for propertyorder #}
+               {% for b in i.propertyorder_set.all %}
+                   <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
+        <img src="{% static 'Images/PropertyMaintenance/Pruning.jpg'%}" class="card-img-top" style="height: 300px;" alt="...">
         <div class="card-body">
-          <h5 class="card-title">Security Job </h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <p class="card-text"><small class="text-muted">Date & time:</small></p>
-          <p class="card-text"><small class="text-muted">Payment: <span class="text-warning">Pending</span></small></p>
-         <p class="card-text"><small class="text-muted">Additional Comments:</small></p>
-         <p class="card-text"><small class="text-muted">Assigned To: Employee Name</small></p>
-         <a href="#"><button class="btn text-danger">Cancel Job</button></a>
-        </div>
-      </div>
-      <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
-        <img src="{% static 'Images/PropertyMaintenance/WindowCleaning.jpg'%}" class="card-img-top" style="height: 300px;" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Service Name</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          <h5 class="card-title">{{ b }}</h5>
+           <p class="card-text">Customer :{{i.cus_order.cus_user}}</p>
           <p class="card-text"><small class="text-muted">Date & time:</small></p>
           <p class="card-text"><small class="text-muted">Payment: <span class="text-success">Paid</span></small></p>
          <p class="card-text"><small class="text-muted">Additional Comments:</small></p>
          <p class="card-text"><small class="text-muted">Assigned To: Employee Name</small></p>
-         <a href="#"><button class="btn text-danger">Cancel Job</button></a>
+         <a href="{% url 'account:admindeleteorder' i.id %}"><button class="btn text-danger">Cancel Job</button></a>
         </div>
       </div>
-      
+               {% endfor %}
+           {% endif %}
+       {% endfor %}
+
        
 </div>
   <footer class="footer bg-dark">

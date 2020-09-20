@@ -399,3 +399,21 @@ tr:nth-child(even) {
   height: 60px;
 }
 
+.container-lg{
+  padding-bottom: 60px;
+}
+
+.bookServices label{
+  text-align: center;
+}
+
+.form-control{
+  margin: 0;
+}
+
+.submitPM .btn{
+  color: #34987a;
+}
+.submitPM .btn:hover {
+  color: white;
+}

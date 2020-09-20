@@ -67,8 +67,10 @@
       </div>
     </nav>
     <div class="container">
-        <h2 style="padding: 30px 0px;">Dashboard</h2>
-        <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
+        <h2 style="padding: 30px 0px;">Wait to Accept</h2>
+        {% for order in orders %}
+            {% if order.complete == True and order.assigned == False %}
+                <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
             <div class="row no-gutters">
                 <div class="col-md-4">
                     <img src="{% static 'Images/SecurityJobs/EventSecurity.jpeg'%}" class="card-img" alt="..." height="150px">
@@ -78,28 +80,17 @@
                 <h5 class="card-title">Event Security</h5>
                 <p class="card-text"><small class="text-muted">Date & time:</small></p>
                 <p class="card-text"><small class="text-muted">Location:</small></p>
-                <a href="{% url 'account:employeeJobs'%}"><button class="btn text-primary">More Details</button></a>
-                <a href="#"><button class="btn text-success">Start Job</button></a>
+                <a href="{{ order.decline_job_url }}"><button class="btn text-primary">Decline</button></a>
+                <a href="{{ order.accpet_job_url }}"><button class="btn text-success">Accept Job</button></a>
             </div>
             </div>
             </div>
             </div>
-            <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img src="{% static 'Images/PropertyMaintenance/chimneySweep.png'%}" class="card-img" alt="..." height="150px">
-                    </div>
-                <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title">Chimney Sweep</h5>
-                    <p class="card-text"><small class="text-muted">Date & time:</small></p>
-                    <p class="card-text"><small class="text-muted">Location:</small></p>
-                    <a href="{% url 'account:employeeJobs'%}"><button class="btn text-primary">More Details</button></a>
-                    <a href="#"> <button class="btn text-success">Start Job</button></a>
-                </div>
-                </div>
-                </div>
-                </div>
+
+
+            {% endif %}
+
+        {% endfor %}
     </div>
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>

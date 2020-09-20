@@ -19,55 +19,51 @@ def about(request):
     return render(request, 'account/AboutUs.html')
 
 
-def BookJob(request):
-    return render(request, 'account/BookJob.html')
-
 
 def contact(request):
     return render(request, 'account/Contact.html')
 
 
-def security(request):
-    return render(request, 'account/security.html')
 
+# --
 
-def propertyMaintenance(request):
-    return render(request, 'account/PropertyMaintenance.html')
-
-
-def loginpage(request):
-    return render(request, 'account/Login.html')
 
 
 def Security(request):
     return render(request, 'account/Security.html')
 
 
-def Services(request):
-    return render(request, 'account/Services.html')
+
+
 
 def BookPM(request):
     return render(request, 'account/BookPropertyMaintenance.html')
 
 def BookSecurity(request):
-    return render(request, 'account/BookSecurity.html')
-def Admin_D(request):
-    return render(request, 'account/Admin_D.html')
 
-def employeeDashboard(request):
-    return render(request, 'account/Employee_Dash.html')
+    services = SecurityServices.objects.all()
+    form = servicebook_form()
+    context = {
+        'services': services,
+        'form': form
+    }
+    return render(request, 'account/BookSecurity.html',context)
+
+
+
+
 
 def assignedOrders(request):
-    return render(request, 'account/Admin_manageOrders.html')
+
+    order = Order.objects.all()
+    context = {
+        'object': order
+    }
+    return render(request, 'account/Admin_manageOrders.html',context)
 
 def managePortal(request):
     return render(request, 'account/ManagePortal.html')
 
-def employeeJobs(request):
-    return render(request, 'account/Employee_Jobs.html')
-
-def employeeTimesheet(request):
-    return render(request, 'account/Timesheet.html')
 
 def adminpage(request):
     order = Order.objects.all()
@@ -91,6 +87,7 @@ def adminOrder(request, pk):
         # Append the tuple of OptGroup Name, Organism.
         form.fields['employee_order'].choices.append(
             (
+
                 k.name,  # First tuple part is the optgroup name/label
                 list(  # Second tuple part is a list of tuples for each option.
                     (o.id, o.employee_user) for o in EmployeeProfile.objects.filter(group=k).order_by('employee_user')
@@ -107,7 +104,15 @@ def adminOrder(request, pk):
 
     context = {'form': form}
     return render(request, 'account/adminorderdetail.html', context)
+def admindeleteorder(request,pk):
 
+    order = Order.objects.get(id=pk)
+    if request.method == "POST":
+        order.delete()
+        return redirect('account:admin_dashboard')
+    context = {'order':order}
+
+    return render(request,'account/admindeleteorderconfirm.html',context)
 # admin to manage employee account and profile
 def adminManageEmployee(request,pk):
     emp = EmployeeProfile.objects.get(id=pk)
@@ -119,6 +124,41 @@ def adminManageEmployee(request,pk):
 
     context = {'form':form}
     return render(request,'account/adminManageEmployee.html',context)
+
+
+def employeeJobs(request):
+
+    if request.user.is_staff and not request.user.is_superuser:
+        user = request.user.employeeprofile
+        order = Order.objects.filter(employee_order=user)
+
+        context = {
+            'orders': order,
+
+        }
+
+        return render(request, 'account/Employee_Jobs.html',context)
+    else:
+        return HttpResponse("you are not staff")
+
+def employeeDashboard(request):
+    if request.user.is_staff and not request.user.is_superuser:
+        user = request.user.employeeprofile
+        order = Order.objects.filter(employee_order=user)
+
+        context = {
+            'orders': order,
+
+        }
+
+        return render(request, 'account/Employee_Dash.html',context)
+    else:
+        return HttpResponse("you are not staff")
+
+def employeeTimesheet(request):
+    return render(request, 'account/Timesheet.html')
+
+
 
 def customerorderfeedback(request, pk):
     order = Order.objects.get(id=pk)
@@ -151,7 +191,7 @@ def employee_order_job_done(request, pk):
     ins.isDone = True
     ins.save()
 
-    return redirect('account:ServiceOrderlist')
+    return redirect('account:employeeJobs')
 
 
 def ServiceOrderdetail(request, pk):
@@ -199,7 +239,7 @@ def accpet_HiringOrder(request, pk):
     ins.assigned = True
     ins.save()
 
-    return redirect('account:HiringOrderlist')
+    return redirect('account:employee_dashboard')
 
 
 def accpet_ServiceOrder(request, pk):
@@ -208,7 +248,7 @@ def accpet_ServiceOrder(request, pk):
     ins.assigned = True
     ins.save()
 
-    return redirect('account:ServiceOrderlist')
+    return redirect('account:employee_dashboard')
 
 
 def decline_ServiceOrder(request, pk):
@@ -216,13 +256,13 @@ def decline_ServiceOrder(request, pk):
     ins.employee_order = None
     ins.save()
 
-    return redirect('account:ServiceOrderlist')
+    return redirect('account:employee_dashboard')
 
 
 def checkout(request):
     leashdate = request.POST['ld']
     returndate = request.POST['rd']
-
+    
     customer = request.user.customerprofile
     hiringorder, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
     hiringorder.complete = True
@@ -254,6 +294,7 @@ def CustomerRegiser(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect('account:login')
     else:
         form = UserRegisterForm()
 
@@ -304,7 +345,7 @@ def logoutpage(request):
 
 def staffLogin(request):
     if request.user.is_authenticated and request.user.is_staff and not request.user.is_superuser:
-        return redirect('account:ServiceOrderlist')
+        return redirect('account:employee_dashboard')
     elif request.user.is_superuser:
         return redirect('account:admin_dashboard')
     else:
@@ -316,9 +357,11 @@ def staffLogin(request):
             if user is not None:
                 login(request, user)
                 if not request.user.is_superuser and request.user.is_staff:
-                    eploprofile, created = EmployeeProfile.objects.get_or_create(employee_user=user)
+                    # this code below is script code
+                    groupname = GroupEmployee.objects.get(pk=1)
+                    eploprofile, created = EmployeeProfile.objects.get_or_create(employee_user=user,group=groupname)
                     eploprofile.save()
-                    return redirect('account:ServiceOrderlist')
+                    return redirect('account:employee_dashboard')
                 elif request.user.is_superuser:
                     return redirect('account:admin_dashboard')
                 else:
@@ -327,7 +370,7 @@ def staffLogin(request):
     context = {}
     return render(request, 'account/stafflogintest.html', context)
 
-
+# Hire Equipment page
 def Store(request):
     if request.user.is_authenticated and not request.user.is_staff and not request.user.is_superuser:
         products = Equipment.objects.all()
@@ -354,6 +397,7 @@ def Store(request):
 
 @login_required(login_url='account:login')
 def updateItem(request):
+
     data = json.loads(request.body)
     equipmentID = data['equipmentID']
     action = data['action']
@@ -406,19 +450,22 @@ def addservicebook_form(request):
                                                                  notes=service_notes, date_required=service_date)
 
     securityorder.save()
-    print('ok')
-    return redirect('account:ss')
+    return redirect('account:index')
+
 
 
 def customerOrder(request):
-    customer = request.user.customerprofile
-    order = Order.objects.filter(cus_order=customer)
-    hiringorder = HiringOrder.objects.filter(cus_order=customer)
-    context = {
-        'orders': order,
-        'hiringorders': hiringorder
-    }
-    return render(request, 'account/UserPage.html', context)
+    # if not request.user.is_staff and not request.user.is_superuser:
+        customer = request.user.customerprofile
+        order = Order.objects.filter(cus_order=customer)
+        hiringorder = HiringOrder.objects.filter(cus_order=customer)
+        context = {
+            'orders': order,
+            'hiringorders': hiringorder
+        }
+        return render(request, 'account/UserPage.html', context)
+    # else:
+    #     return HttpResponse("you are not user account")
 
 
 

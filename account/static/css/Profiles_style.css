@@ -1,0 +1,152 @@
+* {box-sizing: border-box;}
+
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #EEF0F2;
+}
+
+.container-lg{
+    padding: 80px 0px;
+}
+
+.navbar{
+    font-size: medium;
+}
+.nav-link:hover{
+
+    background: transparent !important;
+    color: #4CAF50 !important;
+}
+.collapse ul li a:hover{
+    color: #4CAF50;
+}
+
+.navbar-brand img{
+    padding: 0;
+    margin: 0;
+    height: 120px;
+    width: 120px;
+}
+
+.grid-container {
+        display: grid;
+        background-color: #333b3f;
+        color: white;
+        font-size: small;
+      }
+
+      .grid-item {
+        background-color: #333b3f;
+        text-align: center;
+        padding: 20px;
+      }
+
+ .item1 {
+     grid-column: 1;
+     grid-row: 1 / span 2;
+     font-size: medium;
+     text-align: left;
+     padding-left: 50px;
+ }
+
+
+.item2 {
+    grid-column: 2 ;
+    grid-row: 1 /span  2;
+    font-size: medium;
+    text-align: center;
+}
+
+.item3 {
+        grid-column: 3 ;
+        grid-row: 1 / span 2;
+        font-size: medium;
+        text-align: center;
+        padding-right: 30px;
+      }
+item4 {
+    grid-column: 2 / span 3;
+    grid-row: 3;
+    text-align: center;
+    font-size: small;
+    padding: 5px;
+}
+
+li a{
+        color: white;
+
+    }
+
+    li a:hover{
+        color: #49C19D;
+    }
+      .fa {
+  padding: 10px 10px;
+  font-size: 30px;
+  width: 30px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 5px;
+  border-radius: 50%;
+}
+
+.fa:hover {
+  opacity: 0.7;
+  text-decoration: none;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+.fa-instagram {
+  background: #125688;
+  color: white;
+}
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+.fa-youtube {
+  background: #bb0000;
+  color: white;
+}
+
+.footer{
+
+    color: white;
+    padding-top: 30px;
+    text-align: center;
+    font-size: 15px;
+    padding-bottom: 10px;
+}
+
+.form-inline .btn {
+    color: white;
+    text-decoration: none;
+}
+
+.form-inline .btn:hover {
+    color: white;
+    background-color: #34987a;
+}
+
+.card{
+    padding: 20px;
+}
+
+.card-text{
+    padding: 0;
+    margin: 0;
+}
+
+.card-body a{
+    float: right;
+}
+
+.card{
+    margin-bottom: 20px;
+    padding: 0;
+}

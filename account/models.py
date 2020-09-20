@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django_google_maps import fields as map_fields
+from django.urls import reverse
 # Create your models here.
 
 class CustomerProfile(models.Model):
@@ -30,7 +31,8 @@ class EmployeeProfile(models.Model):
 
 
     # timesheet = models.OneToOneField('TimeSheet',on_delete=models.CASCADE)
-
+    def get_absolute_url(self):
+        return reverse('account:adminManageEmployee',kwargs={"pk":self.id})
 
     def __str__(self):
         return self.employee_user.username

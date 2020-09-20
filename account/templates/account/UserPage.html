@@ -8,13 +8,15 @@
 <h1>{{ request.user }} order</h1>
 <h1>Hiring orders</h1>
 {% for i in hiringorders %}
-    order : {{ i.id }}
-    {% if i.assigned == True %}
-            status : assigned
-        {% elif i.assigned == False %}
-            status : unassigned
-        {% endif %}
-    <br>
+    {% if i.complete == True %}
+        order : {{ i.id }}
+        {% if i.assigned == True %}
+                status : assigned
+            {% elif i.assigned == False %}
+                status : unassigned
+            {% endif %}
+        <br>
+    {% endif %}
 {% endfor %}
 
 

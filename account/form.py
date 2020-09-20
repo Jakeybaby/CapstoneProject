@@ -21,9 +21,12 @@ class EmployeeRegisterForm(UserCreationForm):
 
 class adminform(ModelForm):
 
+
     employee_order = forms.ModelChoiceField(
         queryset=EmployeeProfile.objects.all().order_by('group__name', 'employee_user')
     )
+
+
     class Meta:
         model = Order
         fields = ['employee_order','cus_order','address','geolocation']
@@ -36,10 +39,20 @@ class adminform(ModelForm):
          }),
         }
 
+    def __init__(self, *args, **kwargs):
+        super(adminform, self).__init__(*args, **kwargs)
+        self.fields['cus_order'].disabled = True
+
+
+
 class adminManageEmployeeform(ModelForm):
     class Meta:
         model = EmployeeProfile
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(adminManageEmployeeform, self).__init__(*args, **kwargs)
+        self.fields['employee_user'].disabled = True
 
 class servicebook_form(ModelForm):
     class Meta:

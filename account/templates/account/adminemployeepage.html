@@ -1,3 +1,5 @@
 {% for i in member %}
-    {{ i.employee_user }}<br>
+    {{ i.employee_user }} <a href="{{ i.get_absolute_url }}">view</a><br>
 {% endfor %}
+
+<a href="{% url 'account:staffregister' %}">Add Employee Account</a>
