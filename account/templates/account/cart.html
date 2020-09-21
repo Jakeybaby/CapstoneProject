@@ -50,6 +50,7 @@
                     <tr>
                         <th><h5>Items</h5><strong>{{ order.get_absolute_url }}</strong></th>
                         <th><h5>Total</h5><strong>${{ order.get_cart_total }}</strong></th>
+{#                        <th><h5>timeleft</h5><strong>{{ order.payment_timeleft }}</strong></th>#}
                         <th>
 
                             <button type="submit">checkout</button>
@@ -87,8 +88,9 @@
 
                         <input type="checkbox" id="scales" name="box1">
                         <label for="scales">pickup</label>
-                        <input type="checkbox" id="scales" name="box1">
-                        <label for="scales">pickup</label>
+
+                        <input type="checkbox" id="scales" name="box2">
+                        <label for="scales">delivery</label>
                 </div>
             </div>
         </div>

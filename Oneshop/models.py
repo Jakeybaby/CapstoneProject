@@ -2,7 +2,7 @@ from django.db import models
 from account.models import *
 from django.utils import timezone
 from django.urls import reverse
-
+from datetime import datetime, timedelta
 
 class SecurityServices(models.Model):
     name = models.TextField(max_length=50, null=True, blank=True)
@@ -37,7 +37,7 @@ class Order(models.Model):
 
     cus_order = models.ForeignKey(CustomerProfile, on_delete=models.SET_NULL, null=True, blank=False)
     employee_order = models.ForeignKey(EmployeeProfile, on_delete=models.SET_NULL, null=True, blank=False)
-    date_order = models.DateTimeField(default=timezone.now)
+    date_order = models.DateTimeField(default=datetime.now)
 
     fullName = models.TextField(max_length=50,null=True,blank=True)
     phoneNumber = models.TextField(max_length=20,null=True,blank=True)
@@ -49,6 +49,7 @@ class Order(models.Model):
     isService = models.BooleanField(default=False)
     isPropety = models.BooleanField(default=False)
     isDone = models.BooleanField(default=False)
+    isPaid = models.BooleanField(default=False)
 
     address = map_fields.AddressField(max_length=200,null=True)
     geolocation = map_fields.GeoLocationField(max_length=100,null=True)
@@ -80,6 +81,14 @@ class Order(models.Model):
     def done_job_url(self):
         return reverse('account:employee_order_job_done', kwargs={"pk":self.id})
 
+    @property
+    def payment_timeleft(self):
+        orderdeshijian = (self.date_order + timedelta(seconds=10)).replace(tzinfo=None)
+        dangqianshijian = datetime.now().replace(tzinfo=None)
+        left = (orderdeshijian - dangqianshijian)
+        print(left)
+        return left
+
     def __str__(self):
         return str(self.id)
 
@@ -87,10 +96,17 @@ class Order(models.Model):
 class HiringOrder(models.Model):
     cus_order = models.ForeignKey(CustomerProfile, on_delete=models.SET_NULL, null=True, blank=False)
     employee_order = models.ForeignKey(EmployeeProfile, on_delete=models.SET_NULL, null=True, blank=False)
-    date_order = models.DateTimeField(default=timezone.now)
+    date_order = models.DateTimeField(default=datetime.now)
 
     complete = models.BooleanField(default=False)
     assigned = models.BooleanField(default=False)
+    isPaid = models.BooleanField(default=False)
+
+    isPickup = models.BooleanField(default=False)
+    isDelivery = models.BooleanField(default=False)
+
+    address = map_fields.AddressField(max_length=200, null=True,blank=True)
+    geolocation = map_fields.GeoLocationField(max_length=100, null=True,blank=True)
 
     fullName = models.TextField(max_length=50, null=True, blank=True)
     phoneNumber = models.TextField(max_length=20, null=True, blank=True)
@@ -112,6 +128,20 @@ class HiringOrder(models.Model):
         cartitems = self.cartitem_set.all()
         total = sum([item.get_total for item in cartitems])
         return total
+
+    # @property
+    # def payment_timeleft(self):
+    #     orderdeshijian = (self.date_order + timedelta(hours=2)).replace(tzinfo=None)
+    #     dangqianshijian = datetime.now().replace(tzinfo=None)
+    #     left = (orderdeshijian - dangqianshijian).seconds
+    #     return left
+
+    @property
+    def payment_timeleft(self):
+        orderdeshijian = (self.date_order + timedelta(seconds=10)).replace(tzinfo=None)
+        dangqianshijian = datetime.now().replace(tzinfo=None)
+        left = int((orderdeshijian - dangqianshijian).min)
+        return left
 
 
     def checkout(self):

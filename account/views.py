@@ -34,9 +34,11 @@ def Security(request):
 
 
 
-
-
 def BookPM(request):
+
+    services = PropetyServices.objects.all()
+
+
     return render(request, 'account/BookPropertyMaintenance.html')
 
 def BookSecurity(request):
@@ -67,8 +69,10 @@ def managePortal(request):
 
 def adminpage(request):
     order = Order.objects.all()
+    hiringorder = HiringOrder.objects.all()
     context = {
-        'object': order
+        'object': order,
+        'hiringorders':hiringorder
     }
     return render(request, 'account/Admin_D.html', context)
 
@@ -262,15 +266,43 @@ def decline_ServiceOrder(request, pk):
 def checkout(request):
     leashdate = request.POST['ld']
     returndate = request.POST['rd']
-    
+    # test1 = request.POST.get('box1', False)
+    # test2 = request.POST.get('box2', False)
+    # if test1 == 'on':
+    #     customer = request.user.customerprofile
+    #     hiringorder, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
+    #     hiringorder.complete = True
+    #     hiringorder.isPickup = True
+    #     hiringorder.leash_date = leashdate
+    #     hiringorder.return_date = returndate
+    #     hiringorder.save()
+    #     return redirect('account:HireEquipement')
+    # else:
+    #     print('pass1')
+    #     pass
+    # if test2 == 'on':
+    #     customer = request.user.customerprofile
+    #     hiringorder, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
+    #     hiringorder.complete = True
+    #     hiringorder.isDelivery = True
+    #     hiringorder.leash_date = leashdate
+    #     hiringorder.return_date = returndate
+    #     hiringorder.save()
+    #     return redirect('account:HireEquipement')
+    # else:
+    #     print('pass2')
+    #     pass
+    # print('pass to here')
     customer = request.user.customerprofile
     hiringorder, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
     hiringorder.complete = True
+
     hiringorder.leash_date = leashdate
     hiringorder.return_date = returndate
     hiringorder.save()
-
+    print('test')
     return redirect('account:HireEquipement')
+
 
 
 @login_required(login_url='account:login')

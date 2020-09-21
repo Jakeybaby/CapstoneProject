@@ -89,7 +89,15 @@
                     <p class="card-text">Customer :{{i.cus_order.cus_user}}</p>
 
                     <p class="card-text"><small class="text-muted">Date & time:{{ a.date_required }}</small></p>
-                     <p class="card-text"><small class="text-muted">Payment: <span class="text-success">Paid</span> / <span class="text-warning">Pending</span></small></p>
+                     <p class="card-text"><small class="text-muted">Payment:
+                         {% if i.isPaid == False %}
+                            <span class="text-warning">Pending</span>/Time left:{{ i.payment_timeleft }}
+                             {% if i.payment_timeleft  > 10 %}
+                                 <span class="text-warning">Expreid</span>
+                                 {% endif %}
+                             {% else %}
+                                <span class="text-success">Paid</span>
+                         {% endif %}</small></p>
                     <p class="card-text"><small class="text-muted">Additional Comments:{{ a.notes }}</small></p>
                     <a href="{% url 'account:admindeleteorder' i.id %}"><button class="btn text-danger">Cancel Job</button></a>
                     <a href="{{ i.admin_get_absolute_url }}"> <button class="btn text-primary">Assign Staff</button></a>
@@ -125,7 +133,32 @@
                    {% endfor %}
            {% endif %}
        {% endfor %}
+         <h4 style="padding-bottom: 20px;">New Hiring orders</h4>
+        {% for hiring in hiringorders %}
+            <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{% static 'Images/HireEquipments/gardening-forks (1).png'%}" class="card-img" alt="..." height="180px">
+                    </div>
+                <div class="col-md-8">
+                <div class="card-body">
 
+                    <h5 class="card-title">{{ hiring.id }}</h5>
+                    <p class="card-text">Customer :{{hiring.cus_order.cus_user.username}}</p>
+
+                    <p class="card-text"><small class="text-muted">Date & time:{{ hiring.date_order }}</small></p>
+                     <p class="card-text"><small class="text-muted">Payment:
+                            <span class="text-warning">Pending</span>/<span class="text-success">Paid</span>
+                         </small></p>
+                    <p class="card-text"><small class="text-muted">Additional Comments:</small></p>
+                    <a href="#"><button class="btn text-danger">Cancel Job</button></a>
+                    <a href="#"> <button class="btn text-primary">Assign Staff</button></a>
+
+                </div>
+                </div>
+                </div>
+            </div>
+        {% endfor %}
        <h4 style="padding-bottom: 20px;">Leave Requests</h4>
           <div class="col-sm w-75 ">
               <div class="card border border-secondary">
