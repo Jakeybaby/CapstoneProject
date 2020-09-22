@@ -52,7 +52,7 @@
               <a class="dropdown-item" href="#">Manage Profile</a>
                 <a class="dropdown-item" href="#">Learning Portal</a>
 
-
+            </div>
           </li>
         </ul>
         <span class="form-inline my-2 my-lg-0">
@@ -70,24 +70,51 @@
         <h2 style="padding: 30px 0px;">Wait to Accept</h2>
         {% for order in orders %}
             {% if order.complete == True and order.assigned == False %}
+                {% for a in order.securityorder_set.all %}
                 <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
-            <div class="row no-gutters">
-                <div class="col-md-4">
-                    <img src="{% static 'Images/SecurityJobs/EventSecurity.jpeg'%}" class="card-img" alt="..." height="150px">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="{% static 'Images/SecurityJobs/EventSecurity.jpeg'%}" class="card-img" alt="..." height="150px">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                            <h5 class="card-title">ID: {{ order.id }}</h5>
+                            <p class="card-text"><small class="text-muted">Customer Name: {{ order.cus_order.cus_user.first_name }}</small></p>
+                            <p class="card-text"><small class="text-muted">Date & time:{{ order.server_date }}</small></p>
+                            <p class="card-text"><small class="text-muted">Job Request:{{ a.security_service }}</small></p>
+                            <p class="card-text"><small class="text-muted">Location:{{ order.address }}</small></p>
+                            <p class="card-text"><small class="text-muted">Notes:{{ b.notes }}</small></p>
+                            <a class="jobDesc" target="_blank" href="https://www.google.com/maps/place/{{ order.geolocation }}"><img src="{% static 'Images/location.png'%}"></a>
+                            <a href="{{ order.decline_job_url }}"><button class="btn text-primary">Decline</button></a>
+                            <a href="{{ order.accpet_job_url }}"><button class="btn text-success">Accept Job</button></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="card-title">Event Security</h5>
-                <p class="card-text"><small class="text-muted">Date & time:</small></p>
-                <p class="card-text"><small class="text-muted">Location:</small></p>
-                <a href="{{ order.decline_job_url }}"><button class="btn text-primary">Decline</button></a>
-                <a href="{{ order.accpet_job_url }}"><button class="btn text-success">Accept Job</button></a>
-            </div>
-            </div>
-            </div>
-            </div>
+                {% endfor %}
 
-
+                {% for b in order.propertyorder_set.all %}
+                    <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="{% static 'Images/SecurityJobs/EventSecurity.jpeg'%}" class="card-img" alt="..." height="150px">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                            <h5 class="card-title">ID :{{ order.id }}</h5>
+                            <p class="card-text"><small class="text-muted">Customer Name: {{ order.cus_order.cus_user.first_name }}</small></p>
+                            <p class="card-text"><small class="text-muted">Date & time:{{ order.server_date }}</small></p>
+                            <p class="card-text"><small class="text-muted">Job Request: {{ b.property_service }}</small></p>
+                            <p class="card-text"><small class="text-muted">Location:{{ order.address }}</small></p>
+                            <p class="card-text"><small class="text-muted">Notes:{{ b.notes }}</small></p>
+                                <a class="jobDesc" target="_blank" href="https://www.google.com/maps/place/{{ order.geolocation }}"><img src="{% static 'Images/location.png'%}"></a>
+                            <a href="{{ order.decline_job_url }}"><button class="btn text-primary">Decline</button></a>
+                            <a href="{{ order.accpet_job_url }}"><button class="btn text-success">Accept Job</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             {% endif %}
 
         {% endfor %}

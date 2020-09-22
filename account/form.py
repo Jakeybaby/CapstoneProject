@@ -44,6 +44,30 @@ class adminform(ModelForm):
         self.fields['cus_order'].disabled = True
 
 
+class adminHiringform(ModelForm):
+
+
+    employee_order = forms.ModelChoiceField(
+        queryset=EmployeeProfile.objects.all().order_by('group__name', 'employee_user')
+    )
+
+
+    class Meta:
+        model = Order
+        fields = ['employee_order','cus_order','address','geolocation']
+        widgets = {
+            "address": GoogleMapsAddressWidget(attrs={
+            'data-map-type': 'roadmap',
+            'data-autocomplete-options': json.dumps({ 'types': ['geocode','establishment'],
+            'componentRestrictions': {'country': 'NZ'}
+            })
+         }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(adminHiringform, self).__init__(*args, **kwargs)
+        self.fields['cus_order'].disabled = True
+
 
 class adminManageEmployeeform(ModelForm):
     class Meta:
@@ -67,7 +91,18 @@ class servicebook_form(ModelForm):
             }),
         }
 
-
+class Hiringbook_form(ModelForm):
+    class Meta:
+        model = HiringOrder
+        fields = ['address','geolocation']
+        widgets = {
+            "address": GoogleMapsAddressWidget(attrs={
+                'data-map-type': 'roadmap',
+                'data-autocomplete-options': json.dumps({'types': ['geocode','establishment'],
+                'componentRestrictions': {'country': 'NZ'}
+                })
+            }),
+        }
 
 
 class orderfeedback(ModelForm):

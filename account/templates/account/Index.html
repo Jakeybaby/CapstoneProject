@@ -40,13 +40,13 @@
             <a class="nav-link" href="{%url 'account:About' %}">About Us</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="{% url 'account:Services'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="{% url 'account:BookSecurity'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Services
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'account:BookPM'%}">Property Maintenance</a>
               <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Security</a>
-             
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'account:HireEquipement'%}">Hire Equipments</a>
@@ -96,7 +96,7 @@
   <hr class="my-4">
   <div class="jumbotron">
     <h3 class="display-5">Our Services</h3>
-    <a class="btn btn-lg shadow p-3 mb-5 rounded rounded float-left" href="{% url 'account:security'%}" role="button"><img src="{% static 'Images/logo1.png' %}"><p>Security</p></a>
+    <a class="btn btn-lg shadow p-3 mb-5 rounded rounded float-left" href="{% url 'account:BookSecurity'%}" role="button"><img src="{% static 'Images/logo1.png' %}"><p>Security</p></a>
     <a class="btn btn-lg shadow p-3 mb-5 rounded" href="{% url 'account:HireEquipement' %}" role="button"><img src="{% static 'Images/logo1.png' %}"><p>Hire Equipment</p></a>
     <a class="btn btn-lg shadow p-3 mb-5 rounded rounded float-right" href="{% url 'account:PropertyMaintenance'%}" role="button"><img src="{% static 'Images/logo1.png' %}"><p>Property Maintenance</p></a>
   </div>
@@ -129,7 +129,7 @@
   <div class="grid-item item1">
     <h5 style="text-decoration: underline;">Quick Links<br></h5>
     
-    <li style="list-style-type: none;"><a href="{% url 'account:security' %}" style="text-decoration: none;">Security</a></li>
+    <li style="list-style-type: none;"><a href="{% url 'account:BookSecurity' %}" style="text-decoration: none;">Security</a></li>
     <li style="list-style-type: none;"><a href="{% url 'account:HireEquipement'%}" style="text-decoration: none;">Hire Equipement</a></li>
     <li style="list-style-type: none;"><a href="{%url 'account:PropertyMaintenance'%}" style="text-decoration: none;">Property Maintenance</a></li>
       <li style="list-style-type: none;"><a href="{%url 'account:stafflogin'%}" style="text-decoration: none;">Staff Login</a></li>

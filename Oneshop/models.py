@@ -81,13 +81,16 @@ class Order(models.Model):
     def done_job_url(self):
         return reverse('account:employee_order_job_done', kwargs={"pk":self.id})
 
+    def payserviceorder(self):
+        return reverse('account:payserviceorder', kwargs={"pk":self.id})
+
     @property
-    def payment_timeleft(self):
-        orderdeshijian = (self.date_order + timedelta(seconds=10)).replace(tzinfo=None)
-        dangqianshijian = datetime.now().replace(tzinfo=None)
-        left = (orderdeshijian - dangqianshijian)
-        print(left)
-        return left
+    def latepayment(self):
+        if (datetime.now().replace(tzinfo=None) - self.date_order.replace(tzinfo=None)) > timedelta(hours=24):
+            return True
+        else:
+            return False
+
 
     def __str__(self):
         return str(self.id)
@@ -129,20 +132,20 @@ class HiringOrder(models.Model):
         total = sum([item.get_total for item in cartitems])
         return total
 
-    # @property
-    # def payment_timeleft(self):
-    #     orderdeshijian = (self.date_order + timedelta(hours=2)).replace(tzinfo=None)
-    #     dangqianshijian = datetime.now().replace(tzinfo=None)
-    #     left = (orderdeshijian - dangqianshijian).seconds
-    #     return left
-
     @property
-    def payment_timeleft(self):
-        orderdeshijian = (self.date_order + timedelta(seconds=10)).replace(tzinfo=None)
-        dangqianshijian = datetime.now().replace(tzinfo=None)
-        left = int((orderdeshijian - dangqianshijian).min)
-        return left
+    def latepayment(self):
+        if (datetime.now().replace(tzinfo=None) - self.date_order.replace(tzinfo=None)) > timedelta(hours=24):
+            return True
+        else:
+            return False
 
+
+    def admin_get_absolute_url(self):
+        return reverse('account:adminHiringOrder',kwargs={"pk":self.id})
+
+
+    def payHiringorder(self):
+        return reverse('account:payhiringorder', kwargs={"pk":self.id})
 
     def checkout(self):
         return reverse('account:checkout')
@@ -165,7 +168,7 @@ class SecurityOrder(models.Model):
     notes = models.TextField(max_length=100,blank=True)
 
     def __str__(self):
-        return str(self.security_service.name)
+        return str(self.id)
 
 
 class PropertyOrder(models.Model):
@@ -175,7 +178,7 @@ class PropertyOrder(models.Model):
     notes = models.TextField(max_length=100, blank=True)
 
     def __str__(self):
-        return self.property_service.name
+        return str(self.id)
 
 #
 # class Feedback(models.Model):

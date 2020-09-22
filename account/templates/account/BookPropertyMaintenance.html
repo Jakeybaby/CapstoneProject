@@ -16,7 +16,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-  </head>      
+  {{ form.media }}
+  </head>
   <body>
     
     
@@ -38,16 +39,16 @@
             <a class="nav-link" href="{% url 'account:index' %}">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{%url 'account:AboutUs' %)">About Us</a>
+            <a class="nav-link" href="{%url 'account:About' %}">About Us</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="{% url 'account:Services'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="{% url 'account:BookSecurity'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Services
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'account:PropertyMaintenance'%}">Property Maintenance</a>
-              <a class="dropdown-item" href="{% url 'account:security'%}">Security</a>
-             
+              <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Security</a>
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'account:HireEquipement'%}">Hire Equipments</a>
@@ -70,7 +71,8 @@
     
   <div class="container-lg">
     <h3 class="heading" style="padding: 50px 0px;">Book Property Maintenance Services</h3>
-      <form>
+      <form method="post" action="/pmservice_form/">
+          {% csrf_token %}
         <fieldset>
           <div class="form-group">
             <label for="exampleInputName" >Full Name:</label>
@@ -81,38 +83,39 @@
             <input type="Email" class="form-control w-50" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter your e-mail">
           </div>
           <div class="form-group">
-            <label  for="exampleInputAddress">Address:</label>
-            <textarea class="form-control w-50" id="exampleTextarea" rows="3" placeholder="Address"></textarea>
-          </div>
-          <div class="form-group">
             <label  for="exampleInputPhone">Mobile Number:</label>
             <input type="text" class="form-control" id="exampleInputName" placeholder="+64">
           </div>
             
           <form action="/action_page.php" class="row" style="padding-bottom: 50px;">
             <label for="bookingdate" >Booking date:</label><br>
-            <input  class="w-50" type="datetime-local" id="bookingdate" name="bookingdate">
+            <input  class="w-50" type="datetime-local" id="servicedate" name="servicedate">
             <!--<input type="submit">-->
           </form><br>
           <div class="form-group" style="padding: 30px 0px;">
             <label for="exampleSelect1">Types of services:</label>
-            <select class="form-control w-50" id="exampleSelect1">
-              <option class="text-muted">Select One</option>
-              <option>Mowing Lawns</option>
-              <option>Prunning Trees</option>
-              <option>House Washing</option>
-              <option>Gutter Cleaning</option>
-              <option>Chimney Cleaning</option>
-              <option>Window Cleaning</option>
-              <option>Outside house paint work</option>
-              <option>Roof Work</option>
+
+            <select class="form-control w-50" id="serviceoptions" name="servicename">
+                <option disabled selected value> -- select an option -- </option>
+                {% for i in services %}
+                    <option value="{{ i.id }}" data-price="{{ i.price }}">{{i.name}}</option>
+                {% endfor %}
+
             </select>
           </div>
-            
+            <div class="form-group row">
+            <label class="col-sm-3" for="exampleTextarea" style="float: right;">Price: <span id="serviceprice"></span></label>
+
+
+          </div>
           <div class="form-group">
             <label  for="exampleTextarea" >Additional Comments</label>
-            <textarea class="form-control w-50" id="exampleTextarea" rows="3" placeholder="Comments" ></textarea>
+            <textarea class="form-control w-50" id="exampleTextarea" rows="3" placeholder="Comments" name="description"></textarea>
           </div>
+            {{ form.address }}
+            {{ form.geolocation.as_hidden }}
+
+            <link href="{% static 'css/google-map-admin.css'%}" rel="stylesheet" type="text/css">
           <a class="submitPM" href="#">
           <button type="submit" class="btn btn-outline-success">Submit</button>
         </a>
@@ -130,7 +133,7 @@
   <div class="grid-item item1">
     <h5 style="text-decoration: underline;">Quick Links<br></h5>
     
-    <li style="list-style-type: none;"><a href="{% url 'account:security' %}" style="text-decoration: none;">Security</a></li>
+    <li style="list-style-type: none;"><a href="{% url 'account:BookSecurity' %}" style="text-decoration: none;">Security</a></li>
     <li style="list-style-type: none;"><a href="{% url 'account:HireEquipement'%}" style="text-decoration: none;">Hire Equipement</a></li>
     <li style="list-style-type: none;"><a href="{%url 'account:PropertyMaintenance'%}" style="text-decoration: none;">Property Maintenance</a></li>
   </div>
@@ -150,5 +153,6 @@
   </div>  
   <div class="grid-item item4">&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </div>
 </footer>
+  <script type="text/javascript" src="{% static 'js/service.js' %}"></script>
 </body>
 </html>

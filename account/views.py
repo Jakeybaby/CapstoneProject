@@ -5,9 +5,11 @@ from .form import UserRegisterForm
 from .models import *
 from Oneshop.models import *
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import JsonResponse
 from .form import *
 from django.contrib.auth import login, authenticate, logout
+from datetime import datetime
 import json
 
 
@@ -27,19 +29,54 @@ def contact(request):
 
 # --
 
+# book a security service function
+def addservicebook_form(request):
+    service_id = request.POST['servicename']
+    service_notes = request.POST['description']
+    service_date = request.POST['servicedate']
+    service_user = request.user.customerprofile
+    service_name = SecurityServices.objects.get(id=service_id)
+    service_address = request.POST['address']
+    service_geo = request.POST['geolocation']
 
+    order = Order.objects.create(cus_order=service_user, complete=True, isService=True, server_date=service_date,
+                                 address=service_address, geolocation=service_geo)
+    securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name,
+                                                                 notes=service_notes, date_required=service_date)
 
-def Security(request):
-    return render(request, 'account/Security.html')
+    securityorder.save()
+    messages.success(request,'Success book')
+    return redirect('account:customerOrder')
 
+def addpmservicebook_form(request):
+    service_id = request.POST['servicename']
+    service_notes = request.POST['description']
+    service_date = request.POST['servicedate']
+    service_user = request.user.customerprofile
+    service_name = PropetyServices.objects.get(id=service_id)
+    service_address = request.POST['address']
+    service_geo = request.POST['geolocation']
+
+    order = Order.objects.create(cus_order=service_user, complete=True, isService=True, server_date=service_date,
+                                 address=service_address, geolocation=service_geo)
+    propertyorder, created = PropertyOrder.objects.get_or_create(order=order, property_service=service_name,
+                                                                 notes=service_notes, date_required=service_date)
+
+    propertyorder.save()
+    messages.success(request, 'Success book')
+    return redirect('account:customerOrder')
 
 
 def BookPM(request):
 
     services = PropetyServices.objects.all()
+    form = servicebook_form()
+    context = {
+        'services':services,
+        "form": form
+    }
 
-
-    return render(request, 'account/BookPropertyMaintenance.html')
+    return render(request, 'account/BookPropertyMaintenance.html',context)
 
 def BookSecurity(request):
 
@@ -108,6 +145,34 @@ def adminOrder(request, pk):
 
     context = {'form': form}
     return render(request, 'account/adminorderdetail.html', context)
+
+def adminHiringOrder(request, pk):
+    order = HiringOrder.objects.get(id=pk)
+    form = adminHiringform(instance=order)
+    form.fields['employee_order'].choices = list()
+    for k in GroupEmployee.objects.all():
+        # Append the tuple of OptGroup Name, Organism.
+        form.fields['employee_order'].choices.append(
+            (
+
+                k.name,  # First tuple part is the optgroup name/label
+                list(  # Second tuple part is a list of tuples for each option.
+                    (o.id, o.employee_user) for o in EmployeeProfile.objects.filter(group=k).order_by('employee_user')
+                    # Each option itself is a tuple of id and name for the label.
+                )
+            )
+        )
+
+    if request.method == 'POST':
+        form = adminHiringform(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('account:admin_dashboard')
+
+    context = {'form': form}
+    return render(request, 'account/adminorderdetail.html', context)
+
+
 def admindeleteorder(request,pk):
 
     order = Order.objects.get(id=pk)
@@ -117,6 +182,40 @@ def admindeleteorder(request,pk):
     context = {'order':order}
 
     return render(request,'account/admindeleteorderconfirm.html',context)
+
+
+def admindeletehiringorder(request,pk):
+
+    order = HiringOrder.objects.get(id=pk)
+    if request.method == "POST":
+        order.delete()
+        return redirect('account:admin_dashboard')
+    context = {'order':order}
+
+    return render(request,'account/admindeleteorderconfirm.html',context)
+
+def payserviceorder(request, pk):
+
+    ins = get_object_or_404(Order, pk=pk)
+    if request.method == "POST":
+        ins.isPaid = True
+        ins.save()
+        return HttpResponse("payment done")
+
+    return render(request, 'account/paymentPage.html')
+
+
+def payhiringorder(request, pk):
+
+    ins = get_object_or_404(HiringOrder, pk=pk)
+    if request.method == "POST":
+        ins.isPaid = True
+        ins.save()
+        return HttpResponse("payment done")
+
+    return render(request, 'account/paymentPage.html')
+
+
 # admin to manage employee account and profile
 def adminManageEmployee(request,pk):
     emp = EmployeeProfile.objects.get(id=pk)
@@ -263,44 +362,58 @@ def decline_ServiceOrder(request, pk):
     return redirect('account:employee_dashboard')
 
 
+
+
+
 def checkout(request):
     leashdate = request.POST['ld']
     returndate = request.POST['rd']
-    # test1 = request.POST.get('box1', False)
-    # test2 = request.POST.get('box2', False)
-    # if test1 == 'on':
-    #     customer = request.user.customerprofile
-    #     hiringorder, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
-    #     hiringorder.complete = True
-    #     hiringorder.isPickup = True
-    #     hiringorder.leash_date = leashdate
-    #     hiringorder.return_date = returndate
-    #     hiringorder.save()
-    #     return redirect('account:HireEquipement')
-    # else:
-    #     print('pass1')
-    #     pass
-    # if test2 == 'on':
-    #     customer = request.user.customerprofile
-    #     hiringorder, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
-    #     hiringorder.complete = True
-    #     hiringorder.isDelivery = True
-    #     hiringorder.leash_date = leashdate
-    #     hiringorder.return_date = returndate
-    #     hiringorder.save()
-    #     return redirect('account:HireEquipement')
-    # else:
-    #     print('pass2')
-    #     pass
-    # print('pass to here')
-    customer = request.user.customerprofile
-    hiringorder, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
-    hiringorder.complete = True
+    service_address = request.POST['address']
+    service_geo = request.POST['geolocation']
+    test3 = request.POST.get('way', False)
 
-    hiringorder.leash_date = leashdate
-    hiringorder.return_date = returndate
-    hiringorder.save()
-    print('test')
+    if test3 == 'pickup':
+
+        customer = request.user.customerprofile
+        hiringorder, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
+        hiringorder.date_order=datetime.now()
+        hiringorder.complete = True
+        hiringorder.isPickup = True
+        hiringorder.leash_date = leashdate
+        hiringorder.return_date = returndate
+        hiringorder.save()
+        ins = hiringorder.cartitem_set.all()
+        for i in ins:
+            eq = get_object_or_404(Equipment, pk=i.equipment.id)
+            eq.stock = eq.stock - i.quantity
+            eq.save()
+        messages.success(request, 'Success book')
+        return redirect('account:HireEquipement')
+    else:
+
+        pass
+    if test3 == 'deliver':
+
+        customer = request.user.customerprofile
+        hiringorder, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
+        hiringorder.date_order = datetime.now()
+        hiringorder.complete = True
+        hiringorder.isDelivery = True
+        hiringorder.leash_date = leashdate
+        hiringorder.return_date = returndate
+        hiringorder.address = service_address
+        hiringorder.geolocation = service_geo
+        hiringorder.save()
+        ins = hiringorder.cartitem_set.all()
+        for i in ins:
+            eq = get_object_or_404(Equipment, pk=i.equipment.id)
+            eq.stock = eq.stock - i.quantity
+            eq.save()
+        messages.success(request, 'Success book')
+        return redirect('account:HireEquipement')
+    else:
+        pass
+
     return redirect('account:HireEquipement')
 
 
@@ -310,11 +423,12 @@ def cart(request):
     if not request.user.is_staff and not request.user.is_superuser:
         customer = request.user.customerprofile
         order, created = HiringOrder.objects.get_or_create(cus_order=customer, complete=False)
-
+        form = Hiringbook_form()
         equipment = order.cartitem_set.all()
         context = {
             'equipments': equipment,
             'order': order,
+            'form':form
         }
         return render(request, 'account/cart.html', context)
     else:
@@ -440,10 +554,11 @@ def updateItem(request):
     cartItem, created = CartItem.objects.get_or_create(order=order, equipment=equipment)
 
     if action == 'add':
-        if equipment.stock <= 0:
+        if cartItem.quantity >= equipment.stock:
             print('not enough stocking')
         else:
             cartItem.quantity = (cartItem.quantity + 1)
+
             cartItem.save()
 
     elif action == 'remove':
@@ -457,32 +572,16 @@ def updateItem(request):
     return JsonResponse('Item added', safe=False)
 
 
-def servicebook(request):
-    services = SecurityServices.objects.all()
-    form = servicebook_form()
-    context = {
-        'services': services,
-        'form': form
-    }
-    return render(request, 'account/servicebooking.html', context)
+# def servicebook(request):
+#     services = SecurityServices.objects.all()
+#     form = servicebook_form()
+#     context = {
+#         'services': services,
+#         'form': form
+#     }
+#     return render(request, 'account/servicebooking.html', context)
 
 
-def addservicebook_form(request):
-    service_id = request.POST['servicename']
-    service_notes = request.POST['description']
-    service_date = request.POST['servicedate']
-    service_user = request.user.customerprofile
-    service_name = SecurityServices.objects.get(id=service_id)
-    service_address = request.POST['address']
-    service_geo = request.POST['geolocation']
-
-    order = Order.objects.create(cus_order=service_user, complete=True, isService=True, server_date=service_date,
-                                 address=service_address, geolocation=service_geo)
-    securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name,
-                                                                 notes=service_notes, date_required=service_date)
-
-    securityorder.save()
-    return redirect('account:index')
 
 
 
@@ -498,6 +597,4 @@ def customerOrder(request):
         return render(request, 'account/UserPage.html', context)
     # else:
     #     return HttpResponse("you are not user account")
-
-
 

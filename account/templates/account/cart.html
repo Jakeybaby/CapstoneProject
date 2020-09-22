@@ -34,12 +34,13 @@
                 }
                 var csrftoken = getToken('csrftoken')
     </script>
+        {{ form.media }}
     </head>
     <body>
 
 
 {% block content %}
-    <form class="form-control" method="post" action="/checkout/">
+    <form class="form-control" method="post" action="">
     {% csrf_token %}
     <div class="row">
         <div class="col-lg-12">
@@ -53,7 +54,7 @@
 {#                        <th><h5>timeleft</h5><strong>{{ order.payment_timeleft }}</strong></th>#}
                         <th>
 
-                            <button type="submit">checkout</button>
+                            <button type="submit" formaction="/checkout/">checkout</button>
                         </th>
                     </tr>
                 </table>
@@ -86,16 +87,23 @@
                     leash date:<input id="leashdate" type="datetime-local" name="ld" required/><br>
                     return date:<input type="datetime-local" name="rd" required/><br>
 
-                        <input type="checkbox" id="scales" name="box1">
-                        <label for="scales">pickup</label>
 
-                        <input type="checkbox" id="scales" name="box2">
-                        <label for="scales">delivery</label>
+
+                        <p>Please select your order:</p>
+                          <input type="radio" id="pickup" name="way" value="pickup" required>
+                          <label for="male">pickup</label><br>
+                          <input type="radio" id="deliver" name="way" value="deliver" required>
+                          <label for="female">deliver</label><br>
+
+                    <span id="address">Address:</span> {{ form.address }}
+                    {{ form.geolocation.as_hidden }}
                 </div>
             </div>
         </div>
     </div>
+
     </form>
     <script type="text/javascript" src="{% static 'js/car2t.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/time.js' %}"></script>
+    <link href="{% static 'css/google-map-admin.css'%}" rel="stylesheet" type="text/css">
 {% endblock content %}

@@ -74,15 +74,15 @@
                 <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
         <img src="{% static 'Images/PropertyMaintenance/Pruning.jpg'%}" class="card-img-top" style="height: 300px;" alt="...">
         <div class="card-body">
-          <h5 class="card-title">Order ID: {{order.id}}</h5>
-          <p class="card-text" style="padding-bottom: 10px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <p class="card-text"><small class="text-muted">Date & time: {{ order.server_date }}</small></p>
-        <p class="card-text"><small class="text-muted">Name of client: {{ order.cus_order.cus_user.username }} </small></p>
-         <p class="card-text"><small class="text-muted">Address: {{ order.address }}</small></p>
+            <h5 class="card-title">Order ID: {{order.id}}</h5>
+            <p class="card-text" style="padding-bottom: 10px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Date & time: {{ order.server_date }}</small></p>
+            <p class="card-text"><small class="text-muted">Name of client: {{ order.cus_order.cus_user.first_name }} </small></p>
+            <p class="card-text"><small class="text-muted">Address: {{ order.address }}</small></p>
 
-         <a class="jobDesc" target="_blank" href="https://www.google.com/maps/place/{{ order.geolocation }}"><img src="{% static 'Images/location.png'%}"></a>
-         <a class="jobDesc" href="{{ order.done_job_url }}"><button class="btn text-success">Done Job</button></a>
-         <a class="jobDesc" href="#"><button class="btn text-danger">Cancel Job</button></a>
+            <a class="jobDesc" target="_blank" href="https://www.google.com/maps/place/{{ order.geolocation }}"><img src="{% static 'Images/location.png'%}"></a>
+            <a class="jobDesc" href="{{ order.done_job_url }}"><button class="btn text-success">Done Job</button></a>
+            <a class="jobDesc" href="#"><button class="btn text-danger">Cancel Job</button></a>
         </div>
       </div>
            {% endif %}
@@ -94,12 +94,12 @@
                 <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
         <img src="{% static 'Images/SecurityJobs/EventSecurity.jpeg'%}" class="card-img-top" style="height: 300px;" alt="...">
         <div class="card-body">
-          <h5 class="card-title">{{order.id}}</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <p class="card-text"><small class="text-muted">Date & time:</small></p>
-        <p class="card-text"><small class="text-muted">Name of client: </small></p>
-         <p class="card-text"><small class="text-muted">Address: </small></p>
-         <a class="jobDesc" href="{{ order.employee_feedback_url }}"><button class="btn text-danger">Feedback</button></a>
+            <h5 class="card-title">{{order.id}}</h5>
+            <p class="card-text" style="padding-bottom: 10px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Date & time: {{ order.server_date }}</small></p>
+            <p class="card-text"><small class="text-muted">Name of client: {{ order.cus_order.cus_user.first_name }} </small></p>
+            <p class="card-text"><small class="text-muted">Address: {{ order.address }}</small></p>
+            <a class="jobDesc" href="{{ order.employee_feedback_url }}"><button class="btn text-danger">Feedback</button></a>
         </div>
       </div>
             {% endif %}

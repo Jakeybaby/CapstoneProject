@@ -5,11 +5,19 @@
     <title>Title</title>
 </head>
 <body>
+{% if messages %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+{% endif %}
 <h1>{{ request.user }} order</h1>
 <h1>Hiring orders</h1>
 {% for i in hiringorders %}
     {% if i.complete == True %}
         order : {{ i.id }}
+        {% if i.isPaid == False %}
+            <a href="{{ i.payHiringorder }}">Payment</a>
+        {% endif %}
         {% if i.assigned == True %}
                 status : assigned
             {% elif i.assigned == False %}
@@ -24,6 +32,9 @@
 {% for i in orders %}
     <div>
         order : {{ i.id }}
+        {% if i.isPaid == False %}
+            <a href="{{ i.payserviceorder }}">Payment</a>
+        {% endif %}
         {% if i.assigned == False %}
             status : unassigned
         {% elif i.assigned == True and i.isDone == False %}

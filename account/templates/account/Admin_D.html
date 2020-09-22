@@ -13,7 +13,9 @@
     <title>Kaipara Security Services Ltd.</title>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
   </head>
   <body>
 
@@ -45,15 +47,15 @@
             <a class="nav-link" href="{% url 'account:contact'%}">Equip Delivery</a>
           </li>
             <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="{% url 'account:Services'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="{% url 'account:BookSecurity'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               More
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
-              <a class="dropdown-item" href="{% url 'account:security'%}">Manage Leaves</a>
+              <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Leaves</a>
                 <a class="dropdown-item" href="{% url 'account:managePortal'%}">Learning Portal</a>
-                <a class="dropdown-item" href="{% url 'account:security'%}">Manage Equipments</a>
-                <a class="dropdown-item" href="{% url 'account:security'%}">Manage Services</a>
+                <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Equipments</a>
+                <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Services</a>
             </div>
             </li>
 
@@ -80,25 +82,31 @@
            <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
                 <div class="row no-gutters">
                     <div class="col-md-4">
-                        <img src="{% static 'Images/HireEquipments/gardening-forks (1).png'%}" class="card-img" alt="..." height="180px">
+                        <img src="{% static 'Images/request.png'%}" class="card-img" alt="..." height="180px">
                     </div>
                 <div class="col-md-8">
                 <div class="card-body">
 
-                    <h5 class="card-title">{{ a }}</h5>
+                    <h5 class="card-title">ID:{{ i }}</h5>
+                    <h6 class="card-title">Type: security</h6>
                     <p class="card-text">Customer :{{i.cus_order.cus_user}}</p>
 
-                    <p class="card-text"><small class="text-muted">Date & time:{{ a.date_required }}</small></p>
+                    <p class="card-text"><small class="text-muted">Required Date:{{ a.date_required }}</small></p>
                      <p class="card-text"><small class="text-muted">Payment:
-                         {% if i.isPaid == False %}
-                            <span class="text-warning">Pending</span>/Time left:{{ i.payment_timeleft }}
-                             {% if i.payment_timeleft  > 10 %}
-                                 <span class="text-warning">Expreid</span>
-                                 {% endif %}
+
+
+                         {% if i.isPaid == False and i.latepayment == False %}
+                            <span class="text-warning">Pending</span>
+                             {% elif i.isPaid == False and i.latepayment == True %}
+                                <span class="text-danger">Expreid</span>
                              {% else %}
                                 <span class="text-success">Paid</span>
                          {% endif %}</small></p>
+
+
+                    <p class="card-text"><small class="text-muted">Order Request: {{ a.security_service }}</small></p>
                     <p class="card-text"><small class="text-muted">Additional Comments:{{ a.notes }}</small></p>
+                    <p class="card-text"><small class="text-muted">Order date:{{ i.date_order }}</small></p>
                     <a href="{% url 'account:admindeleteorder' i.id %}"><button class="btn text-danger">Cancel Job</button></a>
                     <a href="{{ i.admin_get_absolute_url }}"> <button class="btn text-primary">Assign Staff</button></a>
 
@@ -112,19 +120,29 @@
                        <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
                 <div class="row no-gutters">
                     <div class="col-md-4">
-                        <img src="{% static 'Images/HireEquipments/gardening-forks (1).png'%}" class="card-img" alt="..." height="180px">
+                        <img src="{% static 'Images/request.png'%}" class="card-img" alt="..." height="180px">
                     </div>
                 <div class="col-md-8">
                 <div class="card-body">
 
-                    <h5 class="card-title">{{ b }}</h5>
+                    <h5 class="card-title">ID:{{ i }}</h5>
+                    <h6 class="card-title">Type: PropertyMantancen</h6>
                     <p class="card-text">Customer :{{i.cus_order.cus_user}}</p>
 
-                    <p class="card-text"><small class="text-muted">Date & time:{{ b.date_required }}</small></p>
-                     <p class="card-text"><small class="text-muted">Payment: <span class="text-success">Paid</span> / <span class="text-warning">Pending</span></small></p>
+                    <p class="card-text"><small class="text-muted">Required Date:{{ b.date_required }}</small></p>
+                     <p class="card-text"><small class="text-muted">Payment:
+                          {% if i.isPaid == False and i.latepayment == False %}
+                            <span class="text-warning">Pending</span>
+                             {% elif i.isPaid == False and i.latepayment == True %}
+                                <span class="text-danger">Expreid</span>
+                             {% else %}
+                                <span class="text-success">Paid</span>
+                         {% endif %}</small></p>
+                    <p class="card-text"><small class="text-muted">Order Request: {{ b.property_service }}</small></p>
                     <p class="card-text"><small class="text-muted">Additional Comments:{{ b.notes }}</small></p>
-                    <a href="#"><button class="btn text-danger">Cancel Job</button></a>
-                    <a href="{{ i.admin_get_absolute_url }}"> <button class="btn text-primary">More Details</button></a>
+                    <p class="card-text"><small class="text-muted">Order date:{{ i.date_order }}</small></p>
+                    <a href="{% url 'account:admindeleteorder' i.id %}"><button class="btn text-danger">Cancel Job</button></a>
+                    <a href="{{ i.admin_get_absolute_url }}"> <button class="btn text-primary">Assign Staff</button></a>
 
                 </div>
                 </div>
@@ -135,29 +153,36 @@
        {% endfor %}
          <h4 style="padding-bottom: 20px;">New Hiring orders</h4>
         {% for hiring in hiringorders %}
+            {% if hiring.isDelivery %}
             <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
                 <div class="row no-gutters">
                     <div class="col-md-4">
-                        <img src="{% static 'Images/HireEquipments/gardening-forks (1).png'%}" class="card-img" alt="..." height="180px">
+                        <img src="{% static 'Images/request.png'%}" class="card-img" alt="..." height="180px">
                     </div>
                 <div class="col-md-8">
                 <div class="card-body">
 
-                    <h5 class="card-title">{{ hiring.id }}</h5>
+                    <h5 class="card-title">ID:{{ hiring.id }}</h5>
                     <p class="card-text">Customer :{{hiring.cus_order.cus_user.username}}</p>
+                    <p class="card-text"><small class="text-muted">Order date:{{ hiring.date_order }}</small></p>
 
-                    <p class="card-text"><small class="text-muted">Date & time:{{ hiring.date_order }}</small></p>
                      <p class="card-text"><small class="text-muted">Payment:
-                            <span class="text-warning">Pending</span>/<span class="text-success">Paid</span>
-                         </small></p>
+                          {% if hiring.isPaid == False and hiring.latepayment == False %}
+                            <span class="text-warning">Pending</span>
+                             {% elif hiring.isPaid == False and hiring.latepayment == True %}
+                                <span class="text-danger">Expreid</span>
+                             {% else %}
+                                <span class="text-success">Paid</span>
+                         {% endif %}</small></p>
                     <p class="card-text"><small class="text-muted">Additional Comments:</small></p>
-                    <a href="#"><button class="btn text-danger">Cancel Job</button></a>
-                    <a href="#"> <button class="btn text-primary">Assign Staff</button></a>
+                    <a href="{% url 'account:admindeletehiringorder' hiring.id %}"><button class="btn text-danger">Cancel Job</button></a>
+                    <a href="{{ hiring.admin_get_absolute_url }}"> <button class="btn text-primary">Assign Staff</button></a>
 
                 </div>
                 </div>
                 </div>
             </div>
+            {% endif %}
         {% endfor %}
        <h4 style="padding-bottom: 20px;">Leave Requests</h4>
           <div class="col-sm w-75 ">

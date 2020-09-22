@@ -63,3 +63,18 @@ function updateUserOrder(equipmentID,action){
         })
 }
 
+$(document).ready(function() {
+   $('input[type="radio"]').click(function() {
+       if($(this).attr('id') === 'deliver') {
+            $('#map_canvas').show();
+            $('#id_address').show();
+            $('#address').show();
+       }
+
+       else {
+            $('#map_canvas').hide();
+            $('#id_address').hide();
+            $('#address').hide();
+       }
+   });
+});
