@@ -25,7 +25,7 @@ SECRET_KEY = 'm3*sz2w8ba+$)ipv%3nya0l6(zk#xjrkv!e%$d$@-h(o^u)+#s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['karapa.herokuapp.com','127.0.0.1']
 
 
 # Application definition

@@ -153,35 +153,37 @@
        {% endfor %}
          <h4 style="padding-bottom: 20px;">New Hiring orders</h4>
         {% for hiring in hiringorders %}
-            {% if hiring.isDelivery %}
-            <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img src="{% static 'Images/request.png'%}" class="card-img" alt="..." height="180px">
+            {% if not hiring.employee_order %}
+                {% if hiring.isDelivery %}
+                <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="{% static 'Images/request.png'%}" class="card-img" alt="..." height="180px">
+                        </div>
+                    <div class="col-md-8">
+                    <div class="card-body">
+
+                        <h5 class="card-title">ID:{{ hiring.id }}</h5>
+                        <p class="card-text">Customer :{{hiring.cus_order.cus_user.username}}</p>
+                        <p class="card-text"><small class="text-muted">Order date:{{ hiring.date_order }}</small></p>
+
+                         <p class="card-text"><small class="text-muted">Payment:
+                              {% if hiring.isPaid == False and hiring.latepayment == False %}
+                                <span class="text-warning">Pending</span>
+                                 {% elif hiring.isPaid == False and hiring.latepayment == True %}
+                                    <span class="text-danger">Expreid</span>
+                                 {% else %}
+                                    <span class="text-success">Paid</span>
+                             {% endif %}</small></p>
+                        <p class="card-text"><small class="text-muted">Additional Comments:</small></p>
+                        <a href="{% url 'account:admindeletehiringorder' hiring.id %}"><button class="btn text-danger">Cancel Job</button></a>
+                        <a href="{{ hiring.admin_get_absolute_url }}"> <button class="btn text-primary">Assign Staff</button></a>
+
                     </div>
-                <div class="col-md-8">
-                <div class="card-body">
-
-                    <h5 class="card-title">ID:{{ hiring.id }}</h5>
-                    <p class="card-text">Customer :{{hiring.cus_order.cus_user.username}}</p>
-                    <p class="card-text"><small class="text-muted">Order date:{{ hiring.date_order }}</small></p>
-
-                     <p class="card-text"><small class="text-muted">Payment:
-                          {% if hiring.isPaid == False and hiring.latepayment == False %}
-                            <span class="text-warning">Pending</span>
-                             {% elif hiring.isPaid == False and hiring.latepayment == True %}
-                                <span class="text-danger">Expreid</span>
-                             {% else %}
-                                <span class="text-success">Paid</span>
-                         {% endif %}</small></p>
-                    <p class="card-text"><small class="text-muted">Additional Comments:</small></p>
-                    <a href="{% url 'account:admindeletehiringorder' hiring.id %}"><button class="btn text-danger">Cancel Job</button></a>
-                    <a href="{{ hiring.admin_get_absolute_url }}"> <button class="btn text-primary">Assign Staff</button></a>
-
+                    </div>
+                    </div>
                 </div>
-                </div>
-                </div>
-            </div>
+                {% endif %}
             {% endif %}
         {% endfor %}
        <h4 style="padding-bottom: 20px;">Leave Requests</h4>

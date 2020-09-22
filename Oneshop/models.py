@@ -86,7 +86,7 @@ class Order(models.Model):
 
     @property
     def latepayment(self):
-        if (datetime.now().replace(tzinfo=None) - self.date_order.replace(tzinfo=None)) > timedelta(hours=24):
+        if (datetime.now().replace(tzinfo=None) - self.date_order.replace(tzinfo=None)) > timedelta(seconds=24):
             return True
         else:
             return False
@@ -134,7 +134,7 @@ class HiringOrder(models.Model):
 
     @property
     def latepayment(self):
-        if (datetime.now().replace(tzinfo=None) - self.date_order.replace(tzinfo=None)) > timedelta(hours=24):
+        if (datetime.now().replace(tzinfo=None) - self.date_order.replace(tzinfo=None)) > timedelta(seconds=24):
             return True
         else:
             return False

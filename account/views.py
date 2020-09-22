@@ -572,15 +572,6 @@ def updateItem(request):
     return JsonResponse('Item added', safe=False)
 
 
-# def servicebook(request):
-#     services = SecurityServices.objects.all()
-#     form = servicebook_form()
-#     context = {
-#         'services': services,
-#         'form': form
-#     }
-#     return render(request, 'account/servicebooking.html', context)
-
 
 
 
