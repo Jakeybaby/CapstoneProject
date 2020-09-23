@@ -38,9 +38,11 @@ def addservicebook_form(request):
     service_name = SecurityServices.objects.get(id=service_id)
     service_address = request.POST['address']
     service_geo = request.POST['geolocation']
+    service_fullname = request.POST['fullname']
+    service_phone = request.POST['service_phone']
 
     order = Order.objects.create(cus_order=service_user, complete=True, isService=True, server_date=service_date,
-                                 address=service_address, geolocation=service_geo)
+                                 address=service_address, geolocation=service_geo,fullName=service_fullname,phoneNumber=service_phone)
     securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name,
                                                                  notes=service_notes, date_required=service_date)
 
@@ -56,9 +58,11 @@ def addpmservicebook_form(request):
     service_name = PropetyServices.objects.get(id=service_id)
     service_address = request.POST['address']
     service_geo = request.POST['geolocation']
+    service_fullname = request.POST['fullname']
+    service_phone = request.POST['service_phone']
 
     order = Order.objects.create(cus_order=service_user, complete=True, isService=True, server_date=service_date,
-                                 address=service_address, geolocation=service_geo)
+                                 address=service_address, geolocation=service_geo,fullName=service_fullname,phoneNumber=service_phone)
     propertyorder, created = PropertyOrder.objects.get_or_create(order=order, property_service=service_name,
                                                                  notes=service_notes, date_required=service_date)
 
@@ -131,7 +135,7 @@ def adminOrder(request, pk):
 
                 k.name,  # First tuple part is the optgroup name/label
                 list(  # Second tuple part is a list of tuples for each option.
-                    (o.id, o.employee_user) for o in EmployeeProfile.objects.filter(group=k).order_by('employee_user')
+                    (o.id, o.employee_user.first_name) for o in EmployeeProfile.objects.filter(group=k).order_by('employee_user')
                     # Each option itself is a tuple of id and name for the label.
                 )
             )
@@ -192,7 +196,7 @@ def admindeletehiringorder(request,pk):
         return redirect('account:admin_dashboard')
     context = {'order':order}
 
-    return render(request,'account/admindeleteorderconfirm.html',context)
+    return render(request,'account/admindeletehiringorderconfirm.html',context)
 
 def payserviceorder(request, pk):
 

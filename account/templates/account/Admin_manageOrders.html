@@ -54,7 +54,7 @@
                 <a class="dropdown-item" href="#">Manage Equipments</a>
                 <a class="dropdown-item"href="#">Manage Services</a>
 
-
+            </div>
           </li>
         </ul>
         <span class="form-inline my-2 my-lg-0">
@@ -77,12 +77,18 @@
        <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
         <img src="{% static 'Images/PropertyMaintenance/Pruning.jpg'%}" class="card-img-top" style="height: 300px;" alt="...">
         <div class="card-body">
-          <h5 class="card-title">{{ a }}</h5>
-           <p class="card-text">Customer :{{i.cus_order.cus_user}}</p>
-          <p class="card-text"><small class="text-muted">Date & time:</small></p>
-          <p class="card-text"><small class="text-muted">Payment: <span class="text-success">Paid</span></small></p>
-         <p class="card-text"><small class="text-muted">Additional Comments:</small></p>
-         <p class="card-text"><small class="text-muted">Assigned To: Employee Name</small></p>
+          <h5 class="card-title">{{ i }}</h5>
+           <p class="card-text">Customer :{{i.fullName}}</p>
+          <p class="card-text"><small class="text-muted">Date & time:{{ i.date_order }}</small></p>
+          <p class="card-text"><small class="text-muted">Payment: {% if i.isPaid == False and i.latepayment == False %}
+                            <span class="text-warning">Pending</span>
+                             {% elif i.isPaid == False and i.latepayment == True %}
+                                <span class="text-danger">Expreid</span>
+                             {% else %}
+                                <span class="text-success">Paid</span>
+                         {% endif %}</small></p>
+         <p class="card-text"><small class="text-muted">Additional Comments:{{ b.notes }}</small></p>
+         <p class="card-text"><small class="text-muted">Assigned To: {{i.employee_order.employee_user.first_name}}</small></p>
          <a href="{% url 'account:admindeleteorder' i.id %}"><button class="btn text-danger">Cancel Job</button></a>
         </div>
       </div>
@@ -92,12 +98,18 @@
                    <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
         <img src="{% static 'Images/PropertyMaintenance/Pruning.jpg'%}" class="card-img-top" style="height: 300px;" alt="...">
         <div class="card-body">
-          <h5 class="card-title">{{ b }}</h5>
-           <p class="card-text">Customer :{{i.cus_order.cus_user}}</p>
-          <p class="card-text"><small class="text-muted">Date & time:</small></p>
-          <p class="card-text"><small class="text-muted">Payment: <span class="text-success">Paid</span></small></p>
-         <p class="card-text"><small class="text-muted">Additional Comments:</small></p>
-         <p class="card-text"><small class="text-muted">Assigned To: Employee Name</small></p>
+          <h5 class="card-title">{{ i }}</h5>
+           <p class="card-text">Customer :{{i.fullName}}</p>
+          <p class="card-text"><small class="text-muted">Date & time:{{ i.date_order }}</small></p>
+          <p class="card-text"><small class="text-muted">Payment: {% if i.isPaid == False and i.latepayment == False %}
+                            <span class="text-warning">Pending</span>
+                             {% elif i.isPaid == False and i.latepayment == True %}
+                                <span class="text-danger">Expreid</span>
+                             {% else %}
+                                <span class="text-success">Paid</span>
+                         {% endif %}</small></p>
+         <p class="card-text"><small class="text-muted">Additional Comments:{{ b.notes }}</small></p>
+         <p class="card-text"><small class="text-muted">Assigned To: {{i.employee_order.employee_user.first_name}}</small></p>
          <a href="{% url 'account:admindeleteorder' i.id %}"><button class="btn text-danger">Cancel Job</button></a>
         </div>
       </div>

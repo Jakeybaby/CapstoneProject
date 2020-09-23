@@ -76,7 +76,7 @@
         <fieldset>
           <div class="form-group">
             <label for="exampleInputName" >Full Name:</label>
-            <input type="text" class="form-control" id="exampleInputName" placeholder="Enter your full name">
+            <input type="text" class="form-control" id="exampleInputName" placeholder="Enter your full name" name="fullname">
           </div>
           <div class="form-group">
             <label for="exampleInputEmail">Email:</label>
@@ -84,7 +84,7 @@
           </div>
           <div class="form-group">
             <label  for="exampleInputPhone">Mobile Number:</label>
-            <input type="text" class="form-control" id="exampleInputName" placeholder="+64">
+            <input type="text" class="form-control" id="exampleInputName" placeholder="+64" name="service_phone">
           </div>
             
           <form action="/action_page.php" class="row" style="padding-bottom: 50px;">
@@ -153,6 +153,7 @@
   </div>  
   <div class="grid-item item4">&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </div>
 </footer>
+  <script type="text/javascript" src="{% static 'js/time.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/service.js' %}"></script>
 </body>
 </html>

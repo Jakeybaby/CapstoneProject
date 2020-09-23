@@ -76,7 +76,7 @@
         <fieldset>
           <div class="form-group row">
             <label class="col-sm-3"for="exampleInputName" style="float: right;">Full Name:</label>
-            <input type="text" class="form-control col-md-6 " id="exampleInputName" placeholder="Enter your full name">
+            <input type="text" class="form-control col-md-6 " id="exampleInputName" placeholder="Enter your full name" name="fullname">
           </div>
           <div class="form-group row">
             <label class="col-sm-3"for="exampleInputEmail" style="float: right;">Email:</label>
@@ -88,12 +88,12 @@
 {#          </div>#}
           <div class="form-group row">
             <label class="col-sm-3" for="exampleInputPhone" style="float: right;">Mobile Number:</label>
-            <input type="text" class="form-control col-md-6 " id="exampleInputName" placeholder="+64">
+            <input type="text" class="form-control col-md-6 " id="exampleInputName" placeholder="+64" name="service_phone">
           </div>
             
           <form action="/action_page.php" class="row" style="padding-bottom: 50px;">
             <label for="bookingdate" class="col-sm-3">Booking date:</label>
-            <input class="col-md-6" type="datetime-local" id="servicedate" name="servicedate">
+            <input class="col-md-6" type="datetime-local" id="leashdate" name="servicedate">
             <!--<input type="submit">-->
           </form><br>
           <div class="form-group row" style="padding: 50px;">
@@ -154,6 +154,7 @@
   </div>  
   <div class="grid-item item4">&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </div>
 </footer>
+  <script type="text/javascript" src="{% static 'js/time.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/service.js' %}"></script>
 </body>
 </html>
