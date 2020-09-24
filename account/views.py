@@ -99,8 +99,10 @@ def BookSecurity(request):
 def assignedOrders(request):
 
     order = Order.objects.all()
+    hiringorder = HiringOrder.objects.all()
     context = {
-        'object': order
+        'object': order,
+        'hiringorders':hiringorder
     }
     return render(request, 'account/Admin_manageOrders.html',context)
 
@@ -161,7 +163,7 @@ def adminHiringOrder(request, pk):
 
                 k.name,  # First tuple part is the optgroup name/label
                 list(  # Second tuple part is a list of tuples for each option.
-                    (o.id, o.employee_user) for o in EmployeeProfile.objects.filter(group=k).order_by('employee_user')
+                    (o.id, o.employee_user.first_name) for o in EmployeeProfile.objects.filter(group=k).order_by('employee_user')
                     # Each option itself is a tuple of id and name for the label.
                 )
             )
@@ -204,7 +206,7 @@ def payserviceorder(request, pk):
     if request.method == "POST":
         ins.isPaid = True
         ins.save()
-        return HttpResponse("payment done")
+        return redirect('account:customerOrder')
 
     return render(request, 'account/paymentPage.html')
 
@@ -215,7 +217,7 @@ def payhiringorder(request, pk):
     if request.method == "POST":
         ins.isPaid = True
         ins.save()
-        return HttpResponse("payment done")
+        return redirect('account:customerOrder')
 
     return render(request, 'account/paymentPage.html')
 
@@ -252,9 +254,10 @@ def employeeDashboard(request):
     if request.user.is_staff and not request.user.is_superuser:
         user = request.user.employeeprofile
         order = Order.objects.filter(employee_order=user)
-
+        hiring = HiringOrder.objects.filter(employee_order=user)
         context = {
             'orders': order,
+            'hiring':hiring,
 
         }
 
@@ -274,7 +277,7 @@ def customerorderfeedback(request, pk):
         form = orderfeedback(request.POST, instance=order)
         if form.is_valid():
             form.save()
-            return redirect('/customerOrder/')
+            return redirect('account:customerPreOrder')
 
     context = {'form': form}
     return render(request, 'account/customerorderfeedback.html', context)
@@ -295,6 +298,13 @@ def employeeorderfeedback(request, pk):
 
 def employee_order_job_done(request, pk):
     ins = get_object_or_404(Order, pk=pk)
+    ins.isDone = True
+    ins.save()
+
+    return redirect('account:employeeJobs')
+
+def employee_hiringorder_job_done(request, pk):
+    ins = get_object_or_404(HiringOrder, pk=pk)
     ins.isDone = True
     ins.save()
 
@@ -577,8 +587,17 @@ def updateItem(request):
 
 
 
+def adminmanageleave(request):
+    return render(request,'account/adminmanageleave.html')
 
 
+def pickuporder(request):
+    hiringorder = HiringOrder.objects.all()
+    context = {
+        'hiringorders': hiringorder
+    }
+
+    return render(request,'account/pickuporder.html',context)
 
 def customerOrder(request):
     # if not request.user.is_staff and not request.user.is_superuser:
@@ -589,7 +608,17 @@ def customerOrder(request):
             'orders': order,
             'hiringorders': hiringorder
         }
-        return render(request, 'account/UserPage.html', context)
+        return render(request, 'account/UserDashPage.html', context)
     # else:
     #     return HttpResponse("you are not user account")
 
+def customerPreOrder(request):
+    # if not request.user.is_staff and not request.user.is_superuser:
+        customer = request.user.customerprofile
+        order = Order.objects.filter(cus_order=customer)
+        hiringorder = HiringOrder.objects.filter(cus_order=customer)
+        context = {
+            'orders': order,
+            'hiringorders': hiringorder
+        }
+        return render(request, 'account/UserpreorderPage.html', context)

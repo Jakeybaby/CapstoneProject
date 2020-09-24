@@ -41,7 +41,7 @@
             <a class="nav-link" href="#">Manage Timesheets</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Equip Delivery</a>
+            <a class="nav-link" href="{% url 'account:pickuporder'%}">Equip Pick up</a>
           </li>
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -69,53 +69,159 @@
       </div>
     </nav>
    <div class="container">
-       <h4 style="padding-bottom: 20px;">Assigned Jobs</h4>
-       {% for i in object %}
+       <h4 style="padding-bottom: 20px;">Assigned Property Jobs</h4>
+       <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Customer</th>
+          <th>Request</th>
+       <th>Address</th>
+        <th>Required Date</th>
+        <th>Payment Status</th>
+        <th>Comments</th>
+          <th>Job Status</th>
+        <th>Assign Taskss</th>
+      </tr>
+    </thead>
+    <tbody>
+                    {% for i in object %}
            {% if i.employee_order %}
-                {#               loop for securityorder #}
-               {% for a in i.securityorder_set.all %}
-       <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
-        <img src="{% static 'Images/PropertyMaintenance/Pruning.jpg'%}" class="card-img-top" style="height: 300px;" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{ i }}</h5>
-           <p class="card-text">Customer :{{i.fullName}}</p>
-          <p class="card-text"><small class="text-muted">Date & time:{{ i.date_order }}</small></p>
-          <p class="card-text"><small class="text-muted">Payment: {% if i.isPaid == False and i.latepayment == False %}
+               {% for a in i.propertyorder_set.all %}
+
+      <tr>
+        <td>{{ i }}</td>
+        <td>{{i.cus_order.cus_user.first_name}}</td>
+      <td>{{ a.property_service }}</td>
+        <td>{{i.address}}</td>
+        <td>{{ a.date_required }}</td>
+        <td>
+              {% if i.isPaid == False and i.latepayment == False %}
                             <span class="text-warning">Pending</span>
                              {% elif i.isPaid == False and i.latepayment == True %}
                                 <span class="text-danger">Expreid</span>
                              {% else %}
                                 <span class="text-success">Paid</span>
-                         {% endif %}</small></p>
-         <p class="card-text"><small class="text-muted">Additional Comments:{{ b.notes }}</small></p>
-         <p class="card-text"><small class="text-muted">Assigned To: {{i.employee_order.employee_user.first_name}}</small></p>
-         <a href="{% url 'account:admindeleteorder' i.id %}"><button class="btn text-danger">Cancel Job</button></a>
-        </div>
-      </div>
-               {% endfor %}
-               {#               loop for propertyorder #}
-               {% for b in i.propertyorder_set.all %}
-                   <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
-        <img src="{% static 'Images/PropertyMaintenance/Pruning.jpg'%}" class="card-img-top" style="height: 300px;" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{ i }}</h5>
-           <p class="card-text">Customer :{{i.fullName}}</p>
-          <p class="card-text"><small class="text-muted">Date & time:{{ i.date_order }}</small></p>
-          <p class="card-text"><small class="text-muted">Payment: {% if i.isPaid == False and i.latepayment == False %}
-                            <span class="text-warning">Pending</span>
-                             {% elif i.isPaid == False and i.latepayment == True %}
-                                <span class="text-danger">Expreid</span>
-                             {% else %}
-                                <span class="text-success">Paid</span>
-                         {% endif %}</small></p>
-         <p class="card-text"><small class="text-muted">Additional Comments:{{ b.notes }}</small></p>
-         <p class="card-text"><small class="text-muted">Assigned To: {{i.employee_order.employee_user.first_name}}</small></p>
-         <a href="{% url 'account:admindeleteorder' i.id %}"><button class="btn text-danger">Cancel Job</button></a>
-        </div>
-      </div>
-               {% endfor %}
+                         {% endif %}
+        </td>
+        <td>{{ a.notes }}</td>
+        <td>
+            {% if i.isDone == True %}
+                Finished
+            {% else %}
+                On Going
+            {% endif %}
+        </td>
+      <td> <a href="{% url 'account:admindeleteorder' i.id %}"> <button class="btn text-primary">Cancel</button></a></td>
+      </tr>
+
+
+                   {% endfor %}
            {% endif %}
        {% endfor %}
+          </tbody>
+  </table>
+
+   <h4 style="padding-bottom: 20px;">Assigned Security Jobs</h4>
+       <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Customer</th>
+          <th>Request</th>
+       <th>Address</th>
+        <th>Required Date</th>
+        <th>Payment Status</th>
+        <th>Comments</th>
+          <th>Job Status</th>
+        <th>Assign Taskss</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in object %}
+           {% if i.employee_order %}
+               {% for a in i.securityorder_set.all %}
+
+      <tr>
+        <td>{{ i }}</td>
+        <td>{{i.cus_order.cus_user.first_name}}</td>
+        <td>{{ a.security_service }}</td>
+        <td>{{i.address}}</td>
+        <td>{{ a.date_required }}</td>
+        <td>
+              {% if i.isPaid == False and i.latepayment == False %}
+                            <span class="text-warning">Pending</span>
+                             {% elif i.isPaid == False and i.latepayment == True %}
+                                <span class="text-danger">Expreid</span>
+                             {% else %}
+                                <span class="text-success">Paid</span>
+                         {% endif %}
+        </td>
+        <td>{{ a.notes }}</td>
+      <td>
+            {% if i.isDone == True %}
+                Finished
+            {% else %}
+                On Going
+            {% endif %}
+        </td>
+
+      <td> <a href="{% url 'account:admindeleteorder' i.id %}"> <button class="btn text-primary">Cancel</button></a></td>
+      </tr>
+
+
+                   {% endfor %}
+           {% endif %}
+       {% endfor %}
+          </tbody>
+  </table>
+
+    <h4 style="padding-bottom: 20px;">New Hiring orders</h4>
+                    <div>
+   <table class="table table-hover">
+
+    <thead>
+      <tr class="table-secondary">
+        <!--<th></th>-->
+        <th>Id</th>
+        <th>Customer</th>
+       <th>Address</th>
+        <th>Delivery Date</th>
+        <th>Payment Status</th>
+        <th>Assign Tasks</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for hiring in hiringorders %}
+            {% if hiring.employee_order %}
+                {% if hiring.isDelivery %}
+
+      <tr>
+        <!--<td><input type="checkbox" id="checkme"/></td>-->
+        <td>{{ hiring.id }}</td>
+        <td>{{hiring.cus_order.cus_user.first_name}}</td>
+        <td>{{ hiring.address }}</td>
+        <td>{{ hiring.date_order }}</td>
+        <td>{% if hiring.isPaid == False and hiring.latepayment == False %}
+                                <span class="text-warning">Pending</span>
+                                 {% elif hiring.isPaid == False and hiring.latepayment == True %}
+                                    <span class="text-danger">Expreid</span>
+                                 {% else %}
+                                    <span class="text-success">Paid</span>
+                             {% endif %}</td>
+
+      <td>  <a href="{% url 'account:admindeletehiringorder' hiring.id %}"> <button class="btn text-primary">Cancel</button></a></td>
+      </tr>
+    {% endif %}
+            {% endif %}
+        {% endfor %}
+
+          </tbody>
+
+  </table>
+
+
 
        
 </div>

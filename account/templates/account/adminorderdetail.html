@@ -17,7 +17,9 @@
 
 			<form action="" method="POST">
 				{% csrf_token %}
-				{{form.as_p}}
+				Employee :{{ form.employee_order}}<br><br>
+                Address :{{ form.address }}
+                {{ form.geolocation.as_hidden }}
 
 
 

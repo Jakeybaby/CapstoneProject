@@ -40,6 +40,11 @@ class EmployeeProfile(models.Model):
 
 
 
+
+
+
+
+
 # class TimeSheet(models.Model):
 #     timeIn = models.DateTimeField(default=datetime.now, blank=True)
 #     timeOut = models.DateTimeField(default=datetime.now, blank=True)

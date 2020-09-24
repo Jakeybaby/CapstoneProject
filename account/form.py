@@ -29,7 +29,7 @@ class adminform(ModelForm):
 
     class Meta:
         model = Order
-        fields = ['employee_order','cus_order','address','geolocation']
+        fields = ['employee_order','address','geolocation']
         widgets = {
             "address": GoogleMapsAddressWidget(attrs={
             'data-map-type': 'roadmap',
@@ -39,9 +39,9 @@ class adminform(ModelForm):
          }),
         }
 
-    def __init__(self, *args, **kwargs):
-        super(adminform, self).__init__(*args, **kwargs)
-        self.fields['cus_order'].disabled = True
+    # def __init__(self, *args, **kwargs):
+    #     super(adminform, self).__init__(*args, **kwargs)
+    #     self.fields['geolocation'].hidden = True
 
 
 class adminHiringform(ModelForm):
@@ -54,7 +54,7 @@ class adminHiringform(ModelForm):
 
     class Meta:
         model = Order
-        fields = ['employee_order','cus_order','address','geolocation']
+        fields = ['employee_order','address','geolocation']
         widgets = {
             "address": GoogleMapsAddressWidget(attrs={
             'data-map-type': 'roadmap',
@@ -64,9 +64,9 @@ class adminHiringform(ModelForm):
          }),
         }
 
-    def __init__(self, *args, **kwargs):
-        super(adminHiringform, self).__init__(*args, **kwargs)
-        self.fields['cus_order'].disabled = True
+    # def __init__(self, *args, **kwargs):
+    #     super(adminHiringform, self).__init__(*args, **kwargs)
+    #     self.fields['cus_order'].disabled = True
 
 
 class adminManageEmployeeform(ModelForm):

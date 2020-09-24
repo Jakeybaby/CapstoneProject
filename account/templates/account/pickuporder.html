@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/html">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'Images/Logo11.png'%}" rel="icon" sizes="32x32" type="image/gif">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="{% static 'css/Profiles_style.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -12,7 +13,9 @@
     <title>Kaipara Security Services Ltd.</title>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
   </head>
   <body>
 
@@ -48,26 +51,78 @@
               More
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'account:PropertyMaintenance'%}">Manage Employee</a>
-              <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Leaves</a>
-                <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Learning Portal</a>
+              <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
+              <a class="dropdown-item" href="{% url 'account:adminmanageleave'%}">Manage Leaves</a>
+                <a class="dropdown-item" href="{% url 'account:managePortal'%}">Learning Portal</a>
                 <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Equipments</a>
                 <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Services</a>
-
             </div>
-          </li>
+            </li>
+
         </ul>
         <span class="form-inline my-2 my-lg-0">
+          <a href="{% url 'account:index'%}">
+            <button class="btn btn-link my-2 my-sm-0"  type="submit">Back to Mainpage</button>
+          </a>
          <a href="#">
           <button class="btn btn-link my-2 my-sm-0"  type="submit"><img src="{% static 'Images/logout.png'%}" height="45px;"></button>
         </a>
-
+         <!-- <a href="{% url 'account:cart' %}"><button class="btn btn-link my-2 my-sm-0"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+          </svg></button></a>-->
         </span>
       </div>
     </nav>
    <div class="container">
-<h2 style="padding: 30px 0px;">Learning Portal</h2>
-       
+         <h4 style="padding-bottom: 20px;">New pickup orders</h4>
+                    <div>
+   <table class="table table-hover">
+
+    <thead>
+      <tr class="table-secondary">
+        <!--<th></th>-->
+        <th>Job Id</th>
+        <th>Customer Name</th>
+        <th>Delivery Date</th>
+        <th>Payment Status</th>
+        <th>Equipment</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for hiring in hiringorders %}
+
+                {% if hiring.isPickup %}
+
+      <tr>
+        <!--<td><input type="checkbox" id="checkme"/></td>-->
+        <td>{{ hiring.id }}</td>
+        <td>{{hiring.cus_order.cus_user.first_name}}</td>
+        <td>{{ hiring.date_order }}</td>
+        <td>{% if hiring.isPaid == False and hiring.latepayment == False %}
+                                <span class="text-warning">Pending</span>
+                                 {% elif hiring.isPaid == False and hiring.latepayment == True %}
+                                    <span class="text-danger">Expreid</span>
+                                 {% else %}
+                                    <span class="text-success">Paid</span>
+                             {% endif %}</td>
+        <td>
+            {% for a in hiring.cartitem_set.all %}
+                {{ a }} X {{ a.quantity }}<br>
+            {% endfor %}
+        </td>
+
+      </tr>
+    {% endif %}
+
+        {% endfor %}
+
+          </tbody>
+
+  </table>
+
+
 </div>
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>

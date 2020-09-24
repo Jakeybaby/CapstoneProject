@@ -107,6 +107,7 @@ class HiringOrder(models.Model):
 
     isPickup = models.BooleanField(default=False)
     isDelivery = models.BooleanField(default=False)
+    isDone = models.BooleanField(default=False)
 
     address = map_fields.AddressField(max_length=200, null=True,blank=True)
     geolocation = map_fields.GeoLocationField(max_length=100, null=True,blank=True)
@@ -155,6 +156,9 @@ class HiringOrder(models.Model):
 
     def accpet_job_url(self):
         return reverse('account:accpet_HiringOrder', kwargs={"pk":self.id})
+
+    def done_job_url(self):
+        return reverse('account:employee_order_job_done', kwargs={"pk":self.id})
 
     def __str__(self):
         return str(self.id)
