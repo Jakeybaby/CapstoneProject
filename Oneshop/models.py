@@ -161,7 +161,7 @@ class HiringOrder(models.Model):
         return reverse('account:decline_HiringOrder', kwargs={"pk":self.id})
 
     def done_job_url(self):
-        return reverse('account:employee_order_job_done', kwargs={"pk":self.id})
+        return reverse('account:employee_hiringorder_job_done', kwargs={"pk":self.id})
 
     def __str__(self):
         return str(self.id)

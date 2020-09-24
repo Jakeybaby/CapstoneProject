@@ -240,9 +240,10 @@ def employeeJobs(request):
     if request.user.is_staff and not request.user.is_superuser:
         user = request.user.employeeprofile
         order = Order.objects.filter(employee_order=user)
-
+        hiring = HiringOrder.objects.filter(employee_order=user)
         context = {
             'orders': order,
+            'hiring': hiring,
 
         }
 

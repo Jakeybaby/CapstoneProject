@@ -78,7 +78,7 @@
           <th>Request</th>
        <th>Address</th>
         <th>Required Date</th>
-        <th>Payment Status</th>
+        <th>Payment</th>
         <th>Comments</th>
           <th>Job Status</th>
         <th>Assign Taskss</th>
@@ -131,7 +131,7 @@
           <th>Request</th>
        <th>Address</th>
         <th>Required Date</th>
-        <th>Payment Status</th>
+        <th>Payment</th>
         <th>Comments</th>
           <th>Job Status</th>
         <th>Assign Taskss</th>
@@ -187,7 +187,8 @@
         <th>Customer</th>
        <th>Address</th>
         <th>Delivery Date</th>
-        <th>Payment Status</th>
+        <th>Payment</th>
+          <th>Job Status</th>
         <th>Assign Tasks</th>
       </tr>
     </thead>
@@ -210,7 +211,12 @@
                                  {% else %}
                                     <span class="text-success">Paid</span>
                              {% endif %}</td>
-
+        <td>
+            {% if hiring.isDone == True %}
+                Finished
+            {% else %}
+                On Going
+            {% endif %}</td>
       <td>  <a href="{% url 'account:admindeletehiringorder' hiring.id %}"> <button class="btn text-primary">Cancel</button></a></td>
       </tr>
     {% endif %}
