@@ -622,3 +622,11 @@ def customerPreOrder(request):
             'hiringorders': hiringorder
         }
         return render(request, 'account/UserpreorderPage.html', context)
+
+
+def decline_HiringOrder(request,pk):
+    ins = get_object_or_404(HiringOrder, pk=pk)
+    ins.employee_order = None
+    ins.save()
+
+    return redirect('account:employee_dashboard')

@@ -18,6 +18,7 @@ urlpatterns =[
     path('doneorder/<int:pk>/', views.employee_order_job_done, name='employee_order_job_done'),
     path('donehiringorder/<int:pk>/', views.employee_hiringorder_job_done, name='employee_hiringorder_job_done'),
     path('declineserviceorder/<int:pk>/', views.decline_ServiceOrder, name='decline_ServiceOrder'),
+    path('declinehiringorder/<int:pk>/', views.decline_HiringOrder, name='decline_HiringOrder'),
     path('checkout/', views.checkout, name='checkout'),
     path('customerOrder/', views.customerOrder, name='customerOrder'),
     path('customerPreOrder/', views.customerPreOrder, name='customerPreOrder'),

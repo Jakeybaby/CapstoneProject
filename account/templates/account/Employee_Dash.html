@@ -134,8 +134,8 @@
                             <p class="card-text"><small class="text-muted">Job Request:{{ a.security_service }}</small></p>
                             <p class="card-text"><small class="text-muted">Location:{{ a.address }}</small></p>
                             <a class="jobDesc" target="_blank" href="https://www.google.com/maps/place/{{ a.geolocation }}"><img src="{% static 'Images/location.png'%}"></a>
-                            <a href="#"><button class="btn text-primary">Decline</button></a>
-                            <a href="#"><button class="btn text-success">Accept Job</button></a>
+                            <a href="{{ a.decline_job_url }}"><button class="btn text-primary">Decline</button></a>
+                            <a href="{{ a.accpet_job_url }}"><button class="btn text-success">Accept Job</button></a>
                             </div>
                         </div>
                     </div>

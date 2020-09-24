@@ -157,6 +157,9 @@ class HiringOrder(models.Model):
     def accpet_job_url(self):
         return reverse('account:accpet_HiringOrder', kwargs={"pk":self.id})
 
+    def decline_job_url(self):
+        return reverse('account:decline_HiringOrder', kwargs={"pk":self.id})
+
     def done_job_url(self):
         return reverse('account:employee_order_job_done', kwargs={"pk":self.id})
 
