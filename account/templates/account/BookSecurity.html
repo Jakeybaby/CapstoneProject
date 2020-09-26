@@ -3,6 +3,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link href="{% static 'Images/Logo11.png'%}" rel="icon" sizes="32x32" type="image/gif">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -58,9 +59,16 @@
           </li>
         </ul>
         <span class="form-inline my-2 my-lg-0">
-         <a href="{% url 'account:login' %}">
+         {% if request.user.is_authenticated %}
+                Hello, {{ request.user }}
+         <a href="{% url 'account:logout' %}">
+          <button class="btn btn-link my-2 my-sm-0">logout</button>
+        </a>
+                {% else %}
+                <a href="{% url 'account:login' %}">
           <button class="btn btn-link my-2 my-sm-0"  type="submit">Login</button>
         </a>
+            {% endif %}
           <button class="btn btn-link my-2 my-sm-0" type="submit"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
           </svg></button>
@@ -74,52 +82,52 @@
       <form  method="post" action="/service_form/">
           {% csrf_token %}
         <fieldset>
-          <div class="form-group row">
-            <label class="col-sm-3"for="exampleInputName" style="float: right;">Full Name:</label>
-            <input type="text" class="form-control col-md-6 " id="exampleInputName" placeholder="Enter your full name" name="fullname">
+          <div class="form-group">
+            <label for="exampleInputName" >Full Name:</label>
+            <input type="text" class="form-control w-50 " id="exampleInputName" placeholder="Enter your full name" name="fullname">
           </div>
-          <div class="form-group row">
-            <label class="col-sm-3"for="exampleInputEmail" style="float: right;">Email:</label>
-            <input type="Email" class="form-control col-md-6" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter your e-mail">
+          <div class="form-group">
+            <label for="exampleInputEmail" >Email:</label>
+            <input type="Email" class="form-control w-50" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter your e-mail">
           </div>
 {#          <div class="form-group row">#}
 {#            <label class="col-sm-3" for="exampleInputAddress" style="float: right;">Address:</label>#}
 {#            <textarea class="form-control col-md-6" id="exampleTextarea" rows="3" placeholder="Address"></textarea>#}
 {#          </div>#}
-          <div class="form-group row">
-            <label class="col-sm-3" for="exampleInputPhone" style="float: right;">Mobile Number:</label>
-            <input type="text" class="form-control col-md-6 " id="exampleInputName" placeholder="+64" name="service_phone">
+          <div class="form-group">
+            <label for="exampleInputPhone" >Mobile Number:</label>
+            <input type="text" class="form-control w-50" id="exampleInputName" placeholder="+64" name="service_phone">
           </div>
             
           <form action="/action_page.php" class="row" style="padding-bottom: 50px;">
-            <label for="bookingdate" class="col-sm-3">Booking date:</label>
-            <input class="col-md-6" type="datetime-local" id="leashdate" name="servicedate">
+            <label for="bookingdate" >Booking date:</label><br>
+            <input  class="w-50" type="datetime-local" id="servicedate" name="servicedate">
             <!--<input type="submit">-->
           </form><br>
-          <div class="form-group row" style="padding: 50px;">
-            <label for="exampleSelect1" class="col-sm-3" style="float: right;">Types of services:</label>
-            <select class="form-control col-md-6 " id="serviceoptions" name="servicename">
-            <option disabled selected value> -- select an option -- </option>
+          <div class="form-group" style="padding: 30px 0px;">
+            <label for="exampleSelect1">Types of services:</label>
+
+            <select class="form-control w-50" id="serviceoptions" name="servicename">
+                <option disabled selected value> -- select an option -- </option>
                 {% for i in services %}
                     <option value="{{ i.id }}" data-price="{{ i.price }}">{{i.name}}</option>
                 {% endfor %}
+
             </select>
           </div>
             <div class="form-group row">
-            <label class="col-sm-3" for="exampleTextarea" style="float: right;">Price</label>
-                <span id="serviceprice"></span>
-
+            <label class="col-sm-3" for="exampleTextarea" style="float: right;">Price:  <span id="serviceprice"></span></label>
+            </div>
+          <div class="form-group">
+            <label  for="exampleTextarea" >Additional Comments</label>
+            <textarea class="form-control w-50" id="exampleTextarea" rows="3" placeholder="Comments" name="description"></textarea>
           </div>
-          <div class="form-group row">
-            <label class="col-sm-3" for="exampleTextarea" style="float: right;">Additional Comments</label>
-            <textarea class="form-control col-md-6" id="exampleTextarea" rows="3" placeholder="Comments" name="description"></textarea>
-          </div>
-        <label>Address:</label>
-        {{ form.address }}
+        <label>Address:</label><br>
+        <span class="w-50">{{ form.address }}</span>
         {{ form.geolocation.as_hidden }}
 
         <link href="{% static 'css/google-map-admin.css'%}" rel="stylesheet" type="text/css">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" style="margin: 20px 5px;">Submit</button>
         </fieldset> 
            
             
@@ -137,6 +145,7 @@
     <li style="list-style-type: none;"><a href="{% url 'account:BookSecurity' %}" style="text-decoration: none;">Security</a></li>
     <li style="list-style-type: none;"><a href="{% url 'account:HireEquipement'%}" style="text-decoration: none;">Hire Equipement</a></li>
     <li style="list-style-type: none;"><a href="{%url 'account:PropertyMaintenance'%}" style="text-decoration: none;">Property Maintenance</a></li>
+      <li style="list-style-type: none;"><a href="{%url 'account:stafflogin'%}" style="text-decoration: none;">Staff Login</a></li>
   </div>
   <div class="grid-item item2">
     <h5 style="text-decoration: underline;">Contact Us<br></h5>

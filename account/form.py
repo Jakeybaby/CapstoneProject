@@ -97,9 +97,11 @@ class Hiringbook_form(ModelForm):
         fields = ['address','geolocation']
         widgets = {
             "address": GoogleMapsAddressWidget(attrs={
+
                 'data-map-type': 'roadmap',
                 'data-autocomplete-options': json.dumps({'types': ['geocode','establishment'],
-                'componentRestrictions': {'country': 'NZ'}
+                'componentRestrictions': {'country': 'NZ'},
+
                 })
             }),
         }
@@ -117,3 +119,12 @@ class orderfeedbackETC(ModelForm):
         fields = ['feedbackETC']
 
 
+class userprofileform(forms.ModelForm):
+    class Meta:
+        model = CustomerProfile
+        fields = ['address','phone']
+
+class userinfoform(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name','last_name','email']

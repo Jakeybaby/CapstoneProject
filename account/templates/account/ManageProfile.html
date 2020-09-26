@@ -1,6 +1,6 @@
 <!doctype html>
 {% load static %}
-<html xmlns="http://www.w3.org/1999/html">
+<html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="{% static 'Images/Logo11.png'%}" rel="icon" sizes="32x32" type="image/gif">
@@ -41,7 +41,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'account:customerprofile'%}">Manage Profile</a>
           </li>
-
+        
 
         </ul>
         <span class="form-inline my-2 my-lg-0">
@@ -58,99 +58,22 @@
       </div>
     </nav>
    <div class="container">
-        <h2 style="padding: 30px 0px;">Service Order</h2>
-
-       <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Job Id</th>
-        <th>Job Required</th>
-        <th>Job Status</th>
-        <th>Order date</th>
-        <th>---</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for i in orders %}
-        {% if i.isDone == True %}
-            {% for a in i.propertyorder_set.all %}
-    <tr>
-        <td>{{ i.id }}</td>
-        <td>{{ a.property_service }}</td>
-        <td>
-            Done
-        </td>
-      <td>{{ i.date_order }}</td>
-        <td>
-            {% if not i.feedbackCTE %}
-             <a href="{{ i.customer_feedback_url }}"> <button class="btn text-primary">Feedback</button></a>
-            {% else %}
-                Has Give Feedback
-            {% endif %}
-        </td>
-      </tr>
-        {% endfor %}
-
-        {% for b in i.securityorder_set.all %}
-            <tr>
-        <td>{{ i.id }}</td>
-        <td>{{ b.security_service }}</td>
-        <td>
-            Done
-        </td>
-      <td>{{ i.date_order }}</td>
-        <td>
-        {% if not i.feedbackCTE %}
-             <a href="{{ i.customer_feedback_url }}"> <button class="btn text-primary">Feedback</button></a>
-            {% else %}
-                Has Give Feedback
-            {% endif %}
-        </td>
-      </tr>
-        {% endfor %}
-        {% endif %}
-       {% endfor %}
-
-
-          </tbody>
-  </table>
-    <h2 style="padding: 30px 0px;">Hiring</h2>
-   <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Job Id</th>
-        <th>Equipment Leash</th>
-        <th>Delivery Status</th>
-        <th>Order date</th>
-        <th>---</th>
-      </tr>
-    </thead>
-    <tbody>
-
-{% for hiring in hiringorders %}
-     {% if hiring.isDone == True %}
-        <tr>
-
-        <td>{{ hiring.id }}</td>
-        <td>
-            {% for i in hiring.cartitem_set.all %}
-                {{ i.equipment }} X {{ i.quantity }}<br>
-                {% endfor %}
-        </td>
-        <td>
-            Arrived
-        </td>
-      <td>{{ hiring.date_order }}</td>
-        <td>
-        ---
-        </td>
-      </tr>
-        {% endif %}
+                 {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        <h1>{{ message }}</h1>
+    </li>
     {% endfor %}
-
-          </tbody>
-  </table>
-
+</ul>
+{% endif %}
+    <h2 style="padding: 30px 0px;">Profile page</h2>
+       <form method="post">
+           {% csrf_token %}
+     {{ uform.as_p }}
+       {{ uinfoform.as_p }}
+       <button type="submit">yes</button>
+           </form>
     </div>
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>

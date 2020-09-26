@@ -2,14 +2,16 @@
 {% load static %}
 <html>
     <head>
-      <link href="{% static 'Images/logo.png'%}" rel="icon" sizes="32x32" type="image/gif">
+        <link href="{% static 'Images/logo.png'%}" rel="icon" sizes="32x32" type="image/gif">
+        <link href="{% static 'Images/Logo11.png'%}" rel="icon" sizes="32x32" type="image/gif">
+
       <title>Kaipara Security Services Ltd.</title>
       <link href="{% static 'css/styles.css'%}" rel="stylesheet" type="text/css">
       <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-        <link src="BOOTSTRAP.CSS" rel="stylesheet" type="text/css">
+        <link href="BOOTSTRAP.CSS" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -37,73 +39,144 @@
         {{ form.media }}
     </head>
     <body>
+    <nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top navbar-dark bg-dark">
 
+            <a class="navbar-brand" href="{% url 'account:index'%}">
+              <img src="{% static 'Images/Logo11.png' %}" width="110" height="110" class="d-inline-block align-top" alt="" loading="lazy">
 
-{% block content %}
-    <form class="form-control" method="post" action="">
+            </a>
+
+          <!--<a class="navbar-brand" href="#">Company Name</a>-->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'account:index' %}">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{%url 'account:About' %}">About Us</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Services
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{% url 'account:BookPM'%}">Property Maintenance</a>
+                  <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Security</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'account:HireEquipement'%}">Hire Equipments</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'account:contact'%}">Contact Us</a>
+              </li>
+            </ul>
+            <span class="form-inline my-2 my-lg-0">
+             {% if request.user.is_authenticated %}
+                    Hello, {{ request.user }}
+             <a href="{% url 'account:logout' %}">
+              <button class="btn btn-link my-2 my-sm-0">logout</button>
+            </a>
+                    {% else %}
+                    <a href="{% url 'account:login' %}">
+              <button class="btn btn-link my-2 my-sm-0"  type="submit">Login</button>
+            </a>
+                {% endif %}
+              <a href="{% url 'account:cart' %}"><button class="btn btn-link my-2 my-sm-0" ><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+              </svg></button></a>
+            </span>
+          </div>
+        </nav>
+    <div class="container" style="background-color: transparent;">
+    {% block content %}
+    <form class="form-control" method="post" action=""  style="background-color: transparent;border: transparent;">
     {% csrf_token %}
     <div class="row">
         <div class="col-lg-12">
-            <div class="box-element">
-                <a href="{% url 'account:HireEquipement' %}">Continue shopping</a>
+            <div class="box-element" >
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb" style="font-size: 18px;">
+                      <li class="breadcrumb-item"><a  href="{% url 'account:HireEquipement' %}">Continue Shopping</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                    </ol>
+                  </nav>
                 <br>
+                <div class="cart-row" >
+					 <table class="table-hover" style="padding: 0px;">
+                        <tr class="table-info" style="font-size: 18px;">
+                        <th style="flex:2;">Item</th>
+                        <th style="flex:1;">Price</th>
+                        <th style="flex:1;">Quantity</th>
+                        <th style="flex:1;">Total</th>
+                    </tr>
+                         {% for item in equipments %}
+                         <tr class="table-light">
+                        <td style="flex:2"><strong>{{ item.equipment.name }}</strong></td>
+                        <td style="flex:1">${{ item.equipment.price }}</td>
+                        <td>
+                            <div class="row updatecartt" style="flex:1">
+                                <div><button data-equipment="{{ item.equipment.id }}" data-action="add"  class="btn btn-success update-cart" style="border:transparent;background-color:transparent;margin:15px 10px;text-align: center;padding: 10px 5px;"><img src="{% static 'Images/add.png' %}"></button></div>
+                                       <div style="margin:15px 0px;text-align: center;padding: 10px;"><strong> {{ item.quantity }} </strong></div>
+                                <div><button data-equipment="{{ item.equipment.id }}" data-action="remove"  class="btn btn-success update-cart"  style="border:transparent;background-color:transparent;margin:15px 10px;text-align: center;padding: 10px 5px;"><img src="{% static 'Images/minus.png' %}"></button></div>
+                                <div><button data-equipment="{{ item.equipment.id }}" data-action="delete"  class="update-cart" style="border:transparent;background-color:transparent;margin:15px 10px;text-align: center;padding: 10px 15px;"><img src="{% static 'Images/x-button (1).png' %}"></button></div>
+                            </div>
+                        </td>
+                             <td style="flex:1"><strong>${{ item.get_total }}</strong></td>
+                    </tr>
+                      {% endfor %}
+                    </table>
+
+				</div>
                 <table class="table">
                     <tr>
-                        <th><h5>Items</h5><strong>{{ order.get_absolute_url }}</strong></th>
-                        <th><h5>Total</h5><strong>${{ order.get_cart_total }}</strong></th>
+                        <th><h5>Items</h5></th>
+                        <th><h5>Order Total</h5></th>
 {#                        <th><h5>timeleft</h5><strong>{{ order.payment_timeleft }}</strong></th>#}
-                        <th>
-
-                            <button type="submit" formaction="/checkout/">checkout</button>
-                        </th>
+                        <th> </th>
                     </tr>
+                    <tr class="table-light">
+                        <td><strong>{{ order.get_absolute_url }}</strong></td>
+                        <td><strong>${{ order.get_cart_total }}</strong></td>
+                        <td><button class="btn btn-info" type="submit" formaction="/checkout/" style="color: white;">checkout</button></td>
+                    </tr>
+
                 </table>
-            </div>
-
-            <br>
-
-            <div class="box-element">
-                <div class="cart-row">
-					<div style="flex:2"><strong>Item</strong></div>
-					<div style="flex:1"><strong>Price</strong></div>
-					<div style="flex:1"><strong>Quantity</strong></div>
-					<div style="flex:1"><strong>Total</strong></div>
-				</div>
-                {% for item in equipments %}
-                <div class="cart-row">
-					<div style="flex:2">{{ item.equipment.name }}</div>
-					<div style="flex:1">{{ item.equipment.price }}</div>
-					<div style="flex:1">
-                        <div><button data-equipment="{{ item.equipment.id }}" data-action="add"  class="update-cart">+</button></div>
-                                {{ item.quantity }}
-                        <div><button data-equipment="{{ item.equipment.id }}" data-action="remove"  class="update-cart">-</button></div>
-                        <div><button data-equipment="{{ item.equipment.id }}" data-action="delete"  class="update-cart">remove</button></div>
-                    </div>
-					<div style="flex:1"><p>{{ item.get_total }}</p></div>
-				</div>
-                {% endfor %}
-
-
-                    leash date:<input id="leashdate" type="datetime-local" name="ld" required/><br>
-                    return date:<input type="datetime-local" name="rd" required/><br>
 
 
 
-                        <p>Please select your order:</p>
-                          <input type="radio" id="pickup" name="way" value="pickup" required>
-                          <label for="male">pickup</label><br>
-                          <input type="radio" id="deliver" name="way" value="deliver" required>
-                          <label for="female">deliver</label><br>
+                <div style="padding: 30px 20px;">
+                    <h5 style="padding: 15px 10px;">Lease Date:<input style="margin-left:20px; " id="leashdate" type="datetime-local" name="ld" required/></h5><br>
+                    <h5 style="padding: 10px 0px;">Return Date:<input style="margin-left:20px; " type="datetime-local" name="rd" required/></h5><br>
+                </div>
+                        <div class="type" style="margin: 5px 50px 15px 50px;">
+                        <p style="font-size: 20px;color: black;">Please select your order:</p>
+                          <input style="padding:15px;" type="radio" id="pickup" name="way" value="pickup" required>
+                          <label  style="padding:15px;font-size: 20px;" for="male">pickup</label>
+                          <input style="padding:15px;" type="radio" id="deliver" name="way" value="deliver" required>
+                          <label style="padding:15px;font-size: 20px;" for="female">deliver</label><br>
+                        </div>
 
-                    <span id="address">Address:</span> {{ form.address }}
+                <span id="address" style="margin: 5px 50px;">Address:</span>  <div style="margin: 5px 20px 5px 50px;">{{ form.address }}</div>
                     {{ form.geolocation.as_hidden }}
                 </div>
             </div>
         </div>
-    </div>
 
     </form>
+
     <script type="text/javascript" src="{% static 'js/car2t.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/time.js' %}"></script>
     <link href="{% static 'css/google-map-admin.css'%}" rel="stylesheet" type="text/css">
 {% endblock content %}
+
+        <!--Icons made by <a href="https://icon54.com/" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+        Icons made by <a href="https://www.flaticon.com/authors/alfredo-hernandez" title="Alfredo Hernandez">Alfredo Hernandez</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/alfredo-hernandez" title="Alfredo Hernandez">Alfredo Hernandez</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+        Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+    -->

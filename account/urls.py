@@ -22,6 +22,7 @@ urlpatterns =[
     path('checkout/', views.checkout, name='checkout'),
     path('customerOrder/', views.customerOrder, name='customerOrder'),
     path('customerPreOrder/', views.customerPreOrder, name='customerPreOrder'),
+    path('customerprofile/', views.customerprofile, name='customerprofile'),
     path('adminorderlist/', views.adminpage, name='admin_dashboard'),
     path('admindeleteorderlist/<str:pk>/', views.admindeleteorder, name='admindeleteorder'),
     path('admindeletehiringorderlist/<str:pk>/', views.admindeletehiringorder, name='admindeletehiringorder'),

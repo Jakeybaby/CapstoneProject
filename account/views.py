@@ -30,6 +30,7 @@ def contact(request):
 # --
 
 # book a security service function
+@login_required(login_url='account:login')
 def addservicebook_form(request):
     service_id = request.POST['servicename']
     service_notes = request.POST['description']
@@ -47,9 +48,11 @@ def addservicebook_form(request):
                                                                  notes=service_notes, date_required=service_date)
 
     securityorder.save()
-    messages.success(request,'Success book')
+    messages.success(request,'Success book order :'+ str(order.id))
     return redirect('account:customerOrder')
 
+
+@login_required(login_url='account:login')
 def addpmservicebook_form(request):
     service_id = request.POST['servicename']
     service_notes = request.POST['description']
@@ -67,8 +70,9 @@ def addpmservicebook_form(request):
                                                                  notes=service_notes, date_required=service_date)
 
     propertyorder.save()
-    messages.success(request, 'Success book')
+    messages.success(request,'Success book order :'+ str(order.id))
     return redirect('account:customerOrder')
+
 
 
 def BookPM(request):
@@ -81,6 +85,7 @@ def BookPM(request):
     }
 
     return render(request, 'account/BookPropertyMaintenance.html',context)
+
 
 def BookSecurity(request):
 
@@ -106,6 +111,7 @@ def assignedOrders(request):
     }
     return render(request, 'account/Admin_manageOrders.html',context)
 
+
 def managePortal(request):
     return render(request, 'account/ManagePortal.html')
 
@@ -125,9 +131,11 @@ def adminemployeepage(request):
     context = {'member':memeber}
     return render(request,'account/adminemployeepage.html',context)
 
+
 # to see the detail of each order
 def adminOrder(request, pk):
     order = Order.objects.get(id=pk)
+    num = order.id
     form = adminform(instance=order)
     form.fields['employee_order'].choices = list()
     for k in GroupEmployee.objects.all():
@@ -147,6 +155,7 @@ def adminOrder(request, pk):
         form = adminform(request.POST, instance=order)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Order '+str(num)+' has been assgined')
             return redirect('account:admin_dashboard')
 
     context = {'form': form}
@@ -154,6 +163,7 @@ def adminOrder(request, pk):
 
 def adminHiringOrder(request, pk):
     order = HiringOrder.objects.get(id=pk)
+    num = order.id
     form = adminHiringform(instance=order)
     form.fields['employee_order'].choices = list()
     for k in GroupEmployee.objects.all():
@@ -173,6 +183,7 @@ def adminHiringOrder(request, pk):
         form = adminHiringform(request.POST, instance=order)
         if form.is_valid():
             form.save()
+            messages.success(request, 'HiringOrder' + str(num) + 'has been assgined')
             return redirect('account:admin_dashboard')
 
     context = {'form': form}
@@ -182,9 +193,11 @@ def adminHiringOrder(request, pk):
 def admindeleteorder(request,pk):
 
     order = Order.objects.get(id=pk)
+    num = order.id
     if request.method == "POST":
         order.delete()
-        return redirect('account:admin_dashboard')
+        messages.success(request, 'Order ' + str(num) + ' deleted')
+        return redirect('account:assignedOrders')
     context = {'order':order}
 
     return render(request,'account/admindeleteorderconfirm.html',context)
@@ -193,9 +206,11 @@ def admindeleteorder(request,pk):
 def admindeletehiringorder(request,pk):
 
     order = HiringOrder.objects.get(id=pk)
+    num = order.id
     if request.method == "POST":
         order.delete()
-        return redirect('account:admin_dashboard')
+        messages.success(request, 'Hiringorder ' + str(num) + ' deleted')
+        return redirect('account:assignedOrders')
     context = {'order':order}
 
     return render(request,'account/admindeletehiringorderconfirm.html',context)
@@ -206,6 +221,7 @@ def payserviceorder(request, pk):
     if request.method == "POST":
         ins.isPaid = True
         ins.save()
+        messages.success(request, 'Order ' + str(ins.id) + ' has been paid')
         return redirect('account:customerOrder')
 
     return render(request, 'account/paymentPage.html')
@@ -217,6 +233,7 @@ def payhiringorder(request, pk):
     if request.method == "POST":
         ins.isPaid = True
         ins.save()
+        messages.success(request, 'Order ' + str(ins.id) + ' has been paid')
         return redirect('account:customerOrder')
 
     return render(request, 'account/paymentPage.html')
@@ -301,14 +318,14 @@ def employee_order_job_done(request, pk):
     ins = get_object_or_404(Order, pk=pk)
     ins.isDone = True
     ins.save()
-
+    messages.success(request, 'Order ' + str(ins.id) + ' Done')
     return redirect('account:employeeJobs')
 
 def employee_hiringorder_job_done(request, pk):
     ins = get_object_or_404(HiringOrder, pk=pk)
     ins.isDone = True
     ins.save()
-
+    messages.success(request, 'Order ' + str(ins.id) + ' Done')
     return redirect('account:employeeJobs')
 
 
@@ -353,10 +370,10 @@ def HiringOrderlist(request):
 
 def accpet_HiringOrder(request, pk):
     ins = get_object_or_404(HiringOrder, pk=pk)
-    ins.employee_order = request.user.employeeprofile
+    # ins.employee_order = request.user.employeeprofile
     ins.assigned = True
     ins.save()
-
+    messages.success(request, 'Order ' + str(ins.id) + ' has been accepted')
     return redirect('account:employee_dashboard')
 
 
@@ -365,7 +382,7 @@ def accpet_ServiceOrder(request, pk):
     # ins.employee_order = request.user.employeeprofile
     ins.assigned = True
     ins.save()
-
+    messages.success(request, 'Order ' + str(ins.id) + ' has been accepted')
     return redirect('account:employee_dashboard')
 
 
@@ -373,7 +390,7 @@ def decline_ServiceOrder(request, pk):
     ins = get_object_or_404(Order, pk=pk)
     ins.employee_order = None
     ins.save()
-
+    messages.success(request, 'You decline the order: '+ str(ins.id))
     return redirect('account:employee_dashboard')
 
 
@@ -402,8 +419,8 @@ def checkout(request):
             eq = get_object_or_404(Equipment, pk=i.equipment.id)
             eq.stock = eq.stock - i.quantity
             eq.save()
-        messages.success(request, 'Success book')
-        return redirect('account:HireEquipement')
+        messages.success(request, 'Success book pick up order :' + str(hiringorder.id))
+        return redirect('account:customerOrder')
     else:
 
         pass
@@ -424,8 +441,8 @@ def checkout(request):
             eq = get_object_or_404(Equipment, pk=i.equipment.id)
             eq.stock = eq.stock - i.quantity
             eq.save()
-        messages.success(request, 'Success book')
-        return redirect('account:HireEquipement')
+        messages.success(request, 'Success book delivery euqipment order:' + str(hiringorder.id))
+        return redirect('account:customerOrder')
     else:
         pass
 
@@ -491,7 +508,7 @@ def testlogin(request):
                 if not request.user.is_superuser and not request.user.is_staff:
                     cusprofile, created = CustomerProfile.objects.get_or_create(cus_user=user)
                     cusprofile.save()
-                    return redirect('account:HireEquipement')
+                    return redirect('account:index')
                 else:
                     logout(request)
                     return HttpResponse("please login a user account")
@@ -629,5 +646,29 @@ def decline_HiringOrder(request,pk):
     ins = get_object_or_404(HiringOrder, pk=pk)
     ins.employee_order = None
     ins.save()
-
+    messages.success(request, 'You decline the order: '+ str(ins.id))
     return redirect('account:employee_dashboard')
+
+
+
+def customerprofile(request):
+    u_form = userprofileform(instance=request.user.customerprofile)
+    uinfo_form = userinfoform(instance=request.user)
+    if request.method == 'POST':
+        u_form = userprofileform(request.POST, instance=request.user.customerprofile)
+        uinfo_form = userinfoform(request.POST,instance=request.user)
+
+        if u_form.is_valid() and uinfo_form.is_valid():
+            u_form.save()
+            uinfo_form.save()
+            messages.success(request,"Your info updated")
+            return redirect('account:customerprofile')
+        else:
+            u_form = userprofileform(request.POST, instance=request.user.customerprofile)
+            uinfo_form = userinfoform(request.POST, instance=request.user)
+    context={
+        'uform':u_form,
+        'uinfoform':uinfo_form
+    }
+
+    return render(request,'account/ManageProfile.html',context)

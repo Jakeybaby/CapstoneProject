@@ -13,6 +13,13 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script>
+        setTimeout(function () {
+            if($('.messages').length > 0){
+                $('.messages').remove();
+            }
+        },5000)
+    </script>
   </head>
   <body>
 
@@ -67,37 +74,62 @@
     </nav>
 
    <div class="container">
-
+           {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        <h1>{{ message }}</h1>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
        <h3 style="padding: 30px 0px;">On going jobs</h3>
        {% for order in orders %}
            {% if order.complete == True and order.assigned == True and order.isDone == False%}
-                <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
-        <img src="{% static 'Images/PropertyMaintenance/Pruning.jpg'%}" class="card-img-top" style="height: 300px;" alt="...">
+               {% for a in order.securityorder_set.all %}
+                    <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
         <div class="card-body">
             <h5 class="card-title">Order ID: {{order.id}}</h5>
-            <p class="card-text" style="padding-bottom: 10px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Date & time: {{ order.server_date }}</small></p>
+
+            <p class="card-text"><small class="text-muted">Date & time: {{ a.date_required }}</small></p>
             <p class="card-text"><small class="text-muted">Name of client: {{ order.cus_order.cus_user.first_name }} </small></p>
             <p class="card-text"><small class="text-muted">Address: {{ order.address }}</small></p>
+            <p class="card-text"><small class="text-muted">Job Request: {{ a.security_service }}</small></p>
 
             <a class="jobDesc" target="_blank" href="https://www.google.com/maps/place/{{ order.geolocation }}"><img src="{% static 'Images/location.png'%}"></a>
             <a class="jobDesc" href="{{ order.done_job_url }}"><button class="btn text-success">Done Job</button></a>
 
         </div>
       </div>
+               {% endfor %}
+               {% for b in order.propertyorder_set.all %}
+                    <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
+        <div class="card-body">
+            <h5 class="card-title">Order ID: {{order.id}}</h5>
+
+            <p class="card-text"><small class="text-muted">Date & time: {{ b.date_required }}</small></p>
+            <p class="card-text"><small class="text-muted">Name of client: {{ order.cus_order.cus_user.first_name }} </small></p>
+            <p class="card-text"><small class="text-muted">Address: {{ order.address }}</small></p>
+            <p class="card-text"><small class="text-muted">Job Request: {{ b.property_service }}</small></p>
+
+            <a class="jobDesc" target="_blank" href="https://www.google.com/maps/place/{{ order.geolocation }}"><img src="{% static 'Images/location.png'%}"></a>
+            <a class="jobDesc" href="{{ order.done_job_url }}"><button class="btn text-success">Done Job</button></a>
+
+        </div>
+      </div>
+               {% endfor %}
            {% endif %}
        {% endfor %}
 
         {% for order in hiring %}
            {% if order.complete == True and order.assigned == True and order.isDone == False%}
                 <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
-        <img src="{% static 'Images/PropertyMaintenance/Pruning.jpg'%}" class="card-img-top" style="height: 300px;" alt="...">
         <div class="card-body">
-            <h5 class="card-title">Order ID: {{order.id}}</h5>
-            <p class="card-text" style="padding-bottom: 10px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Date & time: {{ order.server_date }}</small></p>
+        <h5 class="card-title">Order ID: {{order.id}}</h5>
+            <p class="card-text"><small class="text-muted">Date & time: {{ order.date_order }}</small></p>
             <p class="card-text"><small class="text-muted">Name of client: {{ order.cus_order.cus_user.first_name }} </small></p>
             <p class="card-text"><small class="text-muted">Address: {{ order.address }}</small></p>
+            <p class="card-text"><small class="text-muted">Equipment: {% for a in order.cartitem_set.all %}{{ a.equipment }}X{{ a.quantity }}{% endfor %}</small></p>
 
             <a class="jobDesc" target="_blank" href="https://www.google.com/maps/place/{{ order.geolocation }}"><img src="{% static 'Images/location.png'%}"></a>
             <a class="jobDesc" href="{{ order.done_job_url }}"><button class="btn text-success">Done Job</button></a>
@@ -110,31 +142,43 @@
         <h3 style="padding: 30px 0px;">Has done jobs</h3>
         {% for order in orders %}
              {% if order.complete == True and order.assigned == True and order.isDone == True%}
-                <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
-        <img src="{% static 'Images/SecurityJobs/EventSecurity.jpeg'%}" class="card-img-top" style="height: 300px;" alt="...">
+                 {% for a in order.propertyorder_set.all %}
+                    <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
         <div class="card-body">
-            <h5 class="card-title">{{order.id}}</h5>
+            <h5 class="card-title">Order ID:{{order.id}}</h5>
             <p class="card-text" style="padding-bottom: 10px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Date & time: {{ order.server_date }}</small></p>
+            <p class="card-text"><small class="text-muted">Date & time: {{ a.date_required }}</small></p>
             <p class="card-text"><small class="text-muted">Name of client: {{ order.cus_order.cus_user.first_name }} </small></p>
-            <p class="card-text"><small class="text-muted">Address: {{ order.address }}</small></p>
+            <p class="card-text"><small class="text-muted">Job Request: {{ a.property_service }}</small></p>
             <a class="jobDesc" href="{{ order.employee_feedback_url }}"><button class="btn text-danger">Feedback</button></a>
         </div>
       </div>
+                 {% endfor %}
+                 {% for b in order.securityorder_set.all %}
+                    <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
+        <div class="card-body">
+            <h5 class="card-title">Order ID:{{order.id}}</h5>
+            <p class="card-text" style="padding-bottom: 10px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Date & time: {{ b.date_required }}</small></p>
+            <p class="card-text"><small class="text-muted">Name of client: {{ order.cus_order.cus_user.first_name }} </small></p>
+             <p class="card-text"><small class="text-muted">Job Request: {{ b.security_service }}</small></p>
+            <a class="jobDesc" href="{{ order.employee_feedback_url }}"><button class="btn text-danger">Feedback</button></a>
+        </div>
+      </div>
+                 {% endfor %}
             {% endif %}
         {% endfor %}
 
    {% for order in hiring %}
              {% if order.complete == True and order.assigned == True and order.isDone == True%}
                 <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
-        <img src="{% static 'Images/SecurityJobs/EventSecurity.jpeg'%}" class="card-img-top" style="height: 300px;" alt="...">
         <div class="card-body">
             <h5 class="card-title">{{order.id}}</h5>
             <p class="card-text" style="padding-bottom: 10px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
             <p class="card-text"><small class="text-muted">Date & time: {{ order.server_date }}</small></p>
             <p class="card-text"><small class="text-muted">Name of client: {{ order.cus_order.cus_user.first_name }} </small></p>
             <p class="card-text"><small class="text-muted">Address: {{ order.address }}</small></p>
-            <a class="jobDesc" href="{{ order.employee_feedback_url }}"><button class="btn text-danger">Feedback</button></a>
+
         </div>
       </div>
             {% endif %}

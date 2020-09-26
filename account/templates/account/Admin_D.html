@@ -15,7 +15,13 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
+        <script>
+        setTimeout(function () {
+            if($('.messages').length > 0){
+                $('.messages').remove();
+            }
+        },5000)
+    </script>
   </head>
   <body>
 
@@ -61,6 +67,16 @@
 
         </ul>
         <span class="form-inline my-2 my-lg-0">
+            {% if request.user.is_authenticated %}
+                Hello, {{ request.user }}
+         <a href="{% url 'account:logout' %}">
+          <button class="btn btn-link my-2 my-sm-0">logout</button>
+        </a>
+                {% else %}
+                <a href="{% url 'account:login' %}">
+          <button class="btn btn-link my-2 my-sm-0"  type="submit">Login</button>
+        </a>
+            {% endif %}
           <a href="{% url 'account:index'%}">
             <button class="btn btn-link my-2 my-sm-0"  type="submit">Back to Mainpage</button>
           </a>
@@ -75,6 +91,15 @@
     </nav>
    <div class="container">
 <h2 style="padding: 30px 0px;">Dashboard</h2>
+      {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        <h1>{{ message }}</h1>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
        <h4 style="padding-bottom: 20px;">New Security Jobs</h4>
        <table class="table table-hover">
     <thead>
@@ -87,6 +112,7 @@
         <th>Payment</th>
         <th>Comments</th>
         <th>Assign Tasks</th>
+          <th>--</th>
       </tr>
     </thead>
     <tbody>
@@ -112,6 +138,7 @@
         <td>{{ a.notes }}</td>
 
       <td> <a href="{{ i.admin_get_absolute_url }}"> <button class="btn text-primary">Assign Staff</button></a></td>
+      <td><a href="{% url 'account:admindeleteorder' i.id %}"> <button class="btn text-primary">Cancel</button></a></td>
       </tr>
 
 
@@ -158,6 +185,7 @@
         <td>{{ a.notes }}</td>
 
       <td> <a href="{{ i.admin_get_absolute_url }}"> <button class="btn text-primary">Assign Staff</button></a></td>
+      <td><a href="{% url 'account:admindeleteorder' i.id %}"> <button class="btn text-primary">Cancel</button></a></td>
       </tr>
 
 
@@ -182,6 +210,7 @@
         <th>Payment</th>
         <th>Comments</th>
         <th>Assign Tasks</th>
+          <th>--</th>
       </tr>
     </thead>
 
@@ -205,6 +234,7 @@
                              {% endif %}</td>
         <td>--</td>
       <td>  <a href="{{ hiring.admin_get_absolute_url }}"> <button class="btn text-primary">Assign Staff</button></a></td>
+      <td><a href="{% url 'account:admindeletehiringorder' hiring.id %}"> <button class="btn text-primary">Cancel</button></a></td>
       </tr>
     {% endif %}
             {% endif %}

@@ -139,3 +139,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 GOOGLE_MAPS_API_KEY = 'AIzaSyCvTF4JKso7zjNZqQbpQugNRMmOUcnoiKQ'
 
 django_heroku.settings(locals())
+
+

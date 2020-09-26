@@ -14,13 +14,18 @@
      .collapse li:hover a:hover{
          color: #34987a;
      }
-      .btn{
+      .navbar .btn{
           color: white;
           text-decoration: none;
-          margin-right: 10px;
-          padding-bottom: 0px;
+          margin: 10px 15px ;
+          padding-bottom: 5px;
           font-size: 20px;
           
+      }
+      .my-2 .btn:hover{
+          text-decoration: none;
+          color: white;
+
       }
       .img-fluid{
           width: 100%;
@@ -34,17 +39,16 @@
       .jumbotron{
           background-color: #EEF0F2;
       }
-      .jumbotron p{
+      .jumbotron .btn .services{
           color: black;
           margin: 0;
           padding: 0;
           
       }
-      
-      
+
       .jumbotron img{
         margin-bottom: 30px;
-        padding: 0;
+        padding: 0px;
       }
 
       .jumbotron .btn{
@@ -53,6 +57,7 @@
       
       .jumbotron .btn:hover{
           background-color: transparent;
+          color: #333b3f;
       }
       .display-5{
           text-align: center;
@@ -416,4 +421,8 @@ tr:nth-child(even) {
 }
 .submitPM .btn:hover {
   color: white;
+}
+
+.services a{
+  color: #333b3f;
 }

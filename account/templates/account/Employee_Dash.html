@@ -14,6 +14,13 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script>
+        setTimeout(function () {
+            if($('.messages').length > 0){
+                $('.messages').remove();
+            }
+        },5000)
+    </script>
   </head>
   <body>
 
@@ -67,14 +74,23 @@
       </div>
     </nav>
     <div class="container">
-        <h2 style="padding: 30px 0px;">Wait to Accept</h2>
+       {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        <h1>{{ message }}</h1>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+        <h2 style="padding: 30px 0px;">Server order Wait to Accept</h2>
         {% for order in orders %}
             {% if order.complete == True and order.assigned == False %}
                 {% for a in order.securityorder_set.all %}
                 <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img src="{% static 'Images/SecurityJobs/EventSecurity.jpeg'%}" class="card-img" alt="..." height="150px">
+                            <img src="{% static 'Images/request.png'%}" class="card-img" alt="..." height="150px">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -83,7 +99,7 @@
                             <p class="card-text"><small class="text-muted">Date & time:{{ order.server_date }}</small></p>
                             <p class="card-text"><small class="text-muted">Job Request:{{ a.security_service }}</small></p>
                             <p class="card-text"><small class="text-muted">Location:{{ order.address }}</small></p>
-                            <p class="card-text"><small class="text-muted">Notes:{{ b.notes }}</small></p>
+                            <p class="card-text"><small class="text-muted">Notes:{{ a.notes }}</small></p>
                             <a class="jobDesc" target="_blank" href="https://www.google.com/maps/place/{{ order.geolocation }}"><img src="{% static 'Images/location.png'%}"></a>
                             <a href="{{ order.decline_job_url }}"><button class="btn text-primary">Decline</button></a>
                             <a href="{{ order.accpet_job_url }}"><button class="btn text-success">Accept Job</button></a>
@@ -97,7 +113,7 @@
                     <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img src="{% static 'Images/SecurityJobs/EventSecurity.jpeg'%}" class="card-img" alt="..." height="150px">
+                            <img src="{% static 'Images/request.png'%}" class="card-img" alt="..." height="150px">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -118,20 +134,21 @@
             {% endif %}
 
         {% endfor %}
+        <h2 style="padding: 30px 0px;">Hiring order Wait to Accept</h2>
         {% for a in hiring %}
             {% if a.complete == True and a.assigned == False %}
 
                 <div class="card mb-3 shadow p-3 mb-5 rounded w-75  border border-success">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img src="{% static 'Images/SecurityJobs/EventSecurity.jpeg'%}" class="card-img" alt="..." height="150px">
+                            <img src="{% static 'Images/request.png'%}" class="card-img" alt="..." height="150px">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
                             <h5 class="card-title">ID: {{ a.id }}</h5>
                             <p class="card-text"><small class="text-muted">Customer Name: {{ a.cus_order.cus_user.first_name }}</small></p>
-                            <p class="card-text"><small class="text-muted">Date & time:{{ a.server_date }}</small></p>
-                            <p class="card-text"><small class="text-muted">Job Request:{{ a.security_service }}</small></p>
+                            <p class="card-text"><small class="text-muted">Date & time:{{ a.date_order }}</small></p>
+                            <p class="card-text"><small class="text-muted">Equipment:{% for i in a.cartitem_set.all %}{{ i }}X{{ i.quantity }}<br>{% endfor %}</small></p>
                             <p class="card-text"><small class="text-muted">Location:{{ a.address }}</small></p>
                             <a class="jobDesc" target="_blank" href="https://www.google.com/maps/place/{{ a.geolocation }}"><img src="{% static 'Images/location.png'%}"></a>
                             <a href="{{ a.decline_job_url }}"><button class="btn text-primary">Decline</button></a>

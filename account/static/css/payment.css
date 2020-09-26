@@ -2,11 +2,11 @@ body {
     font-family: 'Baloo Tammudu 2', cursive;
     background-color: #EEF0F2;
   }
-
+  
   * {
     box-sizing: border-box;
   }
-
+       
 .container{
     margin: 40px auto;
     color: black;
@@ -22,36 +22,36 @@ body {
     flex-wrap: wrap;
     margin: 0 -16px;
   }
-
+  
   .col-25 {
     -ms-flex: 25%; /* IE10 */
     flex: 25%;
   }
-
+  
   .col-50 {
     -ms-flex: 50%; /* IE10 */
     flex: 50%;
     font-size: small;
   }
-
+  
   .col-75 {
     -ms-flex: 75%; /* IE10 */
     flex: 75%;
   }
-
+  
   .col-25,
   .col-50,
   .col-75 {
     padding: 0 16px;
   }
-
+ 
   .container {
     background-color: #f2f2f2;
     padding: 5px 20px 15px 20px;
     border: 1px solid lightgrey;
     border-radius: 3px;
   }
-
+  
   input[type=text] {
     width: 100%;
     margin-bottom: 20px;
@@ -59,35 +59,35 @@ body {
     border: 1px solid #ccc;
     border-radius: 3px;
   }
-
+  
   label {
     margin-bottom: 10px;
     display: block;
   }
-
+  
   .icon-container {
     margin-bottom: 20px;
     padding: 7px 0;
     font-size: 24px;
   }
+  
 
-
-
+  
   .btn:hover {
     background-color: #34987a;
   }
-
-
-
+  
+ 
+  
   hr {
     border: 1px solid lightgrey;
   }
-
+  
   span.price {
     float: right;
     color: grey;
   }
-
+  
   /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
   @media (max-width: 800px) {
     .row {
@@ -103,14 +103,14 @@ body {
     color: white;
     font-size: small;
   }
-
+  
   .grid-item {
     background-color: #333b3f;
     text-align: left;
     padding: 20px;
     font-size: 30px;
   }
-
+  
   .item1 {
     grid-column: 1;
     grid-row: 1 / span 2;
@@ -120,7 +120,7 @@ body {
 
   }
 
-
+  
   .item2 {
     grid-column: 2 ;
     grid-row: 1 /span  2;
@@ -144,16 +144,16 @@ body {
 
   li a{
     color: white;
-
+    
 }
 
 li a:hover{
     color: #34987a;
-}
+} 
 .collapse{
     font-size: 20px;
     color: #34987a;
-
+    
  }
  .collapse li:hover a:hover{
      color: #34987a;
@@ -166,7 +166,7 @@ li a:hover{
       font-size: 20px;
       background-color: #34987a;
     color: white;
-
+      
   }
   .checkout {
       width: 100%;
