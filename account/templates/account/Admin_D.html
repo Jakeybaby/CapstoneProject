@@ -207,6 +207,7 @@
         <th>Customer</th>
        <th>Address</th>
         <th>Delivery Date</th>
+          <th>Equipment</th>
         <th>Payment</th>
         <th>Comments</th>
         <th>Assign Tasks</th>
@@ -225,6 +226,11 @@
         <td>{{hiring.cus_order.cus_user.first_name}}</td>
         <td>{{ hiring.address }}</td>
         <td>{{ hiring.date_order }}</td>
+      <td>
+          {% for i in hiring.cartitem_set.all %}
+              {{ i.equipment }}X{{ i.quantity }}<br>
+          {% endfor %}
+      </td>
         <td>{% if hiring.isPaid == False and hiring.latepayment == False %}
                                 <span class="text-warning">Pending</span>
                                  {% elif hiring.isPaid == False and hiring.latepayment == True %}
