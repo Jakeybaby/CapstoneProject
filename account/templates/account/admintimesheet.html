@@ -1,6 +1,6 @@
 <!doctype html>
 {% load static %}
-<html>
+<html xmlns="http://www.w3.org/1999/html">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="{% static 'Images/Logo11.png'%}" rel="icon" sizes="32x32" type="image/gif">
@@ -13,13 +13,21 @@
     <title>Kaipara Security Services Ltd.</title>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script>
+        setTimeout(function () {
+            if($('.messages').length > 0){
+                $('.messages').remove();
+            }
+        },5000)
+    </script>
   </head>
   <body>
 
 <nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top navbar-dark bg-dark">
 
-        <a class="navbar-brand" href="{% url 'account:employee_dashboard'%}">
+        <a class="navbar-brand" href="{% url 'account:admin_dashboard'%}">
           <img src="{% static 'Images/Logo11.png' %}" width="110" height="110" class="d-inline-block align-top" alt="" loading="lazy">
 
         </a>
@@ -32,42 +40,58 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'account:employee_dashboard' %}">Dashboard <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{% url 'account:admin_dashboard' %}">Dashboard <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'account:employeeJobs'%}">Assigned Jobs</a>
+            <a class="nav-link" href="{%url 'account:assignedOrders' %}">Assigned Jobs</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'account:employeeTimesheet'%}">Timesheet</a>
+            <a class="nav-link" href="{% url 'account:admintimesheet'%}">Manage Timesheets</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Equipment Delivery</a>
+            <a class="nav-link" href="{% url 'account:pickuporder'%}">Equip Pick up</a>
           </li>
             <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="{% url 'account:BookSecurity'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               More
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'account:staffprofile' %}">Manage Profile</a>
-                <a class="dropdown-item" href="#">Learning Portal</a>
-
+              <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
+              <a class="dropdown-item" href="{% url 'account:adminmanageleave'%}">Manage Leaves</a>
+                <a class="dropdown-item" href="{% url 'account:managePortal'%}">Learning Portal</a>
+                <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Equipments</a>
+                <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Services</a>
             </div>
-          </li>
+            </li>
+
         </ul>
         <span class="form-inline my-2 my-lg-0">
+            {% if request.user.is_authenticated %}
+                Hello, {{ request.user }}
+         <a href="{% url 'account:logout' %}">
+          <button class="btn btn-link my-2 my-sm-0">logout</button>
+        </a>
+                {% else %}
+                <a href="{% url 'account:login' %}">
+          <button class="btn btn-link my-2 my-sm-0"  type="submit">Login</button>
+        </a>
+            {% endif %}
           <a href="{% url 'account:index'%}">
             <button class="btn btn-link my-2 my-sm-0"  type="submit">Back to Mainpage</button>
           </a>
          <a href="#">
           <button class="btn btn-link my-2 my-sm-0"  type="submit"><img src="{% static 'Images/logout.png'%}" height="45px;"></button>
         </a>
-
+         <!-- <a href="{% url 'account:cart' %}"><button class="btn btn-link my-2 my-sm-0"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+          </svg></button></a>-->
         </span>
       </div>
     </nav>
    <div class="container">
-                 {% if messages %}
+<h2 style="padding: 30px 0px;">Timesheet</h2>
+      {% if messages %}
 <ul class="messages">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
@@ -76,17 +100,12 @@
     {% endfor %}
 </ul>
 {% endif %}
-    <h2 style="padding: 30px 0px;">Profile page</h2>
-       <form method="post">
-           {% csrf_token %}
-     {{ uform.as_p }}
-       {{ uinfoform.as_p }}
-       <button type="submit">yes</button>
-           </form>
-    </div>
+
+
+</div>
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>
   </footer>
-
+   </div>
 </body>
 </html>

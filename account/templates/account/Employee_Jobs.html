@@ -55,7 +55,7 @@
               More
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Manage Profile</a>
+              <a class="dropdown-item" href="{% url 'account:staffprofile' %}">Manage Profile</a>
                 <a class="dropdown-item" href="#">Learning Portal</a>
 
             </div>
@@ -150,7 +150,11 @@
             <p class="card-text"><small class="text-muted">Date & time: {{ a.date_required }}</small></p>
             <p class="card-text"><small class="text-muted">Name of client: {{ order.cus_order.cus_user.first_name }} </small></p>
             <p class="card-text"><small class="text-muted">Job Request: {{ a.property_service }}</small></p>
-            <a class="jobDesc" href="{{ order.employee_feedback_url }}"><button class="btn text-danger">Feedback</button></a>
+            {% if not order.feedbackETC %}
+                <a class="jobDesc" href="{{ order.employee_feedback_url }}"><button class="btn text-danger">Feedback</button></a>
+            {% else %}
+                Has Give Feedback
+            {% endif %}
         </div>
       </div>
                  {% endfor %}
@@ -162,7 +166,11 @@
             <p class="card-text"><small class="text-muted">Date & time: {{ b.date_required }}</small></p>
             <p class="card-text"><small class="text-muted">Name of client: {{ order.cus_order.cus_user.first_name }} </small></p>
              <p class="card-text"><small class="text-muted">Job Request: {{ b.security_service }}</small></p>
-            <a class="jobDesc" href="{{ order.employee_feedback_url }}"><button class="btn text-danger">Feedback</button></a>
+            {% if not order.feedbackETC %}
+                <a class="jobDesc" href="{{ order.employee_feedback_url }}"><button class="btn text-danger">Feedback</button></a>
+            {% else %}
+                Has Give Feedback
+            {% endif %}
         </div>
       </div>
                  {% endfor %}

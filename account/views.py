@@ -29,6 +29,9 @@ def contact(request):
 
 # --
 
+def admintimesheet(request):
+    return render(request,'account/admintimesheet.html')
+
 # book a security service function
 @login_required(login_url='account:login')
 def addservicebook_form(request):
@@ -116,6 +119,7 @@ def managePortal(request):
     return render(request, 'account/ManagePortal.html')
 
 
+@login_required(login_url='account:stafflogin')
 def adminpage(request):
     order = Order.objects.all()
     hiringorder = HiringOrder.objects.all()
@@ -289,29 +293,41 @@ def employeeTimesheet(request):
 
 
 def customerorderfeedback(request, pk):
-    order = Order.objects.get(id=pk)
-    form = orderfeedback(instance=order)
-    if request.method == 'POST':
-        form = orderfeedback(request.POST, instance=order)
-        if form.is_valid():
-            form.save()
-            return redirect('account:customerPreOrder')
+    if request.method == "POST":
+        order = Order.objects.get(id=pk)
+        fd = request.POST['comments']
+        order.feedbackCTE = fd
+        order.save()
+        return redirect('account:customerPreOrder')
 
-    context = {'form': form}
-    return render(request, 'account/customerorderfeedback.html', context)
+    # form = orderfeedback(instance=order)
+    # if request.method == 'POST':
+    #     form = orderfeedback(request.POST, instance=order)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('account:customerPreOrder')
+    #
+    # context = {'form': form}
+    return render(request, 'account/customerorderfeedback.html')
 
 
 def employeeorderfeedback(request, pk):
-    order = Order.objects.get(id=pk)
-    form = orderfeedbackETC(instance=order)
-    if request.method == 'POST':
-        form = orderfeedbackETC(request.POST, instance=order)
-        if form.is_valid():
-            form.save()
-            return redirect('/ServiceOrderlist/')
+    if request.method == "POST":
 
-    context = {'form': form}
-    return render(request, 'account/customerorderfeedback.html', context)
+        order = Order.objects.get(id=pk)
+        fd = request.POST['comments']
+        order.feedbackETC = fd
+        order.save()
+        return redirect('account:employeeJobs')
+    # form = orderfeedbackETC(instance=order)
+    # if request.method == 'POST':
+    #     form = orderfeedbackETC(request.POST, instance=order)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('/ServiceOrderlist/')
+    #
+    # context = {'form': form}
+    return render(request, 'account/employeeorderfeedback.html')
 
 
 def employee_order_job_done(request, pk):
@@ -512,6 +528,8 @@ def testlogin(request):
                 else:
                     logout(request)
                     return HttpResponse("please login a user account")
+            else:
+                messages.info(request,'Your password or username is incorrect')
     context = {}
     return render(request, 'account/Login.html', context)
 
@@ -617,8 +635,10 @@ def pickuporder(request):
 
     return render(request,'account/pickuporder.html',context)
 
+
+@login_required(login_url='account:login')
 def customerOrder(request):
-    # if not request.user.is_staff and not request.user.is_superuser:
+    if not request.user.is_staff and not request.user.is_superuser:
         customer = request.user.customerprofile
         order = Order.objects.filter(cus_order=customer)
         hiringorder = HiringOrder.objects.filter(cus_order=customer)
@@ -627,8 +647,8 @@ def customerOrder(request):
             'hiringorders': hiringorder
         }
         return render(request, 'account/UserDashPage.html', context)
-    # else:
-    #     return HttpResponse("you are not user account")
+    else:
+        return HttpResponse("you are not user account")
 
 def customerPreOrder(request):
     # if not request.user.is_staff and not request.user.is_superuser:
@@ -672,3 +692,26 @@ def customerprofile(request):
     }
 
     return render(request,'account/ManageProfile.html',context)
+
+
+def staffprofile(request):
+    u_form = staffprofileform(instance=request.user.employeeprofile)
+    uinfo_form = staffinfoform(instance=request.user)
+    if request.method == 'POST':
+        u_form = userprofileform(request.POST, instance=request.user.customerprofile)
+        uinfo_form = userinfoform(request.POST,instance=request.user)
+
+        if u_form.is_valid() and uinfo_form.is_valid():
+            u_form.save()
+            uinfo_form.save()
+            messages.success(request,"Your info updated")
+            return redirect('account:customerprofile')
+        else:
+            u_form = userprofileform(request.POST, instance=request.user.customerprofile)
+            uinfo_form = userinfoform(request.POST, instance=request.user)
+    context={
+        'uform':u_form,
+        'uinfoform':uinfo_form
+    }
+
+    return render(request,'account/staffManageProfile.html',context)

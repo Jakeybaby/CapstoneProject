@@ -128,3 +128,14 @@ class userinfoform(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name','last_name','email']
+
+
+class staffprofileform(forms.ModelForm):
+    class Meta:
+        model = EmployeeProfile
+        fields = ['address','phone']
+
+class staffinfoform(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name','last_name','email']
