@@ -17,6 +17,7 @@ class PropetyServices(models.Model):
     name = models.TextField(max_length=50, null=True, blank=True)
     price = models.IntegerField(null=True, blank=False)
     description = models.TextField(max_length=100, blank=True)
+    test = models.DateField(null=True,blank=True)
 
     def __str__(self):
         return self.name
@@ -43,6 +44,7 @@ class Order(models.Model):
     phoneNumber = models.TextField(max_length=20,null=True,blank=True)
 
     server_date = models.DateTimeField(null=True,blank=True)
+
 
     complete = models.BooleanField(default=False)
     assigned = models.BooleanField(default=False)
