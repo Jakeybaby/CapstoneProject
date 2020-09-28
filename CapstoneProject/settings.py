@@ -136,8 +136,17 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
-GOOGLE_MAPS_API_KEY = 'AIzaSyCvTF4JKso7zjNZqQbpQugNRMmOUcnoiKQ'
+
+# AIzaSyCvTF4JKso7zjNZqQbpQugNRMmOUcnoiKQ
+GOOGLE_MAPS_API_KEY = os.environ.get('MAPAPI')
 
 django_heroku.settings(locals())
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'dcf19960828@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMPS')
+EMAIL_USE_TLS = True
 
 

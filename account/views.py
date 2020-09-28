@@ -10,10 +10,12 @@ from django.http import JsonResponse
 from .form import *
 from django.contrib.auth import login, authenticate, logout
 from datetime import datetime
+from django.core.mail import send_mail
 import json
 
 
 def index(request):
+
     return render(request, 'account/Index.html')
 
 
@@ -37,7 +39,9 @@ def admintimesheet(request):
 def addservicebook_form(request):
     service_id = request.POST['servicename']
     service_notes = request.POST['description']
+
     service_date = request.POST['servicedate']
+
     service_user = request.user.customerprofile
     service_name = SecurityServices.objects.get(id=service_id)
     service_address = request.POST['address']
@@ -159,6 +163,17 @@ def adminOrder(request, pk):
         form = adminform(request.POST, instance=order)
         if form.is_valid():
             form.save()
+            # sending notification when assign the job to employee
+            em = order.employee_order.employee_user.email
+            subject = order.address
+            jobdate = order.server_date
+            send_mail(
+                'New Job Request',
+                'You have a New Order Request to' + str(subject) + ' on ' + str(jobdate) + '\n' +'Please Login in to Your Account to Confirm it',
+                'dcf1996028@gmail.com',
+                [em],
+                fail_silently=False,
+            )
             messages.success(request, 'Order '+str(num)+' has been assgined')
             return redirect('account:admin_dashboard')
 
@@ -187,6 +202,17 @@ def adminHiringOrder(request, pk):
         form = adminHiringform(request.POST, instance=order)
         if form.is_valid():
             form.save()
+            #sending notification when assign the job to employee
+            em = order.employee_order.employee_user.email
+            subject = order.address
+            deliverdate = order.leash_date
+            send_mail(
+                'New Job Request',
+                'You have a Hiring Order Required to deliver to ' + str(subject) + 'on' +str(deliverdate) + '\n' +'Please Login in to Your Account to Confirm it',
+                'dcf1996028@gmail.com',
+                [em],
+                fail_silently=False,
+            )
             messages.success(request, 'HiringOrder' + str(num) + 'has been assgined')
             return redirect('account:admin_dashboard')
 
