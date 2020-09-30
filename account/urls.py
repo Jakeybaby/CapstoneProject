@@ -45,6 +45,7 @@ urlpatterns =[
 
     # path('BookJob/',views.BookJob, name='BookJob'),
     path('Contact/',views.contact, name='contact'),
+    path('timesheettest/',views.timesheettest, name='timesheettest'),
     path('About/', views.about, name='About'),
     # path('service/', views.servicebook, name='Services'),
     path('service_form/',views.addservicebook_form,name='addservicebook_form'),
@@ -65,7 +66,8 @@ urlpatterns =[
     path('Admin_manageOrders/', views.assignedOrders, name='assignedOrders'),
     path('Employee_Jobs/', views.employeeJobs, name='employeeJobs'),
     path('Timesheet/', views.employeeTimesheet, name='employeeTimesheet'),
+    path('timein/', views.timein, name='timein'),
+    path('timeout/', views.timeout, name='timeout'),
+    path('total/', views.total, name='total'),
 
-
-
-    ]
+]

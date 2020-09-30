@@ -29,8 +29,6 @@ class EmployeeProfile(models.Model):
     employee_user = models.OneToOneField(User, on_delete=models.CASCADE)
     group = models.ForeignKey(GroupEmployee,on_delete=models.CASCADE)
 
-
-    # timesheet = models.OneToOneField('TimeSheet',on_delete=models.CASCADE)
     def get_absolute_url(self):
         return reverse('account:adminManageEmployee',kwargs={"pk":self.id})
 
@@ -42,21 +40,24 @@ class EmployeeProfile(models.Model):
 
 
 
+class TimeSheet(models.Model):
+    staff = models.ForeignKey(EmployeeProfile,on_delete=models.CASCADE,null=True,blank=True)
+    Day = models.CharField(max_length=25,null=True,blank=True)
+    timeIn = models.DateTimeField(default=datetime.now, blank=True,null=True)
+    timeOut = models.DateTimeField(default=datetime.now, blank=True,null=True)
 
+    def ti(self):
+        return self.timeIn.strftime("%Y-%m-%d %H:%M:%S")
 
+    def to(self):
+        return self.timeOut.strftime("%Y-%m-%d %H:%M:%S")
 
-# class TimeSheet(models.Model):
-#     timeIn = models.DateTimeField(default=datetime.now, blank=True)
-#     timeOut = models.DateTimeField(default=datetime.now, blank=True)
-#
-#     def ti(self):
-#         return self.timeIn.strftime("%Y-%m-%d %H:%M:%S")
-#
-#     def to(self):
-#         return self.timeOut.strftime("%Y-%m-%d %H:%M:%S")
-#
-#     def hour(self):
-#         return self.timeOut - self.timeIn
+    def hour(self):
+        return round((self.timeOut - self.timeIn).seconds/60/60,2)
+
+    def __str__(self):
+        return str(self.Day)
+
 
 
 

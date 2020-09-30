@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_google_maps',
+    'background_task',
 
 
 
@@ -114,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'NZ'
 
 USE_I18N = True
 
@@ -148,5 +149,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'dcf19960828@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMPS')
 EMAIL_USE_TLS = True
+
+
 
 

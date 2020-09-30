@@ -112,7 +112,7 @@
         <th>Payment</th>
         <th>Comments</th>
         <th>Assign Tasks</th>
-          <th>--</th>
+
       </tr>
     </thead>
     <tbody>
@@ -138,7 +138,7 @@
         <td>{{ a.notes }}</td>
 
       <td> <a href="{{ i.admin_get_absolute_url }}"> <button class="btn text-primary">Assign Staff</button></a></td>
-      <td><a href="{% url 'account:admindeleteorder' i.id %}"> <button class="btn text-primary">Cancel</button></a></td>
+
       </tr>
 
 
@@ -185,7 +185,7 @@
         <td>{{ a.notes }}</td>
 
       <td> <a href="{{ i.admin_get_absolute_url }}"> <button class="btn text-primary">Assign Staff</button></a></td>
-      <td><a href="{% url 'account:admindeleteorder' i.id %}"> <button class="btn text-primary">Cancel</button></a></td>
+
       </tr>
 
 
@@ -211,7 +211,7 @@
         <th>Payment</th>
         <th>Comments</th>
         <th>Assign Tasks</th>
-          <th>--</th>
+
       </tr>
     </thead>
 
@@ -240,7 +240,7 @@
                              {% endif %}</td>
         <td>--</td>
       <td>  <a href="{{ hiring.admin_get_absolute_url }}"> <button class="btn text-primary">Assign Staff</button></a></td>
-      <td><a href="{% url 'account:admindeletehiringorder' hiring.id %}"> <button class="btn text-primary">Cancel</button></a></td>
+
       </tr>
     {% endif %}
             {% endif %}

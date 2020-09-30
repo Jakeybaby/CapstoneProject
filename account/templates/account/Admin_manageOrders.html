@@ -98,7 +98,7 @@
         <th>Payment</th>
         <th>Comments</th>
           <th>Job Status</th>
-        <th>Assign Taskss</th>
+        <th>Assign To</th>
       </tr>
     </thead>
     <tbody>
@@ -129,6 +129,7 @@
                 On Going
             {% endif %}
         </td>
+      <td>{{ i.employee_order.employee_user.first_name }}</td>
       <td> <a href="{% url 'account:admindeleteorder' i.id %}"> <button class="btn text-primary">Cancel</button></a></td>
       </tr>
 
@@ -151,7 +152,7 @@
         <th>Payment</th>
         <th>Comments</th>
           <th>Job Status</th>
-        <th>Assign Taskss</th>
+        <th>Assign To</th>
       </tr>
     </thead>
     <tbody>
@@ -182,7 +183,7 @@
                 On Going
             {% endif %}
         </td>
-
+    <td>{{ i.employee_order.employee_user.first_name }}</td>
       <td> <a href="{% url 'account:admindeleteorder' i.id %}"> <button class="btn text-primary">Cancel</button></a></td>
       </tr>
 
@@ -207,7 +208,7 @@
           <th>Equipment</th>
         <th>Payment</th>
           <th>Job Status</th>
-        <th>Assign Tasks</th>
+        <th>Assign To</th>
       </tr>
     </thead>
 
@@ -240,6 +241,7 @@
             {% else %}
                 On Going
             {% endif %}</td>
+      <td>{{ hiring.employee_order.employee_user.first_name }}</td>
       <td>  <a href="{% url 'account:admindeletehiringorder' hiring.id %}"> <button class="btn text-primary">Cancel</button></a></td>
       </tr>
     {% endif %}

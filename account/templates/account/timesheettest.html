@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% for i in txt %}
+    {{ i }}<br>
+    Check In time: {{ i.timeIn }}<br>
+    Check out time: {{ i.timeOut }}<br>
+    Total : {{ i.hour }}
+    <hr>
+
+{% endfor %}
+
+
+
+<a href="{% url 'account:timein'%}">check in</a>
+<a href="{% url 'account:timeout'%}">check out</a>
+<a href="{% url 'account:total'%}">total</a>
+
+<br>
+Total : {{ total }}
+</body>
+</html>

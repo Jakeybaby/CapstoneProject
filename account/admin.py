@@ -9,5 +9,5 @@ admin.site.register(CustomerProfile)
 admin.site.register(EmployeeProfile)
 
 admin.site.register(GroupEmployee)
-# admin.site.register(TimeSheet)
+admin.site.register(TimeSheet)
 

@@ -1,3 +1,4 @@
+from background_task import background
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.views.generic import DetailView
@@ -9,13 +10,15 @@ from django.contrib import messages
 from django.http import JsonResponse
 from .form import *
 from django.contrib.auth import login, authenticate, logout
-from datetime import datetime
+from datetime import datetime,date
 from django.core.mail import send_mail
+import time
 import json
+import schedule
+
 
 
 def index(request):
-
     return render(request, 'account/Index.html')
 
 
@@ -28,7 +31,85 @@ def contact(request):
     return render(request, 'account/Contact.html')
 
 
+def timesheettest(request):
+    user = request.user.employeeprofile.employee_user.id
+    ins = request.user.employeeprofile.timesheet_set.all().order_by('-id')
+    test1 = TimeSheet.objects.get(Day='Monday', staff__employee_user_id=user)
+    test2 = TimeSheet.objects.get(Day='Tuesday', staff__employee_user_id=user)
+    test3 = TimeSheet.objects.get(Day='Wensday', staff__employee_user_id=user)
+    test4 = TimeSheet.objects.get(Day='Thursday', staff__employee_user_id=user)
+    test5 = TimeSheet.objects.get(Day='Friday', staff__employee_user_id=user)
+    total = round(test3.hour() + test1.hour() + test2.hour() + test4.hour() + test5.hour(), 2)
 
+
+    context={
+        'txt':ins,
+        'total':total
+    }
+    return render(request,'account/timesheettest.html',context)
+
+
+def timein(request):
+    userid = request.user.employeeprofile.employee_user.id
+    if datetime.today().isoweekday() == 1:
+        today = TimeSheet.objects.get(staff__employee_user_id=userid,Day="Monday")
+        today.timeIn = datetime.now()
+        today.save()
+    elif datetime.today().isoweekday() == 2:
+        today = TimeSheet.objects.get(staff__employee_user_id=userid,Day="Tuesday")
+        today.timeIn = datetime.now()
+        today.save()
+    elif datetime.today().isoweekday() == 3:
+        today = TimeSheet.objects.get(staff__employee_user_id=userid,Day="Wensday")
+        today.timeIn = datetime.now()
+        today.save()
+    elif datetime.today().isoweekday() == 4:
+        today = TimeSheet.objects.get(staff__employee_user_id=userid,Day="Thursday")
+        today.timeIn = datetime.now()
+        today.save()
+    elif datetime.today().isoweekday() == 5:
+        today = TimeSheet.objects.get(staff__employee_user_id=userid,Day="Friday")
+        today.timeIn = datetime.now()
+        today.save()
+    return redirect('account:timesheettest')
+
+def timeout(request):
+    userid = request.user.employeeprofile.employee_user.id
+    if datetime.today().isoweekday() == 1:
+        today = TimeSheet.objects.get(staff__employee_user_id=userid, Day="Monday")
+        today.timeOut = datetime.now()
+        today.save()
+    elif datetime.today().isoweekday() == 2:
+        today = TimeSheet.objects.get(staff__employee_user_id=userid, Day="Tuesday")
+        today.timeOut = datetime.now()
+        today.save()
+    elif datetime.today().isoweekday() == 3:
+        today = TimeSheet.objects.get(staff__employee_user_id=userid, Day="Wensday")
+        today.timeOut = datetime.now()
+        today.save()
+    elif datetime.today().isoweekday() == 4:
+        today = TimeSheet.objects.get(staff__employee_user_id=userid, Day="Thursday")
+        today.timeOut = datetime.now()
+        today.save()
+    elif datetime.today().isoweekday() == 5:
+        today = TimeSheet.objects.get(staff__employee_user_id=userid, Day="Friday")
+        today.timeOut = datetime.now()
+        today.save()
+
+    return redirect('account:timesheettest')
+
+def total(request):
+    user = request.user.employeeprofile.employee_user.id
+    test1 = TimeSheet.objects.get(Day='Monday', staff__employee_user_id=user)
+    test2 = TimeSheet.objects.get(Day='Tuesday', staff__employee_user_id=user)
+    test3 = TimeSheet.objects.get(Day='Wensday', staff__employee_user_id=user)
+    test4 = TimeSheet.objects.get(Day='Thursday', staff__employee_user_id=user)
+    test5 = TimeSheet.objects.get(Day='Friday', staff__employee_user_id=user)
+    total = round(test3.hour()+test1.hour()+test2.hour()+test4.hour()+test5.hour(),2)
+    context={
+        'total':total
+    }
+    return render(request,'account/timesheettest.html',context)
 # --
 
 def admintimesheet(request):
@@ -170,7 +251,7 @@ def adminOrder(request, pk):
             send_mail(
                 'New Job Request',
                 'You have a New Order Request to' + str(subject) + ' on ' + str(jobdate) + '\n' +'Please Login in to Your Account to Confirm it',
-                'dcf1996028@gmail.com',
+                'dcf19960828@gmail.com',
                 [em],
                 fail_silently=False,
             )
@@ -209,7 +290,7 @@ def adminHiringOrder(request, pk):
             send_mail(
                 'New Job Request',
                 'You have a Hiring Order Required to deliver to ' + str(subject) + 'on' +str(deliverdate) + '\n' +'Please Login in to Your Account to Confirm it',
-                'dcf1996028@gmail.com',
+                'dcf19960828@gmail.com',
                 [em],
                 fail_silently=False,
             )
@@ -582,7 +663,19 @@ def staffLogin(request):
                     # this code below is script code
                     groupname = GroupEmployee.objects.get(pk=1)
                     eploprofile, created = EmployeeProfile.objects.get_or_create(employee_user=user,group=groupname)
+                    tt = request.user.employeeprofile
+                    ts1, created = TimeSheet.objects.get_or_create(staff=tt, Day="Monday")
+                    ts2, created = TimeSheet.objects.get_or_create(staff=tt, Day="Tuesday")
+                    ts3, created = TimeSheet.objects.get_or_create(staff=tt, Day="Wensday")
+                    ts4, created = TimeSheet.objects.get_or_create(staff=tt, Day="Thursday")
+                    ts5, created = TimeSheet.objects.get_or_create(staff=tt, Day="Friday")
                     eploprofile.save()
+                    ts1.save()
+                    ts2.save()
+                    ts3.save()
+                    ts4.save()
+                    ts5.save()
+
                     return redirect('account:employee_dashboard')
                 elif request.user.is_superuser:
                     return redirect('account:admin_dashboard')
@@ -741,3 +834,4 @@ def staffprofile(request):
     }
 
     return render(request,'account/staffManageProfile.html',context)
+
