@@ -43,14 +43,15 @@ class EmployeeProfile(models.Model):
 class TimeSheet(models.Model):
     staff = models.ForeignKey(EmployeeProfile,on_delete=models.CASCADE,null=True,blank=True)
     Day = models.CharField(max_length=25,null=True,blank=True)
-    timeIn = models.DateTimeField(default=datetime.now, blank=True,null=True)
-    timeOut = models.DateTimeField(default=datetime.now, blank=True,null=True)
+    timeIn = models.DateTimeField(blank=True,null=True)
+    timeOut = models.DateTimeField(blank=True,null=True)
+    isLast = models.BooleanField(default=False)
 
     def ti(self):
-        return self.timeIn.strftime("%Y-%m-%d %H:%M:%S")
+        return self.timeIn.strftime("%H:%M:%S")
 
     def to(self):
-        return self.timeOut.strftime("%Y-%m-%d %H:%M:%S")
+        return self.timeOut.strftime("%H:%M:%S")
 
     def hour(self):
         return round((self.timeOut - self.timeIn).seconds/60/60,2)

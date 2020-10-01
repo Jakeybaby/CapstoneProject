@@ -70,7 +70,50 @@
 
     <div class="container">
         <h2 style="padding: 30px 0px;">Timesheet</h2>
-        
+        <table class="table table-hover" cellpadding="4" cellspacing="0">
+  <tbody>
+  <tr style="background:#ddd;" class="header_row">
+    <td>Days</td>
+      <!--<td>Date</td>-->
+    <td>Starting Time</td>
+    <td>Ending Time</td>
+    <td>Total Hours</td>
+      <td></td>
+  </tr>
+{% for i in txt %}
+    {% if i.isLast == False %}
+      <tr style="background:#eee;">
+          <td>{{ i }}</td>
+          <td>
+              {% if not i.timeIn %}
+                  None
+                  {% else %}
+                  {{ i.ti }}
+              {% endif %}
+          </td>
+          <td>
+              {% if not i.timeOut %}
+                  None
+                  {% else %}
+                  {{ i.to }}
+              {% endif %}
+          </td>
+
+          <td></td>
+      </tr>
+    {% endif %}
+{% endfor %}
+
+  <tr>
+    <td colspan="5" align="right" id="stots"><b>Total Hrs = 0</b></td>
+
+  </tr>
+
+</tbody>
+</table>
+    <a href="{% url 'account:timein'%}">check in</a><br>
+<a href="{% url 'account:timeout'%}">check out</a><br>
+<a href="{% url 'account:reset'%}">reset</a>
     </div>
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>

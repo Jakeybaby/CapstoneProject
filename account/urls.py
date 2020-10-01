@@ -65,9 +65,9 @@ urlpatterns =[
     path('ManagePortal/', views.managePortal, name='managePortal'),
     path('Admin_manageOrders/', views.assignedOrders, name='assignedOrders'),
     path('Employee_Jobs/', views.employeeJobs, name='employeeJobs'),
-    path('Timesheet/', views.employeeTimesheet, name='employeeTimesheet'),
+    path('Timesheet/', views.timesheettest, name='employeeTimesheet'),
     path('timein/', views.timein, name='timein'),
     path('timeout/', views.timeout, name='timeout'),
     path('total/', views.total, name='total'),
-
+    path('reset/', views.reset, name='reset'),
 ]

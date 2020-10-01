@@ -32,71 +32,97 @@ def contact(request):
 
 
 def timesheettest(request):
-    user = request.user.employeeprofile.employee_user.id
-    ins = request.user.employeeprofile.timesheet_set.all().order_by('-id')
-    test1 = TimeSheet.objects.get(Day='Monday', staff__employee_user_id=user)
-    test2 = TimeSheet.objects.get(Day='Tuesday', staff__employee_user_id=user)
-    test3 = TimeSheet.objects.get(Day='Wensday', staff__employee_user_id=user)
-    test4 = TimeSheet.objects.get(Day='Thursday', staff__employee_user_id=user)
-    test5 = TimeSheet.objects.get(Day='Friday', staff__employee_user_id=user)
-    total = round(test3.hour() + test1.hour() + test2.hour() + test4.hour() + test5.hour(), 2)
-
+    user = request.user.employeeprofile
+    ins = request.user.employeeprofile.timesheet_set.all()
+    test1,created = TimeSheet.objects.get_or_create(Day='Monday', staff=user, isLast=False)
+    test2,created = TimeSheet.objects.get_or_create(Day='Tuesday', staff=user, isLast=False)
+    test3,created = TimeSheet.objects.get_or_create(Day='Wensday', staff=user, isLast=False)
+    test4,created = TimeSheet.objects.get_or_create(Day='Thursday', staff=user, isLast=False)
+    test5,created = TimeSheet.objects.get_or_create(Day='Friday', staff=user, isLast=False)
+    # total = round(test3.hour() + test1.hour() + test2.hour() + test4.hour() + test5.hour(), 2)
+    test1.save()
+    test2.save()
+    test3.save()
+    test4.save()
+    test5.save()
 
     context={
         'txt':ins,
-        'total':total
+        # 'total':total
     }
-    return render(request,'account/timesheettest.html',context)
+    return render(request,'account/Timesheet.html',context)
 
-
+def reset(request):
+    user = request.user.employeeprofile
+    ins = request.user.employeeprofile.timesheet_set.all().order_by('-id')
+    test1 = TimeSheet.objects.get(Day='Monday', staff=user,isLast=False)
+    test2 = TimeSheet.objects.get(Day='Tuesday', staff=user,isLast=False)
+    test3 = TimeSheet.objects.get(Day='Wensday', staff=user,isLast=False)
+    test4 = TimeSheet.objects.get(Day='Thursday', staff=user,isLast=False)
+    test5 = TimeSheet.objects.get(Day='Friday', staff=user,isLast=False)
+    test1.isLast = True
+    test2.isLast = True
+    test3.isLast = True
+    test4.isLast = True
+    test5.isLast = True
+    test1.save()
+    test2.save()
+    test3.save()
+    test4.save()
+    test5.save()
+    context = {
+        'txt': ins,
+        # 'total':total
+    }
+    return redirect('account:employeeTimesheet')
 def timein(request):
-    userid = request.user.employeeprofile.employee_user.id
+    userid = request.user.employeeprofile
     if datetime.today().isoweekday() == 1:
-        today = TimeSheet.objects.get(staff__employee_user_id=userid,Day="Monday")
+        today = TimeSheet.objects.get(staff=userid,Day="Monday",isLast=False)
         today.timeIn = datetime.now()
         today.save()
     elif datetime.today().isoweekday() == 2:
-        today = TimeSheet.objects.get(staff__employee_user_id=userid,Day="Tuesday")
+        today = TimeSheet.objects.get(staff=userid,Day="Tuesday",isLast=False)
         today.timeIn = datetime.now()
         today.save()
     elif datetime.today().isoweekday() == 3:
-        today = TimeSheet.objects.get(staff__employee_user_id=userid,Day="Wensday")
+        today = TimeSheet.objects.get(staff=userid,Day="Wensday",isLast=False)
         today.timeIn = datetime.now()
         today.save()
     elif datetime.today().isoweekday() == 4:
-        today = TimeSheet.objects.get(staff__employee_user_id=userid,Day="Thursday")
+        today = TimeSheet.objects.get(staff=userid,Day="Thursday",isLast=False)
         today.timeIn = datetime.now()
         today.save()
     elif datetime.today().isoweekday() == 5:
-        today = TimeSheet.objects.get(staff__employee_user_id=userid,Day="Friday")
+        today = TimeSheet.objects.get(staff=userid,Day="Friday",isLast=False)
         today.timeIn = datetime.now()
         today.save()
-    return redirect('account:timesheettest')
+    return redirect('account:employeeTimesheet')
 
 def timeout(request):
-    userid = request.user.employeeprofile.employee_user.id
+    userid = request.user.employeeprofile
     if datetime.today().isoweekday() == 1:
-        today = TimeSheet.objects.get(staff__employee_user_id=userid, Day="Monday")
+        today = TimeSheet.objects.get(staff=userid, Day="Monday",isLast=False)
         today.timeOut = datetime.now()
         today.save()
     elif datetime.today().isoweekday() == 2:
-        today = TimeSheet.objects.get(staff__employee_user_id=userid, Day="Tuesday")
+        today = TimeSheet.objects.get(staff=userid, Day="Tuesday",isLast=False)
         today.timeOut = datetime.now()
         today.save()
     elif datetime.today().isoweekday() == 3:
-        today = TimeSheet.objects.get(staff__employee_user_id=userid, Day="Wensday")
+        today = TimeSheet.objects.get(staff=userid, Day="Wensday",isLast=False)
         today.timeOut = datetime.now()
         today.save()
     elif datetime.today().isoweekday() == 4:
-        today = TimeSheet.objects.get(staff__employee_user_id=userid, Day="Thursday")
+        today = TimeSheet.objects.get(staff=userid, Day="Thursday",isLast=False)
         today.timeOut = datetime.now()
         today.save()
     elif datetime.today().isoweekday() == 5:
-        today = TimeSheet.objects.get(staff__employee_user_id=userid, Day="Friday")
+        today = TimeSheet.objects.get(staff=userid, Day="Friday",isLast=False)
         today.timeOut = datetime.now()
         today.save()
 
-    return redirect('account:timesheettest')
+    return redirect('account:employeeTimesheet')
 
 def total(request):
     user = request.user.employeeprofile.employee_user.id
@@ -106,10 +132,10 @@ def total(request):
     test4 = TimeSheet.objects.get(Day='Thursday', staff__employee_user_id=user)
     test5 = TimeSheet.objects.get(Day='Friday', staff__employee_user_id=user)
     total = round(test3.hour()+test1.hour()+test2.hour()+test4.hour()+test5.hour(),2)
-    context={
-        'total':total
-    }
-    return render(request,'account/timesheettest.html',context)
+    # context={
+    #     'total':total
+    # }
+    return render(request,'account/Timesheet.html')
 # --
 
 def admintimesheet(request):
@@ -394,8 +420,7 @@ def employeeDashboard(request):
     else:
         return HttpResponse("you are not staff")
 
-def employeeTimesheet(request):
-    return render(request, 'account/Timesheet.html')
+
 
 
 
@@ -664,11 +689,11 @@ def staffLogin(request):
                     groupname = GroupEmployee.objects.get(pk=1)
                     eploprofile, created = EmployeeProfile.objects.get_or_create(employee_user=user,group=groupname)
                     tt = request.user.employeeprofile
-                    ts1, created = TimeSheet.objects.get_or_create(staff=tt, Day="Monday")
-                    ts2, created = TimeSheet.objects.get_or_create(staff=tt, Day="Tuesday")
-                    ts3, created = TimeSheet.objects.get_or_create(staff=tt, Day="Wensday")
-                    ts4, created = TimeSheet.objects.get_or_create(staff=tt, Day="Thursday")
-                    ts5, created = TimeSheet.objects.get_or_create(staff=tt, Day="Friday")
+                    ts1, created = TimeSheet.objects.get_or_create(staff=tt, Day="Monday",isLast=False)
+                    ts2, created = TimeSheet.objects.get_or_create(staff=tt, Day="Tuesday",isLast=False)
+                    ts3, created = TimeSheet.objects.get_or_create(staff=tt, Day="Wensday",isLast=False)
+                    ts4, created = TimeSheet.objects.get_or_create(staff=tt, Day="Thursday",isLast=False)
+                    ts5, created = TimeSheet.objects.get_or_create(staff=tt, Day="Friday",isLast=False)
                     eploprofile.save()
                     ts1.save()
                     ts2.save()
