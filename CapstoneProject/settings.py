@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_google_maps',
-    'background_task',
+
 
 
 
@@ -139,7 +139,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 
 # AIzaSyCvTF4JKso7zjNZqQbpQugNRMmOUcnoiKQ
-GOOGLE_MAPS_API_KEY = os.environ.get('MAPAPI')
+GOOGLE_MAPS_API_KEY = 'AIzaSyCvTF4JKso7zjNZqQbpQugNRMmOUcnoiKQ'
 
 django_heroku.settings(locals())
 
