@@ -1,4 +1,4 @@
-from background_task import background
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.views.generic import DetailView
@@ -14,7 +14,7 @@ from datetime import datetime,date
 from django.core.mail import send_mail
 import time
 import json
-import schedule
+
 
 
 
