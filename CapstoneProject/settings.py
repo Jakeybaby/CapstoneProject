@@ -145,10 +145,11 @@ GOOGLE_MAPS_API_KEY = 'AIzaSyCvTF4JKso7zjNZqQbpQugNRMmOUcnoiKQ'
 django_heroku.settings(locals())
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'dcf19960828@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get('EMPS')
+EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = os.environ.get('EMPS')
+EMAIL_HOST_PASSWORD = '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'
 EMAIL_USE_TLS = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

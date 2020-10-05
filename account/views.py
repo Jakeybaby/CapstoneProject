@@ -290,7 +290,7 @@ def adminOrder(request, pk):
             send_mail(
                 'New Job Request',
                 'You have a New Order Request to' + str(subject) + ' on ' + str(jobdate) + '\n' +'Please Login in to Your Account to Confirm it',
-                'dcf19960828@gmail.com',
+                'dengc05@myunitec.ac.nz',
                 [em],
                 fail_silently=False,
             )
@@ -330,7 +330,7 @@ def adminHiringOrder(request, pk):
             send_mail(
                 'New Job Request',
                 'You have a Hiring Order Required to deliver to ' + str(subject) + 'on' +str(deliverdate) + '\n' +'Please Login in to Your Account to Confirm it',
-                'dcf19960828@gmail.com',
+                'dengc05@myunitec.ac.nz',
                 [em],
                 fail_silently=False,
             )
