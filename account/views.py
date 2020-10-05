@@ -713,8 +713,8 @@ def staffLogin(request):
                 login(request, user)
                 if not request.user.is_superuser and request.user.is_staff:
                     # this code below is script code
-                    groupname = GroupEmployee.objects.get(pk=1)
-                    eploprofile, created = EmployeeProfile.objects.get_or_create(employee_user=user,group=groupname)
+                    # groupname = GroupEmployee.objects.get(pk=1)
+                    eploprofile, created = EmployeeProfile.objects.get_or_create(employee_user=user)
                     tt = request.user.employeeprofile
                     ts1, created = TimeSheet.objects.get_or_create(staff=tt, Day="Monday",isLast=False)
                     ts2, created = TimeSheet.objects.get_or_create(staff=tt, Day="Tuesday",isLast=False)
