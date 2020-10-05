@@ -70,4 +70,9 @@ urlpatterns =[
     path('timeout/', views.timeout, name='timeout'),
     path('total/', views.total, name='total'),
     path('reset/', views.reset, name='reset'),
+    path('applyleave/', views.applyleavePage, name='applyleavePage'),
+    path('applyleave_form/', views.applyleave, name='applyleave'),
+    path('approvalleave/<int:pk>/', views.approval_leave, name='approval_leave'),
+    path('rejectleave/<int:pk>/', views.reject_leave, name='reject_leave'),
+    path('adminviewstafftimesheet/<int:pk>/', views.adminviewstafftimesheet, name='adminviewstafftimesheet'),
 ]

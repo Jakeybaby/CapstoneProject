@@ -57,11 +57,11 @@
               More
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
+                 <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
               <a class="dropdown-item" href="{% url 'account:adminmanageleave'%}">Manage Leaves</a>
                 <a class="dropdown-item" href="{% url 'account:managePortal'%}">Learning Portal</a>
-                <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Equipments</a>
-                <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Services</a>
+                <a class="dropdown-item" href="#">Manage Equipments</a>
+                <a class="dropdown-item"href="#">Manage Services</a>
             </div>
             </li>
 
@@ -91,15 +91,31 @@
     </nav>
    <div class="container">
 <h2 style="padding: 30px 0px;">Timesheet</h2>
-      {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-        <h1>{{ message }}</h1>
-    </li>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Employee Name</th>
+
+          <th>View Timesheet</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for i in member %}
+      <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.employee_user.first_name }} {{ i.employee_user.last_name }}</td>
+
+
+      <td> <a href="{{ i.viewtimesheet }}"> <button class="btn text-primary">View </button></a></td>
+      </tr>
+
+
     {% endfor %}
-</ul>
-{% endif %}
+          </tbody>
+  </table>
 
 
 </div>

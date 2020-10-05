@@ -62,59 +62,64 @@
          <a href="#">
           <button class="btn btn-link my-2 my-sm-0"  type="submit"><img src="{% static 'Images/logout.png'%}" height="45px;"></button>
         </a>
-        
+
         </span>
       </div>
     </nav>
 
 
     <div class="container">
-        <h2 style="padding: 30px 0px;">Timesheet</h2>
-        <table class="table table-hover" cellpadding="4" cellspacing="0">
-  <tbody>
-  <tr style="background:#ddd;" class="header_row">
-    <td>Days</td>
-      <!--<td>Date</td>-->
-    <td>Starting Time</td>
-    <td>Ending Time</td>
-    <td>Total Hours</td>
-      <td></td>
-  </tr>
-{% for i in txt %}
-    {% if i.isLast == False %}
-      <tr style="background:#eee;">
-          <td>{{ i }}</td>
-          <td>
-              {% if not i.timeIn %}
-                  None
-                  {% else %}
-                  {{ i.ti }}
-              {% endif %}
-          </td>
-          <td>
-              {% if not i.timeOut %}
-                  None
-                  {% else %}
-                  {{ i.to }}
-              {% endif %}
-          </td>
+        <h2 style="padding: 30px 0px;">Apply for Leave</h2>
 
-          <td></td>
+        <form method="post" action="/applyleave_form/">
+            {% csrf_token %}
+            Start Date:<input type="date" name="a">
+            End Date:<input type="date" name="b">
+            Note:<input type="text" name="c">
+            <button type="submit">Apply</button>
+        </form>
+
+
+
+    <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Start Date</th>
+          <th>End Date</th>
+       <th>Note</th>
+          <th>Status</th>
+
       </tr>
-    {% endif %}
+    </thead>
+    <tbody>
+         {% for i in object %}
+
+
+      <tr>
+        <td>{{ i.id }}</td>
+        <td>{{i.StartDate}}</td>
+        <td>{{i.EndDate}}</td>
+          <td>{{i.note}}</td>
+            <td>
+                {% if i.isApproval == False and i.isReject == False %}
+                        Pending
+                    {% elif i.isApproval == True %}
+                        Approval
+                    {% elif i.isReject == True %}
+                        Reject
+                {% endif %}
+            </td>
+
+
+
+
+      </tr>
+
 {% endfor %}
+          </tbody>
+  </table>
 
-  <tr>
-    <td colspan="5" align="right" id="stots"><b>Total Hrs = 0</b></td>
-
-  </tr>
-
-</tbody>
-</table>
-    <a href="{% url 'account:timein'%}">check in</a><br>
-<a href="{% url 'account:timeout'%}">check out</a><br>
-<a href="{% url 'account:reset'%}">reset</a><br>
-    <a href="{% url 'account:applyleavePage'%}">Apply for a leave</a>
     </div>
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>
@@ -122,3 +127,6 @@
 
 </body>
 </html>
+
+
+

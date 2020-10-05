@@ -139,7 +139,19 @@ def total(request):
 # --
 
 def admintimesheet(request):
-    return render(request,'account/admintimesheet.html')
+    memeber = EmployeeProfile.objects.all()
+
+    context = {'member': memeber}
+    return render(request,'account/admintimesheet.html',context)
+
+def adminviewstafftimesheet(request,pk):
+    ins = EmployeeProfile.objects.filter(employee_user=pk)
+    context= {
+        'object': ins
+    }
+
+
+    return render(request,'account/adminviewstafftimesheet.html',context)
 
 # book a security service function
 @login_required(login_url='account:login')
@@ -252,6 +264,7 @@ def adminOrder(request, pk):
     order = Order.objects.get(id=pk)
     num = order.id
     form = adminform(instance=order)
+    form.fields['geolocation'].widget = forms.HiddenInput()
     form.fields['employee_order'].choices = list()
     for k in GroupEmployee.objects.all():
         # Append the tuple of OptGroup Name, Organism.
@@ -291,6 +304,7 @@ def adminHiringOrder(request, pk):
     order = HiringOrder.objects.get(id=pk)
     num = order.id
     form = adminHiringform(instance=order)
+    form.fields['geolocation'].widget = forms.HiddenInput()
     form.fields['employee_order'].choices = list()
     for k in GroupEmployee.objects.all():
         # Append the tuple of OptGroup Name, Organism.
@@ -384,6 +398,7 @@ def adminManageEmployee(request,pk):
         form = adminManageEmployeeform(request.POST, instance=emp)
         if form.is_valid():
             form.save()
+            return redirect('account:adminemployeepage')
 
     context = {'form':form}
     return render(request,'account/adminManageEmployee.html',context)
@@ -542,7 +557,19 @@ def decline_ServiceOrder(request, pk):
     return redirect('account:employee_dashboard')
 
 
+def approval_leave(request, pk):
+    ins = get_object_or_404(leave, pk=pk)
+    ins.isApproval = True
+    ins.save()
 
+    return redirect('account:adminmanageleave')
+
+def reject_leave(request, pk):
+    ins = get_object_or_404(leave, pk=pk)
+    ins.isReject = True
+    ins.save()
+
+    return redirect('account:adminmanageleave')
 
 
 def checkout(request):
@@ -633,7 +660,7 @@ def EmployeeRegiser(request):
         form = EmployeeRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('account:stafflogin')
+            return redirect('account:adminemployeepage')
     else:
         form = EmployeeRegisterForm(initial={'is_staff': True})
 
@@ -768,7 +795,11 @@ def updateItem(request):
 
 
 def adminmanageleave(request):
-    return render(request,'account/adminmanageleave.html')
+    ins = leave.objects.all()
+    context={
+        'object':ins
+    }
+    return render(request,'account/adminmanageleave.html',context)
 
 
 def pickuporder(request):
@@ -860,3 +891,21 @@ def staffprofile(request):
 
     return render(request,'account/staffManageProfile.html',context)
 
+def applyleave(request):
+    us = request.user.employeeprofile
+    startdate = request.POST['a']
+    enddate = request.POST['b']
+    s = request.POST['c']
+    leaveapply = leave.objects.create(staff=us,StartDate=startdate,EndDate=enddate,note=s)
+
+    return redirect('account:applyleavePage')
+
+
+def applyleavePage(request):
+    ins = leave.objects.filter(staff=request.user.employeeprofile)
+
+    context={
+        'object':ins
+    }
+
+    return render(request,'account/staffapplyleave.html',context)

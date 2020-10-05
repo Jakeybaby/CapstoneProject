@@ -38,7 +38,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'account:HireEquipement'%}">Manage Timesheets</a>
+            <a class="nav-link" href="{% url 'account:admintimesheet'%}">Manage Timesheets</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'account:pickuporder'%}">Equip Pick up</a>
@@ -48,11 +48,11 @@
               More
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'account:PropertyMaintenance'%}">Manage Employee</a>
-              <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Leaves</a>
-                <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Learning Portal</a>
-                <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Equipments</a>
-                <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Services</a>
+              <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
+              <a class="dropdown-item" href="{% url 'account:adminmanageleave'%}">Manage Leaves</a>
+                <a class="dropdown-item" href="{% url 'account:managePortal'%}">Learning Portal</a>
+                <a class="dropdown-item" href="#">Manage Equipments</a>
+                <a class="dropdown-item" href="#">Manage Services</a>
 
             </div>
           </li>

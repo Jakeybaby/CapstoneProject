@@ -1,6 +1,6 @@
-{% load static %}
-{% load crispy_forms_tags %}
+
 <!doctype html>
+{% load static %}
 <html xmlns="http://www.w3.org/1999/html">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,8 +23,6 @@
             }
         },5000)
     </script>
-      {{ form.media }}
-    <link href="{% static 'css/google-map-admin.css'%}" rel="stylesheet" type="text/css">
   </head>
   <body>
 
@@ -60,7 +58,7 @@
               More
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-               <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
+                <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
               <a class="dropdown-item" href="{% url 'account:adminmanageleave'%}">Manage Leaves</a>
                 <a class="dropdown-item" href="{% url 'account:managePortal'%}">Learning Portal</a>
                 <a class="dropdown-item" href="#">Manage Equipments</a>
@@ -93,38 +91,37 @@
       </div>
     </nav>
    <div class="container">
-      {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-        <h1>{{ message }}</h1>
-    </li>
+       {% for i in object %}
+<h2 style="padding: 30px 0px;">{{ i.employee_user.first_name }}'s Timesheet</h2>
+    <table class="table table-hover" cellpadding="4" cellspacing="0">
+  <tbody>
+
+  <tr style="background:#ddd;" class="header_row">
+    <td>Days</td>
+      <!--<td>Date</td>-->
+    <td>Starting Time</td>
+    <td>Ending Time</td>
+
+
+  </tr>
+  <tr>
+  {% for a in i.timesheet_set.all %}
+      {% if a.isLast == False %}
+          <td>{{a.Day}}</td>
+           <td>{{a.timeIn}}</td>
+           <td>{{a.timeOut}}</td>
+  </tr>
+      {% endif %}
     {% endfor %}
-</ul>
-{% endif %}
-    <div class="row">
-	<div class="col-md-6">
-		<div class="card card-body">
+</tbody>
+</table>
+{% endfor %}
 
-			<form action="" method="POST">
-				{% csrf_token %}
-{#				Employee :{{ form.employee_order}}<br><br>#}
-{#                Address :{{ form.address }}#}
-{#                {{ form.geolocation.as_hidden }}#}
-                {{ form|crispy }}
-
-
-				<input type="submit" name="Submit">
-
-			</form>
-            <input type="button" value="Back" onclick="history.back()">
-		</div>
-	</div>
 </div>
-
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>
   </footer>
    </div>
 </body>
 </html>
+

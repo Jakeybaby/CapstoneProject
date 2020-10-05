@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_google_maps',
+    'crispy_forms'
 
 
 
@@ -150,6 +151,6 @@ EMAIL_HOST_USER = 'dcf19960828@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMPS')
 EMAIL_USE_TLS = True
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 

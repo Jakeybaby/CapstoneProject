@@ -41,7 +41,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'account:HireEquipement'%}">Manage Timesheets</a>
+            <a class="nav-link" href="{% url 'account:admintimesheet'%}">Manage Timesheets</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'account:pickuporder'%}">Equip Delivery</a>
@@ -51,11 +51,11 @@
               More
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
+                <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
               <a class="dropdown-item" href="{% url 'account:adminmanageleave'%}">Manage Leaves</a>
                 <a class="dropdown-item" href="{% url 'account:managePortal'%}">Learning Portal</a>
-                <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Equipments</a>
-                <a class="dropdown-item" href="{% url 'account:BookSecurity'%}">Manage Services</a>
+                <a class="dropdown-item" href="#">Manage Equipments</a>
+                <a class="dropdown-item"href="#">Manage Services</a>
             </div>
             </li>
 
@@ -79,16 +79,56 @@
 
 
        <h4 style="padding-bottom: 20px;">Leave Requests</h4>
-          <div class="col-sm w-75 ">
-              <div class="card border border-secondary">
-                  <div class="card-body">
-                      <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-link">Decline</a>
-                      <a href="#" class="btn btn-link">Accept</a>
-                  </div>
-              </div>
-            </div>
+         <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Staff</th>
+        <th>Start Date</th>
+          <th>End Date</th>
+       <th>Note</th>
+          <th>Status</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+
+        {% for i in object %}
+      <tr>
+        <td>{{ i.staff.employee_user.first_name }} {{ i.staff.employee_user.last_name }}</td>
+        <td>{{i.StartDate}}</td>
+          <td>{{i.EndDate}}</td>
+          <td>{{i.note}}</td>
+          <td>
+                {% if i.isApproval == False and i.isReject == False %}
+                        Pending
+                    {% elif i.isApproval == True %}
+                        Approval
+                    {% elif i.isReject == True %}
+                        Reject
+                {% endif %}
+            </td>
+      <td>
+          {% if i.isApproval or i.isReject %}
+              --
+              {% else %}
+                <a href="{{ i.approval }}">Approval</a>
+          {% endif %}
+
+      </td>
+       <td>
+           {% if i.isApproval or i.isReject %}
+              --
+              {% else %}
+                <a href="{{ i.reject }}">Reject</a>
+          {% endif %}
+
+       </td>
+      </tr>
+
+    {% endfor %}
+          </tbody>
+  </table>
 
 </div>
   <footer class="footer bg-dark">

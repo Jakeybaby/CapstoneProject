@@ -32,12 +32,29 @@ class EmployeeProfile(models.Model):
     def get_absolute_url(self):
         return reverse('account:adminManageEmployee',kwargs={"pk":self.id})
 
+    def viewtimesheet(self):
+        return reverse('account:adminviewstafftimesheet', kwargs={"pk": self.employee_user_id})
+
     def __str__(self):
-        return self.employee_user.username
+        return self.employee_user.first_name
 
 
+class leave(models.Model):
+    StartDate = models.DateField(default=datetime.now,null=True,blank=True)
+    EndDate = models.DateField(null=True, blank=True)
+    staff = models.ForeignKey(EmployeeProfile,on_delete=models.CASCADE)
+    note = models.CharField(max_length=255,null=True,blank=True)
+    isApproval = models.BooleanField(default=False)
+    isReject = models.BooleanField(default=False)
 
+    def __str__(self):
+        return str(self.id)
 
+    def approval(self):
+        return reverse('account:approval_leave', kwargs={"pk":self.id})
+
+    def reject(self):
+        return reverse('account:reject_leave', kwargs={"pk":self.id})
 
 
 class TimeSheet(models.Model):

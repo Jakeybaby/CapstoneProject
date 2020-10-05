@@ -84,11 +84,11 @@
         <fieldset>
           <div class="form-group">
             <label for="exampleInputName" >Full Name:</label>
-            <input type="text" class="form-control w-50 " id="exampleInputName" placeholder="Enter your full name" name="fullname">
+            <input type="text" class="form-control w-50 " id="exampleInputName" placeholder="Enter your full name" name="fullname" required>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail" >Email:</label>
-            <input type="Email" class="form-control w-50" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter your e-mail">
+            <input type="Email" class="form-control w-50" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter your e-mail" required>
           </div>
 {#          <div class="form-group row">#}
 {#            <label class="col-sm-3" for="exampleInputAddress" style="float: right;">Address:</label>#}
@@ -96,18 +96,18 @@
 {#          </div>#}
           <div class="form-group">
             <label for="exampleInputPhone" >Mobile Number:</label>
-            <input type="text" class="form-control w-50" id="exampleInputName" placeholder="+64" name="service_phone">
+            <input type="text" class="form-control w-50" id="exampleInputName" placeholder="+64" name="service_phone" required>
           </div>
             
           <form action="" class="row" style="padding-bottom: 50px;">
             <label for="bookingdate" >Booking date:</label><br>
-            <input  class="w-50" type="datetime-local" id="leashdate" name="servicedate">
+            <input  class="w-50" type="datetime-local" id="leashdate" name="servicedate" required>
             <!--<input type="submit">-->
           </form><br>
           <div class="form-group" style="padding: 30px 0px;">
             <label for="exampleSelect1">Types of services:</label>
 
-            <select class="form-control w-50" id="serviceoptions" name="servicename">
+            <select class="form-control w-50" id="serviceoptions" name="servicename" required>
                 <option disabled selected value> -- select an option -- </option>
                 {% for i in services %}
                     <option value="{{ i.id }}" data-price="{{ i.price }}">{{i.name}}</option>
