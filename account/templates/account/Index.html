@@ -109,9 +109,9 @@
   <div class="jumbotron">
     <h3 class="display-5">Our Services</h3>
       <div class="row">
-    <a class="btn btn-lg shadow p-3 mb-5 rounded col-sm-3" href="{% url 'account:BookSecurity'%}" role="button" style="margin: 10px 40px;"><img src="{% static 'Images/logo1.png' %}"><p>Security</p></a>
-    <a class="btn btn-lg shadow p-3 mb-5 rounded col-sm-3" href="{% url 'account:HireEquipement' %}" role="button"  style="margin: 10px 40px;"><img src="{% static 'Images/logo1.png' %}"><p>Hire Equipment</p></a>
-    <a class="btn btn-lg shadow p-3 mb-5 rounded col-sm-3" href="{% url 'account:PropertyMaintenance'%}" role="button"  style="margin: 10px 40px;"><img src="{% static 'Images/logo1.png' %}"><p>Property Maintenance</p></a>
+    <a class="btn btn-lg shadow p-3 mb-5 rounded col-sm-3" href="{% url 'account:BookSecurity'%}" role="button" style="margin: 10px 40px;"><img src="{% static 'Images/Logo1.png' %}"><p>Security</p></a>
+    <a class="btn btn-lg shadow p-3 mb-5 rounded col-sm-3" href="{% url 'account:HireEquipement' %}" role="button"  style="margin: 10px 40px;"><img src="{% static 'Images/Logo1.png' %}"><p>Hire Equipment</p></a>
+    <a class="btn btn-lg shadow p-3 mb-5 rounded col-sm-3" href="{% url 'account:PropertyMaintenance'%}" role="button"  style="margin: 10px 40px;"><img src="{% static 'Images/Logo1.png' %}"><p>Property Maintenance</p></a>
   </div>
       </div>
   <hr class="my-4">
@@ -125,12 +125,8 @@
               {% if i.feedbackCTE %}
         <div class="carousel-item">
             {{ i.cus_order.cus_user.first_name }}'s Feedback :{{ i.feedbackCTE }}<br>
-            Regard the Job :
-            {% for a in i.propertyorder_set.all %}
-                        {{ a.property_service }}
-            {% endfor %}
-
         </div>
+
               {% endif %}
          {% endfor %}
       </div>
