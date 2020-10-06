@@ -19,7 +19,11 @@ import json
 
 
 def index(request):
-    return render(request, 'account/Index.html')
+    ins = Order.objects.all()
+    context={
+        'object':ins
+    }
+    return render(request, 'account/Index.html',context)
 
 
 def about(request):

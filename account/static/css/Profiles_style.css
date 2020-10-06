@@ -28,7 +28,9 @@ body {
     height: 120px;
     width: 120px;
 }
-
+.form-inline .user{
+    color:#34987a;
+  }
 .grid-container {
         display: grid;
         background-color: #333b3f;
@@ -149,4 +151,14 @@ li a{
 .card{
     margin-bottom: 20px;
     padding: 0;
+}
+
+.btn a:hover{
+    text-decoration: none;
+    background-color: transparent;
+    color: white;
+}
+
+.w-50{
+    width: 50%!important;
 }

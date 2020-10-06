@@ -55,15 +55,22 @@
             </div>
           </li>
         </ul>
-        <span class="form-inline my-2 my-lg-0">
-            <a href="{% url 'account:index'%}">
-                <button class="btn btn-link my-2 my-sm-0"  type="submit">Back to Mainpage</button>
-              </a>
-         <a href="#">
-          <button class="btn btn-link my-2 my-sm-0"  type="submit"><img src="{% static 'Images/logout.png'%}" height="45px;"></button>
-        </a>
-        
-        </span>
+        <span class="form-inline my-2 my-lg-0" style="color: #34987a;">
+          <div> {% if request.user.is_authenticated %}
+            Hello, {{ request.user }}
+          </div>
+       <a href="{% url 'account:logout' %}">
+        <button class="btn btn-link my-2 my-sm-0" style="margin: 10px;">logout</button>
+      </a>
+
+              {% else %}
+              <a href="{% url 'account:login' %}">
+        <button class="btn btn-link my-2 my-sm-0" style="margin: 10px;">Login</button>
+      </a>
+
+          {% endif %}
+
+      </span>
       </div>
     </nav>
 
@@ -78,7 +85,7 @@
     <td>Starting Time</td>
     <td>Ending Time</td>
     <td>Total Hours</td>
-      <td></td>
+
   </tr>
 {% for i in txt %}
     {% if i.isLast == False %}
@@ -86,14 +93,14 @@
           <td>{{ i }}</td>
           <td>
               {% if not i.timeIn %}
-                  None
+                 --
                   {% else %}
                   {{ i.ti }}
               {% endif %}
           </td>
           <td>
               {% if not i.timeOut %}
-                  None
+                 --
                   {% else %}
                   {{ i.to }}
               {% endif %}
@@ -111,10 +118,11 @@
 
 </tbody>
 </table>
-    <a href="{% url 'account:timein'%}">check in</a><br>
-<a href="{% url 'account:timeout'%}">check out</a><br>
-<a href="{% url 'account:reset'%}">reset</a><br>
-    <a href="{% url 'account:applyleavePage'%}">Apply for a leave</a>
+<div class="row Timesheet">
+<button class="btn btn-primary" style="padding: 5px 20px;margin: 25px 5px;"><a href="{% url 'account:timein'%}" style="text-decoration: none; color: white;">check in</a></button><br>
+<button class="btn btn-success" style="padding: 5px 20px;margin: 25px 5px;"><a href="{% url 'account:timeout'%}" style="text-decoration: none; color: white;">check out</a></button><br>
+<button class="btn btn-secondary" style="padding: 5px 20px;margin: 25px 5px;"><a href="{% url 'account:reset'%}" style="text-decoration: none; color: white;">reset</a></button><br>
+</div>
     </div>
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>

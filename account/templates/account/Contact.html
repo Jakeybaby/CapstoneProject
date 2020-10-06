@@ -56,47 +56,68 @@
           </li>
         </ul>
         <span class="form-inline my-2 my-lg-0">
-         <a href="{% url 'account:login' %}">
-          <button class="btn btn-link my-2 my-sm-0"  type="submit">Login</button>
-        </a>
-          <a href="{% url 'account:cart' %}"><button class="btn btn-link my-2 my-sm-0"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          {% if request.user.is_authenticated %}
+              Hello, {{ request.user }}
+
+              <a href="{% url 'account:customerOrder' %}">
+        <button class="btn btn-link my-2 my-sm-0"  >View all my order</button>
+      </a>
+      <a href="{% url 'account:logout' %}">
+        <button class="btn btn-link my-2 my-sm-0">logout</button>
+      </a>
+              {% else %}
+              <a href="{% url 'account:login' %}">
+        <button class="btn btn-link my-2 my-sm-0" >Login</button>
+      </a>
+
+          {% endif %}
+          <a href="{% url 'account:cart' %}" ><button class="btn btn-link my-2 my-sm-0"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
-          </svg></button></a>
-        </span>
+          </svg><span style="padding:10px;margin: 0px;">{{ cartItem }}</span></button></a>
+
+      </span>
       </div>
     </nav>
 
-      
-      
-      
-   <div class="container">  
-    <h2>Contact Us</h2>
-  
-    
-        <form action="/action_page.php">
-          <label for="fname">First Name</label>
-          <input type="text" id="fname" name="firstname" placeholder="Your name.."><br>
-      
-          <label for="lname">Last Name</label>
-          <input type="text" id="lname" name="lastname" placeholder="Your last name.."><br>
-      
-          <label for="country">Country</label>
-          <select id="country" name="country">
-            <option value="australia">Australia</option>
-            <option value="canada">Canada</option>
-            <option value="usa">USA</option>
-          </select><br>
-      
-          <label for="subject">Subject</label>
-          <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea><br>
-      
-          <input type="submit" value="Submit">
-        </form>
-      
-      <h2 style="padding-top: 60px;">Head Office</h2>
-      <hr class="my-4">
-        
-    </div>
+
+
+
+    <div class="container">
+      <h2 style="margin-top: 50px;">Contact Us</h2>
+
+
+          <form action="/action_page.php">
+            <label for="fname">First Name</label><br>
+            <input type="text" id="fname" name="firstname" placeholder="Your name.."><br>
+
+            <label for="lname">Last Name</label><br>
+            <input type="text" id="lname" name="lastname" placeholder="Your last name.."><br>
+
+            <label for="country">Country</label><br>
+            <select class="w-50" id="country" name="country">
+              <option value="australia">Australia</option>
+              <option value="canada">Canada</option>
+              <option value="usa">USA</option>
+            </select><br>
+
+            <label for="subject">Subject</label><br>
+            <textarea class="w-50" id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea><br>
+
+            <input type="submit" value="Submit">
+          </form>
+
+        <h2 style="padding-top: 60px;">Head Office</h2>
+        <hr class="my-4">
+         <div class="row" style="margin-bottom: 50px;">
+             <div class="col-md" style="text-align: left;padding: 50px 20px;"> <h4>Kaipara Security Services Ltd.</h4>
+                 <h5>139 Carrington Road, <br>Mount Albert, <br>Auckland 1025, NZ</h5><br>
+                 <div><img src="{% static 'Images/email.png'%}" style="height: 25px;margin: 0px 10px;">admin@KSPMS.co.nz</div><br>
+                 <div><img src="{% static 'Images/phone-call.png'%}" style="height: 25px;margin: 0px 10px;">0800 KAI PARA</div><br>
+             </div>
+             <div class="col-md"><a href="https://www.google.com/maps/place/Unitec+Institute+of+Technology,+Mt+Albert+Campus+Map/@-36.8809263,174.7032198,16z/data=!4m5!3m4!1s0x6d0d4720a3564dcf:0xac4fd7893e9a560f!8m2!3d-36.8809263!4d174.7075972"><img src="{% static 'Images/Map.png' %}" style="height: 300px;width: 300px;"></a>
+             </div>
+      </div>
+     </div>
     <footer class="grid-container">
       <div class="grid-item item1">
         <h5 style="text-decoration: underline;">Quick Links<br></h5>

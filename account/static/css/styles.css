@@ -29,7 +29,7 @@
       }
       .img-fluid{
           width: 100%;
-          height: 600px;
+          height: 900px;
       }
       .btn:hover{
           text-decoration: none;
@@ -43,8 +43,9 @@
           color: black;
           margin: 0;
           padding: 0;
-          
+
       }
+
 
       .jumbotron img{
         margin-bottom: 30px;

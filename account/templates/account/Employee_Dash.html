@@ -62,15 +62,22 @@
             </div>
           </li>
         </ul>
-        <span class="form-inline my-2 my-lg-0">
-          <a href="{% url 'account:index'%}">
-            <button class="btn btn-link my-2 my-sm-0"  type="submit">Back to Mainpage</button>
-          </a>
-         <a href="#">
-          <button class="btn btn-link my-2 my-sm-0"  type="submit"><img src="{% static 'Images/logout.png'%}" height="45px;"></button>
-        </a>
-        
-        </span>
+        <span class="form-inline my-2 my-lg-0" style="color: #34987a;">
+          <div> {% if request.user.is_authenticated %}
+            Hello, {{ request.user }}
+          </div>
+       <a href="{% url 'account:logout' %}">
+        <button class="btn btn-link my-2 my-sm-0" style="margin: 10px;">logout</button>
+      </a>
+
+              {% else %}
+              <a href="{% url 'account:login' %}">
+        <button class="btn btn-link my-2 my-sm-0" style="margin: 10px;">Login</button>
+      </a>
+
+          {% endif %}
+
+      </span>
       </div>
     </nav>
     <div class="container">

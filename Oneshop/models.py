@@ -189,16 +189,7 @@ class PropertyOrder(models.Model):
     def __str__(self):
         return str(self.id)
 
-#
-# class Feedback(models.Model):
-#     description = models.CharField(max_length=255, null=True, blank=True)
-#     customer = models.ForeignKey(CustomerProfile, on_delete=models.SET_NULL, blank=True, null=True)
-#     employee = models.ForeignKey(EmployeeProfile, on_delete=models.SET_NULL, blank=True, null=True)
-#     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
-#     rate = models.IntegerField(default=0, null=True, blank=False)
-#
-#     def __str__(self):
-#         return str(self.description + ' The rate is:' + str(self.rate))
+
 
 
 
