@@ -66,6 +66,11 @@
               <a href="{% url 'account:customerOrder' %}">
           <button class="btn btn-link my-2 my-sm-0"  >My Account</button>
         </a>
+             {% elif request.user.is_authenticated and request.user.is_staff or request.user.is_superuser %}
+              Hello, {{ request.user }}
+         <a href="{% url 'account:logout' %}">
+          <button class="btn btn-link my-2 my-sm-0">logout</button>
+        </a>
 
                 {% else %}
                 <a href="{% url 'account:login' %}">
