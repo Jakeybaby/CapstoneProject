@@ -175,6 +175,7 @@
         <td>
             {% for i in hiring.cartitem_set.all %}
                 {{ i.equipment }} X {{ i.quantity }}<br>
+
                 {% endfor %}
         </td>
         <td>
@@ -187,9 +188,7 @@
       <td>{{ hiring.date_order }}</td>
         <td>{{ hiring.return_date }}</td>
         <td>
-            {% for i in hiring.cartitem_set.all %}
-                {{ i.get_total }}<br>
-                {% endfor %}
+            {{ hiring.get_cart_total }}
         </td>
         <td>
         {% if hiring.isPaid == False %}
@@ -233,9 +232,7 @@
       <td>{{ hiring.date_order }}</td>
         <td>{{ hiring.return_date }}</td>
         <td>
-            {% for i in hiring.cartitem_set.all %}
-                {{ i.get_total }}<br>
-                {% endfor %}
+            {{ hiring.get_cart_total }}
         </td>
         <td>
         {% if hiring.isPaid == False %}
