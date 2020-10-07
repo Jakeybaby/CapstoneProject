@@ -73,9 +73,9 @@
 
         <form method="post" action="/applyleave_form/">
             {% csrf_token %}
-            Start Date:<input type="date" name="a">
-            End Date:<input type="date" name="b">
-            Note:<input type="text" name="c">
+            Start Date:<input type="date" name="a" required>
+            End Date:<input type="date" name="b" required>
+            Note:<input type="text" name="c" required>
             <button type="submit">Apply</button>
         </form>
 
