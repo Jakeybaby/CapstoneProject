@@ -70,8 +70,11 @@
       <tr>
         <th>Job Id</th>
         <th>Job Required</th>
+          <th>Required date</th>
         <th>Job Status</th>
         <th>Order date</th>
+          <th>Price</th>
+          <th>Staff Member</th>
         <th>---</th>
       </tr>
     </thead>
@@ -82,10 +85,13 @@
     <tr>
         <td>{{ i.id }}</td>
         <td>{{ a.property_service }}</td>
+    <td>{{i.server_date}}</td>
         <td>
             Done
         </td>
       <td>{{ i.date_order }}</td>
+    <td>{{ a.property_service.price }}</td>
+    <td>{{ i.employee_order.employee_user.first_name }}</td>
         <td>
             {% if not i.feedbackCTE %}
              <a href="{{ i.customer_feedback_url }}"> <button class="btn text-primary">Feedback</button></a>
@@ -100,10 +106,13 @@
             <tr>
         <td>{{ i.id }}</td>
         <td>{{ b.security_service }}</td>
+            <td>{{i.server_date}}</td>
         <td>
             Done
         </td>
       <td>{{ i.date_order }}</td>
+            <td>{{ b.security_service.price }}</td>
+             <td>{{ i.employee_order.employee_user.first_name }}</td>
         <td>
         {% if not i.feedbackCTE %}
              <a href="{{ i.customer_feedback_url }}"> <button class="btn text-primary">Feedback</button></a>
@@ -124,9 +133,11 @@
     <thead>
       <tr>
         <th>Job Id</th>
-        <th>Equipment Leash</th>
+        <th>Equipment Lend</th>
         <th>Delivery Status</th>
         <th>Order date</th>
+          <th>Return date</th>
+          <th>Price</th>
         <th>---</th>
       </tr>
     </thead>
@@ -146,6 +157,12 @@
             Arrived
         </td>
       <td>{{ hiring.date_order }}</td>
+        <td>{{ hiring.return_date }}</td>
+        <td>
+            {% for i in hiring.cartitem_set.all %}
+                {{ i.get_total }}<br>
+                {% endfor %}
+        </td>
         <td>
         ---
         </td>

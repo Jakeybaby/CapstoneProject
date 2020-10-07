@@ -86,8 +86,11 @@
       <tr>
         <th>Job Id</th>
         <th>Job Required</th>
+          <th>Required date</th>
         <th>Job Status</th>
+          <th>Staff</th>
         <th>Order date</th>
+          <th>Pirce</th>
         <th>Payment</th>
       </tr>
     </thead>
@@ -98,6 +101,7 @@
                 <tr>
             <td>{{ i.id }}</td>
             <td>{{ a.property_service }}</td>
+                <td>{{i.server_date}}</td>
             <td>
                  {% if i.assigned == True %}
                     assigned
@@ -105,7 +109,9 @@
                     unassigned
                 {% endif %}
             </td>
+                <td>{{ i.employee_order.employee_user.first_name }}</td>
           <td>{{ i.date_order }}</td>
+                <td>{{ a.property_service.price }}</td>
             <td>
             {% if i.isPaid == False %}
                  <a href="{{ i.payserviceorder }}"> <button class="btn text-primary">Pay</button></a>
@@ -120,6 +126,7 @@
                 <tr>
             <td>{{ i.id }}</td>
             <td>{{ b.security_service }}</td>
+                <td>{{i.server_date}}</td>
             <td>
                  {% if i.assigned == True %}
                     assigned
@@ -127,7 +134,9 @@
                     unassigned
                 {% endif %}
             </td>
+                <td>{{ i.employee_order.employee_user.first_name }}</td>
           <td>{{ i.date_order }}</td>
+                <td>{{ b.security_service.price }}</td>
             <td>
             {% if i.isPaid == False %}
                  <a href="{{ i.payserviceorder }}"> <button class="btn text-primary">Pay</button></a>
@@ -148,9 +157,11 @@
     <thead>
       <tr>
         <th>Job Id</th>
-        <th>Equipment Leash</th>
+        <th>Equipment Lend</th>
         <th>Job Status</th>
         <th>Order date</th>
+          <th>Return date</th>
+          <th>Price</th>
         <th>Payment</th>
       </tr>
     </thead>
@@ -174,6 +185,12 @@
             {% endif %}
         </td>
       <td>{{ hiring.date_order }}</td>
+        <td>{{ hiring.return_date }}</td>
+        <td>
+            {% for i in hiring.cartitem_set.all %}
+                {{ i.get_total }}<br>
+                {% endfor %}
+        </td>
         <td>
         {% if hiring.isPaid == False %}
              <a href="{{ hiring.payHiringorder }}"> <button class="btn text-primary">Pay</button></a>
@@ -194,8 +211,10 @@
     <thead>
       <tr>
         <th>Job Id</th>
-        <th>Equipment Leash</th>
+        <th>Equipment Lend</th>
         <th>Order date</th>
+          <th>Return date</th>
+          <th>Price</th>
         <th>Payment</th>
       </tr>
     </thead>
@@ -212,6 +231,12 @@
                 {% endfor %}
         </td>
       <td>{{ hiring.date_order }}</td>
+        <td>{{ hiring.return_date }}</td>
+        <td>
+            {% for i in hiring.cartitem_set.all %}
+                {{ i.get_total }}<br>
+                {% endfor %}
+        </td>
         <td>
         {% if hiring.isPaid == False %}
              <a href="{{ hiring.payHiringorder }}"> <button class="btn text-primary">Pay</button></a>
