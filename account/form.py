@@ -164,11 +164,26 @@ class orderfeedbackETC(ModelForm):
 
 
 class userprofileform(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['address'].required = True
+        self.fields['phone'].required = True
+
+
     class Meta:
         model = CustomerProfile
         fields = ['address','phone']
 
 class userinfoform(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].required = True
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+
+
     class Meta:
         model = User
         fields = ['first_name','last_name','email']

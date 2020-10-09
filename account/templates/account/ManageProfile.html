@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load crispy_forms_tags %}
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,7 +28,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top navbar-dark bg-dark">
 
-    <a class="navbar-brand" href="{% url 'account:customerOrder'%}">
+    <a class="navbar-brand" href="{% url 'account:index'%}">
           <img src="{% static 'Images/Logo11.png' %}" width="110" height="110" class="d-inline-block align-top" alt="" loading="lazy">
 
         </a>
@@ -83,8 +84,8 @@
     <h2 style="padding: 30px 0px;">Profile page</h2>
        <form method="post">
            {% csrf_token %}
-     {{ uform.as_p }}
-       {{ uinfoform.as_p }}
+     {{ uform|crispy }}
+       {{ uinfoform|crispy }}
        <button type="submit">yes</button>
            </form>
     </div>
