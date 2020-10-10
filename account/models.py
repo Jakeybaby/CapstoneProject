@@ -38,6 +38,14 @@ class EmployeeProfile(models.Model):
     def __str__(self):
         return self.employee_user.first_name
 
+    def aa(self):
+        try:
+            ss = self.timesheet_set.filter(isLast=False)
+            total = sum([item.hour() for item in ss])
+            return total
+        except TypeError:
+            pass
+
 
 class leave(models.Model):
     StartDate = models.DateField(default=datetime.now,null=True,blank=True)
@@ -71,7 +79,13 @@ class TimeSheet(models.Model):
         return self.timeOut.strftime("%H:%M:%S")
 
     def hour(self):
-        return round((self.timeOut - self.timeIn).seconds/60/60,2)
+        try:
+            # if self.timeIn and self.timeOut:
+                return round((self.timeOut - self.timeIn).seconds/60/60,2)
+            # elif self.timeIn == None or self.timeOut == None:
+            #     return int(0)
+        except TypeError:
+            return 0
 
     def __str__(self):
         return str(self.Day)

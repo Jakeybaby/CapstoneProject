@@ -43,37 +43,59 @@ def timesheettest(request):
     test3,created = TimeSheet.objects.get_or_create(Day='Wensday', staff=user, isLast=False)
     test4,created = TimeSheet.objects.get_or_create(Day='Thursday', staff=user, isLast=False)
     test5,created = TimeSheet.objects.get_or_create(Day='Friday', staff=user, isLast=False)
+    test6, created = TimeSheet.objects.get_or_create(Day='Saturday', staff=user, isLast=False)
+    test7, created = TimeSheet.objects.get_or_create(Day='Sunday', staff=user, isLast=False)
     # total = round(test3.hour() + test1.hour() + test2.hour() + test4.hour() + test5.hour(), 2)
     test1.save()
     test2.save()
     test3.save()
     test4.save()
     test5.save()
+    test6.save()
+    test7.save()
 
     context={
         'txt':ins,
+        'test':user
         # 'total':total
     }
     return render(request,'account/Timesheet.html',context)
 
 def reset(request):
     user = request.user.employeeprofile
+    firstname = request.user.first_name
+    fe = user.aa()
+    em = request.user.employeeprofile.employee_user.email
+    send_mail(
+        'Works hours of total this week',
+        str(firstname)+", Your works hour of this week is " + str(fe)+ " Hours",
+        'dengc05@myunitec.ac.nz',
+        [em],
+        fail_silently=False,
+    )
+    print(fe)
     ins = request.user.employeeprofile.timesheet_set.all().order_by('-id')
     test1 = TimeSheet.objects.get(Day='Monday', staff=user,isLast=False)
     test2 = TimeSheet.objects.get(Day='Tuesday', staff=user,isLast=False)
     test3 = TimeSheet.objects.get(Day='Wensday', staff=user,isLast=False)
     test4 = TimeSheet.objects.get(Day='Thursday', staff=user,isLast=False)
     test5 = TimeSheet.objects.get(Day='Friday', staff=user,isLast=False)
+    test6 = TimeSheet.objects.get(Day='Saturday', staff=user, isLast=False)
+    test7 = TimeSheet.objects.get(Day='Sunday', staff=user, isLast=False)
     test1.isLast = True
     test2.isLast = True
     test3.isLast = True
     test4.isLast = True
     test5.isLast = True
+    test6.isLast = True
+    test7.isLast = True
     test1.save()
     test2.save()
     test3.save()
     test4.save()
     test5.save()
+    test6.save()
+    test7.save()
     context = {
         'txt': ins,
         # 'total':total
@@ -83,63 +105,200 @@ def timein(request):
     userid = request.user.employeeprofile
     if datetime.today().isoweekday() == 1:
         today = TimeSheet.objects.get(staff=userid,Day="Monday",isLast=False)
-        today.timeIn = datetime.now()
-        today.save()
+        try:
+            if datetime.now().replace(tzinfo=None) - today.timeIn < timedelta(hours=23):
+                messages.success(request, "You already check in")
+            else:
+                today.timeIn = datetime.now()
+                today.save()
+        except TypeError:
+            today.timeIn = datetime.now()
+            today.save()
+
     elif datetime.today().isoweekday() == 2:
         today = TimeSheet.objects.get(staff=userid,Day="Tuesday",isLast=False)
-        today.timeIn = datetime.now()
-        today.save()
+        try:
+            if datetime.now().replace(tzinfo=None) - today.timeIn < timedelta(hours=23):
+                messages.success(request, "You already check in")
+            else:
+                today.timeIn = datetime.now()
+                today.save()
+        except TypeError:
+            today.timeIn = datetime.now()
+            today.save()
     elif datetime.today().isoweekday() == 3:
         today = TimeSheet.objects.get(staff=userid,Day="Wensday",isLast=False)
-        today.timeIn = datetime.now()
-        today.save()
+        try:
+            if datetime.now().replace(tzinfo=None) - today.timeIn < timedelta(hours=23):
+                messages.success(request, "You already check in")
+            else:
+                today.timeIn = datetime.now()
+                today.save()
+        except TypeError:
+            today.timeIn = datetime.now()
+            today.save()
     elif datetime.today().isoweekday() == 4:
         today = TimeSheet.objects.get(staff=userid,Day="Thursday",isLast=False)
-        today.timeIn = datetime.now()
-        today.save()
+        try:
+            if datetime.now().replace(tzinfo=None) - today.timeIn < timedelta(hours=23):
+                messages.success(request, "You already check in")
+            else:
+                today.timeIn = datetime.now()
+                today.save()
+        except TypeError:
+            today.timeIn = datetime.now()
+            today.save()
     elif datetime.today().isoweekday() == 5:
         today = TimeSheet.objects.get(staff=userid,Day="Friday",isLast=False)
-        today.timeIn = datetime.now()
-        today.save()
+        try:
+            if datetime.now().replace(tzinfo=None) - today.timeIn < timedelta(hours=23):
+                messages.success(request, "You already check in")
+            else:
+                today.timeIn = datetime.now()
+                today.save()
+        except TypeError:
+            today.timeIn = datetime.now()
+            today.save()
+    elif datetime.today().isoweekday() == 6:
+
+        today = TimeSheet.objects.get(staff=userid,Day="Saturday",isLast=False)
+        try:
+            if datetime.now().replace(tzinfo=None) - today.timeIn < timedelta(hours=23):
+                messages.success(request, "You already check in")
+            else:
+                today.timeIn = datetime.now()
+                today.save()
+        except TypeError:
+            today.timeIn = datetime.now()
+            today.save()
+    elif datetime.today().isoweekday() == 7:
+        today = TimeSheet.objects.get(staff=userid,Day="Sunday",isLast=False)
+
+        try:
+            if datetime.now().replace(tzinfo=None) - today.timeIn < timedelta(hours=23):
+                messages.success(request, "You already check in")
+            else:
+                today.timeIn = datetime.now()
+                today.save()
+        except TypeError:
+            today.timeIn = datetime.now()
+            today.save()
     return redirect('account:employeeTimesheet')
 
 def timeout(request):
     userid = request.user.employeeprofile
     if datetime.today().isoweekday() == 1:
         today = TimeSheet.objects.get(staff=userid, Day="Monday",isLast=False)
-        today.timeOut = datetime.now()
-        today.save()
+        if today.timeIn:
+            try:
+                if datetime.now().replace(tzinfo=None) - today.timeOut < timedelta(hours=23):
+                    messages.success(request, "You already check out")
+                else:
+                    today.timeOut = datetime.now()
+                    today.save()
+            except TypeError:
+                today.timeOut = datetime.now()
+                today.save()
+        else:
+            messages.success(request, "You haven't check in")
     elif datetime.today().isoweekday() == 2:
         today = TimeSheet.objects.get(staff=userid, Day="Tuesday",isLast=False)
-        today.timeOut = datetime.now()
-        today.save()
+        if today.timeIn:
+            try:
+                if datetime.now().replace(tzinfo=None) - today.timeOut < timedelta(hours=23):
+                    messages.success(request,"You already check out")
+                else:
+                    today.timeOut = datetime.now()
+                    today.save()
+            except TypeError:
+                today.timeOut = datetime.now()
+                today.save()
+        else:
+            messages.success(request,"You haven't check in")
     elif datetime.today().isoweekday() == 3:
         today = TimeSheet.objects.get(staff=userid, Day="Wensday",isLast=False)
-        today.timeOut = datetime.now()
-        today.save()
+        if today.timeIn:
+            try:
+                if datetime.now().replace(tzinfo=None) - today.timeOut < timedelta(hours=23):
+                    messages.success(request, "You already check out")
+                else:
+                    today.timeOut = datetime.now()
+                    today.save()
+            except TypeError:
+                today.timeOut = datetime.now()
+                today.save()
+        else:
+            messages.success(request, "You haven't check in")
     elif datetime.today().isoweekday() == 4:
         today = TimeSheet.objects.get(staff=userid, Day="Thursday",isLast=False)
-        today.timeOut = datetime.now()
-        today.save()
+        if today.timeIn:
+            try:
+                if datetime.now().replace(tzinfo=None) - today.timeOut < timedelta(hours=23):
+                    messages.success(request, "You already check out")
+                else:
+                    today.timeOut = datetime.now()
+                    today.save()
+            except TypeError:
+                today.timeOut = datetime.now()
+                today.save()
+        else:
+            messages.success(request, "You haven't check in")
     elif datetime.today().isoweekday() == 5:
         today = TimeSheet.objects.get(staff=userid, Day="Friday",isLast=False)
-        today.timeOut = datetime.now()
-        today.save()
-
+        if today.timeIn:
+            try:
+                if datetime.now().replace(tzinfo=None) - today.timeOut < timedelta(hours=23):
+                    messages.success(request, "You already check out")
+                else:
+                    today.timeOut = datetime.now()
+                    today.save()
+            except TypeError:
+                today.timeOut = datetime.now()
+                today.save()
+        else:
+            messages.success(request, "You haven't check in")
+    elif datetime.today().isoweekday() == 6:
+        today = TimeSheet.objects.get(staff=userid,Day="Saturday",isLast=False)
+        if today.timeIn:
+            try:
+                if datetime.now().replace(tzinfo=None) - today.timeOut < timedelta(hours=23):
+                    messages.success(request,"You already check out")
+                else:
+                    today.timeOut = datetime.now()
+                    today.save()
+            except TypeError:
+                today.timeOut = datetime.now()
+                today.save()
+        else:
+            messages.success(request,"You haven't check in")
+    elif datetime.today().isoweekday() == 7:
+        today = TimeSheet.objects.get(staff=userid,Day="Sunday",isLast=False)
+        if today.timeIn:
+            try:
+                if datetime.now().replace(tzinfo=None) - today.timeOut < timedelta(hours=23):
+                    messages.success(request, "You already check out")
+                else:
+                    today.timeOut = datetime.now()
+                    today.save()
+            except TypeError:
+                today.timeOut = datetime.now()
+                today.save()
+        else:
+            messages.success(request, "You haven't check in")
     return redirect('account:employeeTimesheet')
 
-def total(request):
-    user = request.user.employeeprofile.employee_user.id
-    test1 = TimeSheet.objects.get(Day='Monday', staff__employee_user_id=user)
-    test2 = TimeSheet.objects.get(Day='Tuesday', staff__employee_user_id=user)
-    test3 = TimeSheet.objects.get(Day='Wensday', staff__employee_user_id=user)
-    test4 = TimeSheet.objects.get(Day='Thursday', staff__employee_user_id=user)
-    test5 = TimeSheet.objects.get(Day='Friday', staff__employee_user_id=user)
-    total = round(test3.hour()+test1.hour()+test2.hour()+test4.hour()+test5.hour(),2)
-    # context={
-    #     'total':total
-    # }
-    return render(request,'account/Timesheet.html')
+# def total(request):
+#     user = request.user.employeeprofile.employee_user.id
+#     test1 = TimeSheet.objects.get(Day='Monday', staff__employee_user_id=user)
+#     test2 = TimeSheet.objects.get(Day='Tuesday', staff__employee_user_id=user)
+#     test3 = TimeSheet.objects.get(Day='Wensday', staff__employee_user_id=user)
+#     test4 = TimeSheet.objects.get(Day='Thursday', staff__employee_user_id=user)
+#     test5 = TimeSheet.objects.get(Day='Friday', staff__employee_user_id=user)
+#     total = round(test3.hour()+test1.hour()+test2.hour()+test4.hour()+test5.hour(),2)
+#     # context={
+#     #     'total':total
+#     # }
+#     return render(request,'account/Timesheet.html')
 # --
 
 def admintimesheet(request):
@@ -666,6 +825,8 @@ def EmployeeRegiser(request):
         form = EmployeeRegisterForm(request.POST)
         if form.is_valid():
             form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, 'Staff Account was created for ' + username)
             return redirect('account:adminemployeepage')
     else:
         form = EmployeeRegisterForm(initial={'is_staff': True})
@@ -727,12 +888,16 @@ def staffLogin(request):
                     ts3, created = TimeSheet.objects.get_or_create(staff=tt, Day="Wensday",isLast=False)
                     ts4, created = TimeSheet.objects.get_or_create(staff=tt, Day="Thursday",isLast=False)
                     ts5, created = TimeSheet.objects.get_or_create(staff=tt, Day="Friday",isLast=False)
+                    ts6, created = TimeSheet.objects.get_or_create(staff=tt, Day="Saturday", isLast=False)
+                    ts7, created = TimeSheet.objects.get_or_create(staff=tt, Day="Sunday", isLast=False)
                     eploprofile.save()
                     ts1.save()
                     ts2.save()
                     ts3.save()
                     ts4.save()
                     ts5.save()
+                    ts6.save()
+                    ts7.save()
 
                     return redirect('account:employee_dashboard')
                 elif request.user.is_superuser:
