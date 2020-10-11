@@ -13,6 +13,9 @@ from django.core.mail import send_mail
 import time
 import json
 
+import stripe
+
+stripe.api_key = "sk_test_51BURg0Bf2WXWLp3KNXQUXA19LuYZZO2GHw3JYmL96QDhgCgwBUfPcMgxqTtTNTFaMG0OkC2E6mbp2KGVTCnBRCWK0063yoA0WI"
 
 
 
@@ -299,41 +302,38 @@ def timeout(request):
 #     return render(request,'account/Timesheet.html')
 # --
 
+
 def admintimesheet(request):
     memeber = EmployeeProfile.objects.all()
 
     context = {'member': memeber}
     return render(request,'account/admintimesheet.html',context)
 
+
 def adminviewstafftimesheet(request,pk):
     ins = EmployeeProfile.objects.filter(employee_user=pk)
     context= {
         'object': ins
     }
-
-
     return render(request,'account/adminviewstafftimesheet.html',context)
+
 
 # book a security service function
 @login_required(login_url='account:login')
 def addservicebook_form(request):
     service_id = request.POST['servicename']
     service_notes = request.POST['description']
-
     service_date = request.POST['servicedate']
-
     service_user = request.user.customerprofile
     service_name = SecurityServices.objects.get(id=service_id)
     service_address = request.POST['address']
     service_geo = request.POST['geolocation']
     service_fullname = request.POST['fullname']
     service_phone = request.POST['service_phone']
-
     order = Order.objects.create(cus_order=service_user, complete=True, isService=True, server_date=service_date,
                                  address=service_address, geolocation=service_geo,fullName=service_fullname,phoneNumber=service_phone)
     securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name,
                                                                  notes=service_notes, date_required=service_date)
-
     securityorder.save()
     messages.success(request,'Success book order :'+ str(order.id))
     return redirect('account:customerOrder')
@@ -370,12 +370,10 @@ def BookPM(request):
         'services':services,
         "form": form
     }
-
     return render(request, 'account/BookPropertyMaintenance.html',context)
 
 
 def BookSecurity(request):
-
     services = SecurityServices.objects.all()
     form = servicebook_form()
     context = {
@@ -389,7 +387,6 @@ def BookSecurity(request):
 
 
 def assignedOrders(request):
-
     order = Order.objects.all()
     hiringorder = HiringOrder.objects.all()
     context = {
@@ -416,9 +413,9 @@ def adminpage(request):
     else:
         return HttpResponse("You are not admin")
 
+
 def adminemployeepage(request):
     memeber = EmployeeProfile.objects.all()
-
     context = {'member':memeber}
     return render(request,'account/adminemployeepage.html',context)
 
@@ -434,7 +431,6 @@ def adminOrder(request, pk):
         # Append the tuple of OptGroup Name, Organism.
         form.fields['employee_order'].choices.append(
             (
-
                 k.name,  # First tuple part is the optgroup name/label
                 list(  # Second tuple part is a list of tuples for each option.
                     (o.id, o.employee_user.first_name) for o in EmployeeProfile.objects.filter(group=k).order_by('employee_user')
@@ -532,26 +528,73 @@ def admindeletehiringorder(request,pk):
 
 def payserviceorder(request, pk):
 
+
     ins = get_object_or_404(Order, pk=pk)
+    aa = ins.propertyorder_set.all()
+    user = request.user
+
+    for i in aa:
+        ss = int(i.property_service.price)
+
     if request.method == "POST":
         ins.isPaid = True
         ins.save()
         messages.success(request, 'Order ' + str(ins.id) + ' has been paid')
+
+        customer = stripe.Customer.create(
+            email=user.email,
+            name=user.first_name,
+
+        )
+        charge = stripe.Charge.create(
+
+            amount = ss*100,
+            currency = 'nzd',
+            source='tok_visa',
+            description = 'test',
+        )
         return redirect('account:customerOrder')
 
-    return render(request, 'account/paymentPage.html')
+    context={
+        'ins':ins,
+        'user':user,
+        'ss':ss
+
+    }
+    return render(request, 'account/paymentPage.html',context)
 
 
 def payhiringorder(request, pk):
 
     ins = get_object_or_404(HiringOrder, pk=pk)
+    user = request.user
+    ss = int(ins.get_cart_total)
+
+
     if request.method == "POST":
         ins.isPaid = True
         ins.save()
         messages.success(request, 'Order ' + str(ins.id) + ' has been paid')
-        return redirect('account:customerOrder')
+        customer = stripe.Customer.create(
+            email=user.email,
+            name=user.first_name,
 
-    return render(request, 'account/paymentPage.html')
+        )
+        charge = stripe.Charge.create(
+
+            amount=ss * 100,
+            currency='nzd',
+            source='tok_visa',
+            description='test',
+        )
+        return redirect('account:customerOrder')
+    context = {
+        'ins': ins,
+        'user': user,
+        'ss': ss
+
+    }
+    return render(request, 'account/hiringpaymentPage.html',context)
 
 
 # admin to manage employee account and profile

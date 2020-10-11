@@ -113,7 +113,7 @@
     <div class="container" style="padding-top: 30px;">
         <h4>Payment</h4>
 
-        <form action="{% url 'account:payserviceorder' ins.id %}" method="post" id="payment-form">
+        <form action="{% url 'account:payhiringorder' ins.id %}" method="post" id="payment-form">
             {% csrf_token %}
   <div class="form" style="margin: 30px;">
       <div class="row main">
