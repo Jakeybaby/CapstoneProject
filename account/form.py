@@ -109,11 +109,13 @@ class adminHiringform(ModelForm):
 class adminManageEmployeeform(ModelForm):
     class Meta:
         model = EmployeeProfile
-        fields = ['employee_user','group']
+        fields = ['employee_user','group','phone','address']
 
     def __init__(self, *args, **kwargs):
         super(adminManageEmployeeform, self).__init__(*args, **kwargs)
         self.fields['employee_user'].disabled = True
+        self.fields['phone'].disabled = True
+        self.fields['address'].disabled = True
 
 
 class servicebook_form(ModelForm):

@@ -1,8 +1,6 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from django.views.generic import DetailView
-from .form import UserRegisterForm
 from .models import *
 from Oneshop.models import *
 from django.contrib.auth.decorators import login_required
@@ -407,13 +405,16 @@ def managePortal(request):
 
 @login_required(login_url='account:stafflogin')
 def adminpage(request):
-    order = Order.objects.all()
-    hiringorder = HiringOrder.objects.all()
-    context = {
-        'object': order,
-        'hiringorders':hiringorder
-    }
-    return render(request, 'account/Admin_D.html', context)
+    if request.user.is_superuser:
+        order = Order.objects.all()
+        hiringorder = HiringOrder.objects.all()
+        context = {
+            'object': order,
+            'hiringorders':hiringorder
+        }
+        return render(request, 'account/Admin_D.html', context)
+    else:
+        return HttpResponse("You are not admin")
 
 def adminemployeepage(request):
     memeber = EmployeeProfile.objects.all()
@@ -1044,17 +1045,17 @@ def staffprofile(request):
     u_form = staffprofileform(instance=request.user.employeeprofile)
     uinfo_form = staffinfoform(instance=request.user)
     if request.method == 'POST':
-        u_form = userprofileform(request.POST, instance=request.user.customerprofile)
-        uinfo_form = userinfoform(request.POST,instance=request.user)
+        u_form = staffprofileform(request.POST, instance=request.user.employeeprofile)
+        uinfo_form = staffinfoform(request.POST,instance=request.user)
 
         if u_form.is_valid() and uinfo_form.is_valid():
             u_form.save()
             uinfo_form.save()
             messages.success(request,"Your info updated")
-            return redirect('account:customerprofile')
+            return redirect('account:staffprofile')
         else:
-            u_form = userprofileform(request.POST, instance=request.user.customerprofile)
-            uinfo_form = userinfoform(request.POST, instance=request.user)
+            u_form = staffprofileform(request.POST, instance=request.user.employeeprofile)
+            uinfo_form = staffinfoform(request.POST, instance=request.user)
     context={
         'uform':u_form,
         'uinfoform':uinfo_form
