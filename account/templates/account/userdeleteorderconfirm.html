@@ -20,7 +20,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top navbar-dark bg-dark">
 
-        <a class="navbar-brand" href="{% url 'account:index'%}">
+    <a class="navbar-brand" href="{% url 'account:index'%}">
           <img src="{% static 'Images/Logo11.png' %}" width="110" height="110" class="d-inline-block align-top" alt="" loading="lazy">
 
         </a>
@@ -33,33 +33,19 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'account:admin_dashboard' %}">Dashboard <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{% url 'account:customerOrder'%}">Dashboard <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{%url 'account:assignedOrders' %}">Assigned Jobs</a>
+            <a class="nav-link" href="{%url 'account:customerPreOrder' %}">Previous Orders</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'account:admintimesheet'%}">Manage Timesheets</a>
+            <a class="nav-link" href="{% url 'account:customerprofile'%}">Manage Profile</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'account:contact'%}">Equip Delivery</a>
-          </li>
-            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="{% url 'account:BookSecurity'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              More
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
-              <a class="dropdown-item" href="{% url 'account:adminmanageleave'%}">Manage Leaves</a>
-                <a class="dropdown-item" href="{% url 'account:managePortal'%}">Learning Portal</a>
-                <a class="dropdown-item" href="#">Manage Equipments</a>
-                <a class="dropdown-item"href="#">Manage Services</a>
 
-            </div>
-            </li>
+
         </ul>
-        <span class="form-inline my-2 my-lg-0" style="color: #34987a;">
+         <span class="form-inline my-2 my-lg-0" style="color: #34987a;">
           <div> {% if request.user.is_authenticated %}
             Hello, {{ request.user }}
           </div>
@@ -84,10 +70,10 @@
 
 			<p>Are you sure you want to delete "{{order}}"?</p>
 
-			<form action="{% url 'account:admindeleteorder' order.id  %}" method="POST">
+			<form action="{% url 'account:userdeleteorder' order.id  %}" method="POST">
 
 				{% csrf_token %}
-				<a class="btn btn-warning" href="{% url 'account:admin_dashboard' %}">Back</a>
+				<a class="btn btn-warning" href="{% url 'account:customerOrder' %}">Back</a>
 
 				<button class="btn-danger" type="submit">Yes</button>
 			</form>

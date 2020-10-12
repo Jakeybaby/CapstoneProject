@@ -119,6 +119,7 @@
                  Paid
             {% endif %}
             </td>
+                <td> <a href="{% url 'account:userdeleteorder' i.id %}"> <button class="btn text-primary">Cancel Order</button></a></td>
           </tr>
             {% endfor %}
 
@@ -144,6 +145,7 @@
                  Paid
             {% endif %}
             </td>
+                <td> <a href="{% url 'account:userdeleteorder' i.id %}"> <button class="btn text-primary">Cancel Order</button></a></td>
           </tr>
             {% endfor %}
         {% endif %}
@@ -197,6 +199,7 @@
              Paid
         {% endif %}
         </td>
+        <td>  <a href="{% url 'account:userdeletehiringorder' hiring.id %}"> <button class="btn text-primary">Cancel Order</button></a></td>
       </tr>
         {% endif %}
     {% endfor %}
@@ -241,6 +244,7 @@
              Paid
         {% endif %}
         </td>
+        <td>  <a href="{% url 'account:userdeletehiringorder' hiring.id %}"> <button class="btn text-primary">Cancel Order</button></a></td>
       </tr>
         {% endif %}
     {% endfor %}

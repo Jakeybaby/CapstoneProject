@@ -86,9 +86,9 @@
 			<form action="{% url 'account:admindeletehiringorder' order.id  %}" method="POST">
 
 				{% csrf_token %}
-				<a class="btn btn-warning" href="{% url 'account:admin_dashboard' %}">Cancel</a>
+				<a class="btn btn-warning" href="{% url 'account:admin_dashboard' %}">Back</a>
 
-				<input class="btn btn-danger" type="submit" name="Confirm">
+				<button class="btn-danger" type="submit">Yes</button>
 			</form>
 		</div>
 	</div>

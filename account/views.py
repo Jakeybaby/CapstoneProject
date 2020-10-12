@@ -335,7 +335,7 @@ def addservicebook_form(request):
     securityorder, created = SecurityOrder.objects.get_or_create(order=order, security_service=service_name,
                                                                  notes=service_notes, date_required=service_date)
     securityorder.save()
-    messages.success(request,'Success book order :'+ str(order.id))
+    messages.success(request,'Your new job'+ str(order.id) +'request has been created')
     return redirect('account:customerOrder')
 
 
@@ -357,7 +357,7 @@ def addpmservicebook_form(request):
                                                                  notes=service_notes, date_required=service_date)
 
     propertyorder.save()
-    messages.success(request,'Success book order :'+ str(order.id))
+    messages.success(request,'Your new job'+ str(order.id) +'request has been created')
     return redirect('account:customerOrder')
 
 
@@ -454,7 +454,7 @@ def adminOrder(request, pk):
                 [em],
                 fail_silently=False,
             )
-            messages.success(request, 'Order '+str(num)+' has been assgined')
+            messages.success(request, 'Job request id ' +str(num)+' has been assigned and waiting for the reply from the employee')
             return redirect('account:admin_dashboard')
 
     context = {'form': form}
@@ -494,7 +494,7 @@ def adminHiringOrder(request, pk):
                 [em],
                 fail_silently=False,
             )
-            messages.success(request, 'HiringOrder' + str(num) + 'has been assgined')
+            messages.success(request, 'Job request id ' +str(num)+' has been assigned and waiting for the reply from the employee')
             return redirect('account:admin_dashboard')
 
     context = {'form': form}
@@ -526,16 +526,42 @@ def admindeletehiringorder(request,pk):
 
     return render(request,'account/admindeletehiringorderconfirm.html',context)
 
+
+def userdeleteorder(request,pk):
+
+    order = Order.objects.get(id=pk)
+    num = order.id
+    if request.method == "POST":
+        order.delete()
+        messages.success(request, 'Order ' + str(num) + ' deleted')
+        return redirect('account:customerOrder')
+    context = {'order':order}
+
+    return render(request,'account/userdeleteorderconfirm.html',context)
+
+
+def userdeletehiringorder(request,pk):
+
+    order = HiringOrder.objects.get(id=pk)
+    num = order.id
+    if request.method == "POST":
+        order.delete()
+        messages.success(request, 'Hiringorder ' + str(num) + ' deleted')
+        return redirect('account:customerOrder')
+    context = {'order':order}
+
+    return render(request,'account/userdeletehiringorderconfirm.html',context)
+
 def payserviceorder(request, pk):
 
 
     ins = get_object_or_404(Order, pk=pk)
     aa = ins.propertyorder_set.all()
     user = request.user
-
+    em = user.email
     for i in aa:
         ss = int(i.property_service.price)
-
+        dd = i.property_service.name
     if request.method == "POST":
         ins.isPaid = True
         ins.save()
@@ -553,6 +579,18 @@ def payserviceorder(request, pk):
             source='tok_visa',
             description = 'test',
         )
+
+        send_mail(
+            'Customer Order '+ str(ins.id) + " Invoice",
+            'Hi '+ user.first_name+ ',\nYour order has successful pay to kairpara Limited LTD\n'
+                                    'The total amount of charge is '+str(ss)+'\n'
+                                                                             'Order item:\n'
+                                                                             'Name             Price\n'
+                                                                             +str(dd)+'          '+str(ss),
+            'dengc05@myunitec.ac.nz',
+            [em],
+            fail_silently=False,
+        )
         return redirect('account:customerOrder')
 
     context={
@@ -567,9 +605,14 @@ def payserviceorder(request, pk):
 def payhiringorder(request, pk):
 
     ins = get_object_or_404(HiringOrder, pk=pk)
+    aa = ins.cartitem_set.all()
+    for i in aa:
+        eq = i.equipment.name
+        eqprice = i.equipment.price
+
     user = request.user
     ss = int(ins.get_cart_total)
-
+    em = user.email
 
     if request.method == "POST":
         ins.isPaid = True
@@ -586,6 +629,18 @@ def payhiringorder(request, pk):
             currency='nzd',
             source='tok_visa',
             description='test',
+        )
+
+        send_mail(
+            'Customer Order ' + str(ins.id) + " Invoice",
+            'Hi ' + user.first_name + ',\nYour order has successful pay to kairpara Limited LTD\n'
+                                      'The total amount of charge is $' + str(ss) + '\n'
+                                                                                   'Order item:\n'
+                                                                                   'Name             Price\n'
+                                                                                    + str(eq) + '                  ' + str(eqprice),
+            'dengc05@myunitec.ac.nz',
+            [em],
+            fail_silently=False,
         )
         return redirect('account:customerOrder')
     context = {
@@ -870,7 +925,7 @@ def EmployeeRegiser(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, 'Staff Account was created for ' + username)
+            messages.success(request, 'New employee account has been created for' + username)
             return redirect('account:adminemployeepage')
     else:
         form = EmployeeRegisterForm(initial={'is_staff': True})
@@ -1071,7 +1126,7 @@ def customerprofile(request):
         if u_form.is_valid() and uinfo_form.is_valid():
             u_form.save()
             uinfo_form.save()
-            messages.success(request,"Your info updated")
+            messages.success(request,"Your profile has been updated successfully")
             return redirect('account:customerprofile')
         else:
             u_form = userprofileform(request.POST, instance=request.user.customerprofile)
@@ -1094,7 +1149,7 @@ def staffprofile(request):
         if u_form.is_valid() and uinfo_form.is_valid():
             u_form.save()
             uinfo_form.save()
-            messages.success(request,"Your info updated")
+            messages.success(request,"Your profile has been updated successfully")
             return redirect('account:staffprofile')
         else:
             u_form = staffprofileform(request.POST, instance=request.user.employeeprofile)
