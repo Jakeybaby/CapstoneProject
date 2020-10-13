@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -142,7 +141,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 # AIzaSyCvTF4JKso7zjNZqQbpQugNRMmOUcnoiKQ
 GOOGLE_MAPS_API_KEY = 'AIzaSyCvTF4JKso7zjNZqQbpQugNRMmOUcnoiKQ'
 
-django_heroku.settings(locals())
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'

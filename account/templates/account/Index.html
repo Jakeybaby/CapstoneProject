@@ -86,7 +86,7 @@
 
 
       <div>
-        <img class="img-fluid" src="{% static 'Images/security.jpg'%}">
+        <img class="img-fluid" src="{% static 'Images/security_edited.png'%}">
       </div>
 
    <div class="container">
@@ -118,27 +118,42 @@
   <h3 style="text-align: center;padding: 40px 0px;">Customer Testimonials</h3>
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
-        <div class="carousel-item active">
-            <h1>Customer Feedback</h1>
-        </div>
+
+          <div class="carousel-item active" data-interval="10000">
+            <img src="{% static 'Images/gray-background.jpg'%}" class="d-block w-100" alt="...">
+           
+            <div class="carousel-caption d-none d-md-block" style="color: black;">
+              <h5>Customer Feedback</h5>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div> 
+          </div>
+          
           {% for i in object %}
               {% if i.feedbackCTE %}
-        <div class="carousel-item">
-            {{ i.cus_order.cus_user.first_name }}'s Feedback :{{ i.feedbackCTE }}<br>
+              <div class="carousel-item" data-interval="2000">
+                <img src="{% static 'Images/gray-background.jpg'%}" class="d-block w-100" alt="...">
+           
+                <div class="carousel-caption d-none d-md-block" style="color: black;">
+                
+                  {{ i.cus_order.cus_user.first_name }}'s Feedback :{{ i.feedbackCTE }}<br>
+                </div> 
+           
         </div>
 
               {% endif %}
          {% endfor %}
       </div>
-      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev" >
+        <span class="carousel-control-prev-icon" aria-hidden="true" ></span>
+        <span class="sr-only" style="color: black;">Previous</span>
       </a>
       <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
+        <span class="sr-only" style="color: black;">Next</span>
       </a>
     </div>
+
+   
  
 </div>
 <footer class="grid-container">
@@ -151,8 +166,12 @@
       <li style="list-style-type: none;"><a href="{%url 'account:stafflogin'%}" style="text-decoration: none;">Staff Login</a></li>
   </div>
   <div class="grid-item item2">
+   
     <h5 style="text-decoration: underline;">Contact Us<br></h5>
-    Address
+        139 Carrington Street, <br>
+        Mt. Albert, Auckland<br>
+        <button class="btn btn-link">admin@KSPMS.co.nz</button>
+        <br>
     <br>
     <a href="#" class="fa fa-twitter"></a>
         <a href="#" class="fa fa-instagram"></a>
