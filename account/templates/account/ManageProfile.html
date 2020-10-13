@@ -75,18 +75,18 @@
                  {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-        <h1>{{ message }}</h1>
-    </li>
+    <span {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        <div class="alert alert-success">{{ message }}</div>
+    </span>
     {% endfor %}
 </ul>
 {% endif %}
-    <h2 style="padding: 30px 0px;">Profile page</h2>
-       <form method="post">
-           {% csrf_token %}
+    <h2>Profile page</h2>
+       <form method="post" style="padding: 0px;">
+           <span style="padding: 0px;margin: 0px;">{% csrf_token %}
      {{ uform|crispy }}
-       {{ uinfoform|crispy }}
-       <button type="submit">Save</button>
+       {{ uinfoform|crispy }}</span>
+       <button class="btn btn-success" type="submit">Save</button>
            </form>
     </div>
   <footer class="footer bg-dark">

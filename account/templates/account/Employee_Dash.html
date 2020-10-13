@@ -82,11 +82,11 @@
     </nav>
     <div class="container">
        {% if messages %}
-<ul class="messages">
+<ul class="messages" style="margin: 20px;">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-        <h1>{{ message }}</h1>
-    </li>
+    <span {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        <div class="alert alert-success">{{ message }}</div>
+    </span>
     {% endfor %}
 </ul>
 {% endif %}

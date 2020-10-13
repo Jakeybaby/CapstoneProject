@@ -82,11 +82,11 @@
 
    <div class="container">
            {% if messages %}
-<ul class="messages">
+<ul class="messages" style="margin: 20px;">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-        <h1>{{ message }}</h1>
-    </li>
+    <span {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        <div class="alert alert-success">{{ message }}</div>
+    </span>
     {% endfor %}
 </ul>
 {% endif %}
@@ -153,7 +153,7 @@
                     <div class="card mb-3 shadow-sm p-3 mb-5 rounded w-75">
         <div class="card-body">
             <h5 class="card-title">Order ID:{{order.id}}</h5>
-            <p class="card-text" style="padding-bottom: 10px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text" style="padding-bottom: 10px;"></p>
             <p class="card-text"><small class="text-muted">Date & time: {{ a.date_required }}</small></p>
             <p class="card-text"><small class="text-muted">Name of client: {{ order.cus_order.cus_user.first_name }} </small></p>
             <p class="card-text"><small class="text-muted">Job Request: {{ a.property_service }}</small></p>

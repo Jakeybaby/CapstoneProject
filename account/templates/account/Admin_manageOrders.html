@@ -87,9 +87,9 @@
           {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-        <h1>{{ message }}</h1>
-    </li>
+    <span {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+    <div class="alert alert-success">{{ message }}</div>
+</span>
     {% endfor %}
 </ul>
 {% endif %}
@@ -262,6 +262,7 @@
 
 
        
+</div>
 </div>
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>
