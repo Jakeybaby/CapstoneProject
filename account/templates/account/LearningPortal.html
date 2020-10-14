@@ -1,0 +1,231 @@
+<!doctype html>
+{% load static %}
+<html xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'Images/Logo11.png'%}" rel="icon" sizes="32x32" type="image/gif">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="{% static 'css/Profiles_style.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--Different Fonts ## refer to css file -->
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Kaipara Security Services Ltd.</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script>
+        setTimeout(function () {
+            if($('.messages').length > 0){
+                $('.messages').remove();
+            }
+        },5000)
+    </script>
+  </head>
+  <style>
+      * {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: black;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+  </style>
+  <body>
+
+<nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top navbar-dark bg-dark">
+
+        <a class="navbar-brand" href="{% url 'account:index'%}">
+          <img src="{% static 'Images/Logo11.png' %}" width="110" height="110" class="d-inline-block align-top" alt="" loading="lazy">
+
+        </a>
+
+      <!--<a class="navbar-brand" href="#">Company Name</a>-->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'account:employee_dashboard' %}">Dashboard <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account:employeeJobs'%}">Assigned Jobs</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account:employeeTimesheet'%}">Timesheet</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Equipment Delivery</a>
+          </li>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              More
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'account:staffprofile' %}">Manage Profile</a>
+                <a class="dropdown-item" href="{% url 'account:LearningPortal'%}">Learning Portal</a>
+
+            </div>
+          </li>
+        </ul>
+        <span class="form-inline my-2 my-lg-0" style="color: #34987a;">
+          <div> {% if request.user.is_authenticated %}
+            Hello, {{ request.user }}
+          </div>
+       <a href="{% url 'account:logout' %}">
+        <button class="btn btn-link my-2 my-sm-0" style="margin: 10px;">logout</button>
+      </a>
+
+              {% else %}
+              <a href="{% url 'account:login' %}">
+        <button class="btn btn-link my-2 my-sm-0" style="margin: 10px;">Login</button>
+      </a>
+
+          {% endif %}
+
+      </span>
+      </div>
+    </nav>
+    <div class="container" style="margin: 40px auto;">
+      <h3>Learning Portal</h3>
+
+<div class="tabs shadow p-3 mb-5 rounded" style="border: 1px solid #d9d9d9;">
+<button class="tablink" onclick="openPage('Home', this, '#1a8cff')" id="defaultOpen">Home</button>
+<button class="tablink" onclick="openPage('News', this, '#1a8cff')" >Services</button>
+<button class="tablink" onclick="openPage('Contact', this, '#1a8cff')">Equipment Delivery</button>
+<button class="tablink" onclick="openPage('About', this, '#1a8cff')">Manage Leaves</button>
+
+<div id="Home" class="tabcontent">
+  <h3>Introduction to the Portal</h3>
+  <p></p><br>
+  <h5>Using Mobile App for first time</h5>
+  
+  <div style="text-align:center"> 
+    <button onclick="playPause()">Play/Pause</button> 
+    <button onclick="makeBig()">Big</button>
+    <button onclick="makeSmall()">Small</button>
+    <button onclick="makeNormal()">Normal</button>
+    <br><br>
+    <video id="video1" width="320">
+      <source src="{% static 'Videos/KSPMS_Employee.mp4'%}" type="video/mp4">
+      Your browser does not support HTML video.
+    </video>
+    
+  </div>
+  <h6 class="text-danger" style="text-align: center;">*If You are having an issue logging in, please contact the Admin / Manager.</h6>
+</div>
+
+<div id="News" class="tabcontent">
+  <h3>Services</h3>
+  <p>Some news this fine day!</p> 
+</div>
+
+<div id="Contact" class="tabcontent">
+  <h2>Equipment Delivery</h2><br>
+  <h5 class="text-success">Safe Delivery Plan</h5>
+  <ul>
+      <li>Send out safety information on deliveries and
+        collections to other parties in the delivery chain</li>
+        <li>Request safety information on deliveries and
+            collections from other parties in the delivery chain</li>
+            <li> Know the route; anticipate problems</li>
+            <li> Plan the best times for deliveries to arrive</li>
+            <li> Plan to have the right number of people and
+                equipment ready to handle the delivery when it
+                arrives</li>
+                <li>Plan how to keep the driver and all others who
+                    may be affected by the activity safe</li>
+  </ul>
+
+  <a href="https://worksafe.govt.nz/managing-health-and-safety/novel-coronavirus-covid/covid-19-advice-for-delivery-drivers/" target="_blank">For more information</a>
+</div>
+
+<div id="About" class="tabcontent">
+  <h3>Apply / Manage Leaves</h3><br>
+  <h5 class="text-success">Using Timesheet to clock In and Out</h5>
+  <video width="320" height="240" controls>
+    <source src="{% static 'Videos/SubmitHours.mp4'%}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video><br><br>
+  <h5 class="text-success">Apply for leave</h5><br>
+  <video width="320" height="240" controls>
+    <source src="{% static 'Videos/ApplyLeave.mp4'%}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+<script>
+var myVideo = document.getElementById("video1"); 
+
+function playPause() { 
+  if (myVideo.paused) 
+    myVideo.play(); 
+  else 
+    myVideo.pause(); 
+} 
+
+function makeBig() { 
+    myVideo.width = 560; 
+} 
+
+function makeSmall() { 
+    myVideo.width = 320; 
+} 
+
+function makeNormal() { 
+    myVideo.width = 420; 
+} 
+function openPage(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "block";
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+</div>
+    </div>
+  <footer class="footer bg-dark">
+      <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>
+  </footer>
+
+</body>
+</html>

@@ -75,4 +75,5 @@ urlpatterns =[
     path('approvalleave/<int:pk>/', views.approval_leave, name='approval_leave'),
     path('rejectleave/<int:pk>/', views.reject_leave, name='reject_leave'),
     path('adminviewstafftimesheet/<int:pk>/', views.adminviewstafftimesheet, name='adminviewstafftimesheet'),
+    path('LearningPortal/', views.portal, name='LearningPortal'),
 ]

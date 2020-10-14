@@ -30,7 +30,8 @@ def index(request):
 def about(request):
     return render(request, 'account/AboutUs.html')
 
-
+def portal(request):
+    return render(request, 'account/LearningPortal.html')
 
 def contact(request):
     return render(request, 'account/Contact.html')

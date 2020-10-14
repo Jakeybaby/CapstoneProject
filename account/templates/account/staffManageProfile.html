@@ -59,7 +59,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'account:staffprofile' %}">Manage Profile</a>
-                <a class="dropdown-item" href="#">Learning Portal</a>
+                <a class="dropdown-item" href="{% url 'account:LearningPortal'%}">Learning Portal</a>
 
             </div>
           </li>
@@ -82,7 +82,7 @@
       </span>
       </div>
     </nav>
-   <div class="container">
+   <div class="container shadow p-3 mb-5 bg-white rounded" >
                  {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -92,13 +92,16 @@
     {% endfor %}
 </ul>
 {% endif %}
-    <h2 style="padding: 30px 0px;">Profile page</h2>
-       <form method="post">
-           {% csrf_token %}
+    <h2 style="margin: 30px 0px;">Profile page</h2>
+   
+       <form class="profile" method="post" style="padding: 0; margin: 0;" >
+        {% csrf_token %}
      {{ uform|crispy }}
-       {{ uinfoform|crispy }}
-       <button type="submit">Update</button>
+    {{ uinfoform|crispy }}
+       <button class="btn btn-primary" type="submit">Update</button>
            </form>
+           
+
     </div>
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>

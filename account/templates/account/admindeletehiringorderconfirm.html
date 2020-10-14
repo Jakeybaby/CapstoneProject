@@ -76,22 +76,20 @@
       </span>
       </div>
     </nav>
-<div class="row">
-	<div class="col-md-6">
-		<div class="card card-body">
+    <div class="container shadow p-3 mb-5 bg-white rounded" style="margin: 80px auto;text-align: center;">
+     
 
 
-			<p>Are you sure you want to delete "{{order}}"?</p>
+			<p>Are you sure you want to delete order "{{order}}"?</p><br>
 
 			<form action="{% url 'account:admindeletehiringorder' order.id  %}" method="POST">
 
 				{% csrf_token %}
-				<a class="btn btn-warning" href="{% url 'account:admin_dashboard' %}">Cancel</a>
+        <a class="btn btn-outline-secondary" href="{% url 'account:admin_dashboard' %}" style="margin: 0px 30px;">Cancel</a>
 
-				<input class="btn btn-danger" type="submit" name="Confirm">
+				<input class="btn btn-outline-danger" type="submit" name="Confirm" value="Confirm">
 			</form>
-		</div>
-	</div>
+
 </div>
 </body>
 </html>

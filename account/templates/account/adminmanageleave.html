@@ -87,12 +87,12 @@
          <table class="table table-hover">
     <thead>
       <tr>
-        <th>Staff</th>
+        <th>Staff Name</th>
         <th>Start Date</th>
           <th>End Date</th>
-       <th>Note</th>
+       <th>Leave Type</th>
           <th>Status</th>
-
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -113,19 +113,19 @@
                         Reject
                 {% endif %}
             </td>
-      <td>
+      <td class="row">
           {% if i.isApproval or i.isReject %}
               --
               {% else %}
-                <a href="{{ i.approval }}">Approval</a>
-          {% endif %}
+                <a class="text-info" href="{{ i.approval }}">Approve </a>
+                {% endif %}
+          
 
-      </td>
-       <td>
+        <p> &nbsp;/ &nbsp;</p>
            {% if i.isApproval or i.isReject %}
               --
               {% else %}
-                <a href="{{ i.reject }}">Reject</a>
+                <a class="text-danger" href="{{ i.reject }}"> Reject</a>
           {% endif %}
 
        </td>

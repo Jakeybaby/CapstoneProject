@@ -57,7 +57,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'account:staffprofile' %}">Manage Profile</a>
-                <a class="dropdown-item" href="#">Learning Portal</a>
+                <a class="dropdown-item" href="{% url 'account:LearningPortal'%}">Learning Portal</a>
 
             </div>
           </li>
@@ -88,7 +88,7 @@
 <ul class="messages">
     {% for message in messages %}
 
-        <div class="alert alert-success">{{ message }}</div>
+        <div class="alert alert-warning">{{ message }}</div>
 
     {% endfor %}
 </ul>
@@ -146,10 +146,10 @@
 </table>
 <div class="row Timesheet">
 
-<button class="btn btn-primary" style="padding: 5px 20px;margin: 25px 5px;"><a href="{% url 'account:timein'%}" style="text-decoration: none; color: white;">check in</a></button><br>
-<button class="btn btn-success" style="padding: 5px 20px;margin: 25px 5px;"><a href="{% url 'account:timeout'%}" style="text-decoration: none; color: white;">check out</a></button><br>
-<button class="btn btn-secondary" style="padding: 5px 20px;margin: 25px 5px;"><a href="{% url 'account:reset'%}" style="text-decoration: none; color: white;">Submit TimeSheet</a></button><br>
-    <button class="btn btn-secondary" style="padding: 5px 20px;margin: 25px 5px;"><a href="{% url 'account:applyleavePage'%}" style="text-decoration: none; color: white;">Apply for a leave</a></button><br>
+<button class="btn btn-primary" style="padding: 5px 20px;margin: 25px 5px; color: white;"><a href="{% url 'account:timein'%}" style="text-decoration: none;color: white; ">check in</a></button><br>
+<button class="btn btn-success" style="padding: 5px 20px;margin: 25px 5px;"><a href="{% url 'account:timeout'%}" style="text-decoration: none;color: white; ">check out</a></button><br>
+<button class="btn btn-secondary" style="padding: 5px 20px;margin: 25px 5px;"><a href="{% url 'account:reset'%}" style="text-decoration: none;color: white; ">Submit TimeSheet</a></button><br>
+    <button class="btn btn-info" style="padding: 5px 20px;margin: 25px 5px;"><a href="{% url 'account:applyleavePage'%}" style="text-decoration: none;color: white;">Apply for a leave</a></button><br>
 
 </div>
     </div>

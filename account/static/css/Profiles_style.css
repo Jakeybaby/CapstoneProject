@@ -117,6 +117,7 @@ li a{
 }
 
 .footer{
+        
 
     color: white;
     padding-top: 30px;
@@ -135,12 +136,10 @@ li a{
     background-color: #34987a;
 }
 
-.card{
-    padding: 20px;
-}
+
 .form-group {
-    margin: 20px;
-    padding: 50px;
+    margin: 0;
+    padding: 0;
 }
 .card-text{
     padding: 0;
@@ -164,4 +163,13 @@ li a{
 
 .w-50{
     width: 50%!important;
+}
+
+.container .profile{
+    padding: 0px;
+}
+
+#div_id_address{
+    padding: 0px;
+    margin: 0px;
 }
