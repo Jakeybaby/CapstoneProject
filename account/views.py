@@ -586,7 +586,7 @@ def payserviceorder(request, pk):
                                     'The total amount of charge is '+str(ss)+'\n'
                                                                              'Order item:\n'
                                                                              'Name             Price\n'
-                                                                             +str(dd)+'          '+str(ss),
+                                                                             +str(dd)+'                    '+str(ss),
             'dengc05@myunitec.ac.nz',
             [em],
             fail_silently=False,
@@ -1179,3 +1179,141 @@ def applyleavePage(request):
     }
 
     return render(request,'account/staffapplyleave.html',context)
+
+
+def manageServices(request):
+    SSall = SecurityServices.objects.all()
+    PSall = PropetyServices.objects.all()
+    eqm = Equipment.objects.all()
+    context={
+        "ssall":SSall,
+        'psall':PSall,
+        'eq':eqm
+    }
+    return render(request,'account/manageService.html',context)
+
+
+def manageequipments(request):
+
+    eqm = Equipment.objects.all()
+    context={
+
+        'eq':eqm
+    }
+    return render(request,'account/manageequipment.html',context)
+
+
+def changeServices(request,pk):
+    ins = PropetyServices.objects.get(id=pk)
+    form = adminManagePropertyservicesform(instance=ins)
+    if request.method == "POST":
+        form = adminManagePropertyservicesform(request.POST, instance=ins)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "ok done")
+            return redirect('account:manageServices')
+    context = {'form':form}
+
+    return render(request,'account/changeservice.html',context)
+
+
+def deletePropertyServices(request,pk):
+    ins = PropetyServices.objects.get(id=pk)
+    if request.method == "POST":
+
+        ins.delete()
+        return redirect('account:manageServices')
+    context={'order':ins}
+    return render(request,'account/admindeletePS.html',context)
+
+def changeSecurityServices(request,pk):
+    ins = SecurityServices.objects.get(id=pk)
+    form = adminManageSecurityservicesform(instance=ins)
+    if request.method == "POST":
+        form = adminManageSecurityservicesform(request.POST, instance=ins)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "ok done")
+            return redirect('account:manageServices')
+    context = {'form':form}
+
+    return render(request,'account/changeSecurityservice.html',context)
+
+
+def deleteSecurityServices(request,pk):
+    ins = SecurityServices.objects.get(id=pk)
+    if request.method == "POST":
+        ins.delete()
+
+        return redirect('account:manageServices')
+    context ={
+        'order':ins
+    }
+    return render(request,'account/admindeleteSS.html',context)
+
+
+def changeEquipment(request,pk):
+    ins = Equipment.objects.get(id=pk)
+    form = adminManageEquipmentform(instance=ins)
+    if request.method == "POST":
+        form = adminManageEquipmentform(request.POST,request.FILES, instance=ins)
+        print('sdf')
+        if form.is_valid():
+            form.save()
+            messages.success(request, "ok done")
+            return redirect('account:manageequipments')
+    context = {'form':form}
+
+    return render(request,'account/changeequipment.html',context)
+
+
+def deleteequipment(request,pk):
+    ins = Equipment.objects.get(id=pk)
+    if request.method == "POST":
+        ins.delete()
+        return redirect('account:manageequipments')
+    context ={'order':ins}
+    return render(request,'account/admindeleteEQ.html',context)
+
+
+
+def addSS(request):
+    if request.method =="POST":
+        form = adminManageSecurityservicesform(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('account:manageServices')
+    else:
+        form = adminManageSecurityservicesform()
+
+    context = {'form': form}
+    return render(request,'account/addSS.html',context)
+
+def addPS(request):
+    if request.method == "POST":
+        form = adminManagePropertyservicesform(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('account:manageServices')
+    else:
+        form = adminManagePropertyservicesform()
+
+    context = {'form': form}
+    return render(request, 'account/addSS.html', context)
+
+
+def addEQ(request):
+    if request.method == "POST":
+        form = adminManageEquipmentform(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('account:manageequipments')
+    else:
+        form = adminManageEquipmentform()
+
+    context = {'form': form}
+    return render(request, 'account/addEQ.html', context)
+
+
+
+

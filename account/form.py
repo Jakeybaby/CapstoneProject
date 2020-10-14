@@ -118,6 +118,31 @@ class adminManageEmployeeform(ModelForm):
         self.fields['address'].disabled = True
 
 
+class adminManagePropertyservicesform(ModelForm):
+    class Meta:
+        model = PropetyServices
+        fields = ['name','price']
+
+
+class adminManageSecurityservicesform(ModelForm):
+    class Meta:
+        model = SecurityServices
+        fields = ['name','price']
+
+
+class adminManageEquipmentform(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].required = True
+        self.fields['price'].required = True
+        self.fields['pic'].required = True
+        self.fields['stock'].required = True
+
+    class Meta:
+        model = Equipment
+        fields = ['name','price','pic','stock']
+
 class servicebook_form(ModelForm):
 
     def __init__(self, *args, **kwargs):

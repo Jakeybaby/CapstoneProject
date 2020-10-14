@@ -37,7 +37,7 @@
             <a class="nav-link" href="{% url 'account:index' %}">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{%url 'account:About' %)">About Us</a>
+            <a class="nav-link" href="{% url 'account:About' %}">About Us</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="{% url 'account:Services'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -46,7 +46,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'account:PropertyMaintenance'%}">Property Maintenance</a>
               <a class="dropdown-item" href="{% url 'account:security'%}">Security</a>
-             
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'account:Hire_Equipments'%}">Hire Equipments</a>

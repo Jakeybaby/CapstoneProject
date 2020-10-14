@@ -1,8 +1,7 @@
-<!doctype html>
-{% load crispy_forms_tags %}
 {% load static %}
-<html xmlns="http://www.w3.org/1999/html">
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="{% static 'Images/Logo11.png'%}" rel="icon" sizes="32x32" type="image/gif">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -14,18 +13,11 @@
     <title>Kaipara Security Services Ltd.</title>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-        <script>
-        setTimeout(function () {
-            if($('.messages').length > 0){
-                $('.messages').remove();
-            }
-        },5000)
-    </script>
-  </head>
-  <body>
-
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
 <nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top navbar-dark bg-dark">
 
         <a class="navbar-brand" href="{% url 'account:index'%}">
@@ -51,21 +43,21 @@
             <a class="nav-link" href="{% url 'account:admintimesheet'%}">Manage Timesheets</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'account:pickuporder'%}">Equip Pick up</a>
+            <a class="nav-link" href="{% url 'account:contact'%}">Equip Delivery</a>
           </li>
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="{% url 'account:BookSecurity'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               More
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
+                <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
               <a class="dropdown-item" href="{% url 'account:adminmanageleave'%}">Manage Leaves</a>
                 <a class="dropdown-item" href="{% url 'account:managePortal'%}">Learning Portal</a>
                 <a class="dropdown-item" href="{% url 'account:manageequipments' %}">Manage Equipments</a>
                 <a class="dropdown-item"href="{% url 'account:manageServices' %}">Manage Services</a>
+
             </div>
             </li>
-
         </ul>
         <span class="form-inline my-2 my-lg-0" style="color: #34987a;">
           <div> {% if request.user.is_authenticated %}
@@ -85,21 +77,22 @@
       </span>
       </div>
     </nav>
-   <div class="container">
-       <form method="post">
-           {% csrf_token %}
-            {{ form|crispy }}
-           <input type="submit">
-           <input type="button" value="Back" onclick="history.back()">
-       </form>
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body">
 
 
+			<p>Are you sure you want to delete service "{{order.name}}"?</p>
+
+			<form action="{% url 'account:deleteSecurityServices' order.id  %}" method="POST">
+
+				{% csrf_token %}
+				<a class="btn btn-warning" href="{% url 'account:manageServices' %}">Back</a>
+
+				<button class="btn-danger" type="submit">Yes</button>
+			</form>
+		</div>
+	</div>
 </div>
-  <footer class="footer bg-dark">
-      <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>
-  </footer>
-  
 </body>
 </html>
-
-

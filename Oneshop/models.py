@@ -5,16 +5,19 @@ from django.urls import reverse
 from datetime import datetime, timedelta
 
 class SecurityServices(models.Model):
-    name = models.TextField(max_length=50, null=True, blank=True)
+    name = models.CharField(max_length=50, null=True, blank=False)
     price = models.IntegerField(null=True, blank=False)
     description = models.TextField(max_length=100,blank=True)
 
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('account:changeSecurityServices', kwargs={"pk": self.id})
+
 
 class PropetyServices(models.Model):
-    name = models.TextField(max_length=50, null=True, blank=True)
+    name = models.CharField(max_length=50, null=True, blank=False)
     price = models.IntegerField(null=True, blank=False)
     description = models.TextField(max_length=100, blank=True)
 
@@ -22,9 +25,12 @@ class PropetyServices(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('account:changeServices', kwargs={"pk": self.id})
+
 
 class Equipment(models.Model):
-    name = models.TextField(max_length=50, null=True, blank=True)
+    name = models.CharField(max_length=50, null=True, blank=True)
     stock = models.IntegerField(null=True, blank=True)
     price = models.IntegerField(null=True, blank=True)
     pic = models.ImageField(null=True,blank=True)
@@ -33,6 +39,8 @@ class Equipment(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('account:changeEquipment', kwargs={"pk": self.id})
 
 class Order(models.Model):
 

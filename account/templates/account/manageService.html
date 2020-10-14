@@ -1,5 +1,6 @@
+
+
 <!doctype html>
-{% load crispy_forms_tags %}
 {% load static %}
 <html xmlns="http://www.w3.org/1999/html">
   <head>
@@ -16,12 +17,12 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-        <script>
+    <script>
         setTimeout(function () {
             if($('.messages').length > 0){
                 $('.messages').remove();
             }
-        },5000)
+        },4000)
     </script>
   </head>
   <body>
@@ -58,7 +59,7 @@
               More
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
+                 <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
               <a class="dropdown-item" href="{% url 'account:adminmanageleave'%}">Manage Leaves</a>
                 <a class="dropdown-item" href="{% url 'account:managePortal'%}">Learning Portal</a>
                 <a class="dropdown-item" href="{% url 'account:manageequipments' %}">Manage Equipments</a>
@@ -67,7 +68,7 @@
             </li>
 
         </ul>
-        <span class="form-inline my-2 my-lg-0" style="color: #34987a;">
+       <span class="form-inline my-2 my-lg-0" style="color: #34987a;">
           <div> {% if request.user.is_authenticated %}
             Hello, {{ request.user }}
           </div>
@@ -85,21 +86,80 @@
       </span>
       </div>
     </nav>
-   <div class="container">
-       <form method="post">
-           {% csrf_token %}
-            {{ form|crispy }}
-           <input type="submit">
-           <input type="button" value="Back" onclick="history.back()">
-       </form>
+   <div class="container" style="margin: 40px auto;">
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <span {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        <div class="alert alert-success">{{ message }}</div>
+    </span>
+    {% endfor %}
+</ul>
+{% endif %}
+<h2 style="padding: 30px 0px;">Manage Property Services</h2>
+<a href="{% url 'account:addps' %}">Add Services</a>
 
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+       <th>Price</th>
+
+
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for i in psall %}
+      <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.name }}</td>
+        <td>{{i.price}}</td>
+
+      <td> <a href="{{ i.get_absolute_url }}"> <button class="btn text-primary">Update</button></a></td>
+      <td> <a href="{% url 'account:deletePropertyServices' i.id %}"> <button class="btn text-primary">Delete</button></a></td>
+
+      </tr>
+    {% endfor %}
+
+          </tbody>
+  </table>
+
+<h2 style="padding: 30px 0px;">Manage Security Services</h2>
+<a href="{% url 'account:addss' %}">Add Services</a>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+       <th>Price</th>
+
+
+      </tr>
+    </thead>
+
+    <tbody>
+
+     {% for a in ssall %}
+      <tr>
+        <td>{{ a.id }}</td>
+        <td>{{ a.name }}</td>
+        <td>{{a.price}}</td>
+
+      <td> <a href="{{ a.get_absolute_url }}"> <button class="btn text-primary">Update</button></a></td>
+      <td> <a href="{% url 'account:deleteSecurityServices' a.id %}"> <button class="btn text-primary">Delete</button></a></td>
+
+      </tr>
+    {% endfor %}
+
+          </tbody>
+  </table>
 
 </div>
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>
   </footer>
-  
+   </div>
 </body>
 </html>
-
-
