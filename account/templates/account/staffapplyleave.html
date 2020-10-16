@@ -50,20 +50,27 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'account:staffprofile' %}">Manage Profile</a>
-                <a class="dropdown-item" href="#">Learning Portal</a>
+                <a class="dropdown-item" href="{% url 'account:LearningPortal'%}">Learning Portal</a>
 
             </div>
           </li>
         </ul>
-        <span class="form-inline my-2 my-lg-0">
-            <a href="{% url 'account:index'%}">
-                <button class="btn btn-link my-2 my-sm-0"  type="submit">Back to Mainpage</button>
-              </a>
-         <a href="#">
-          <button class="btn btn-link my-2 my-sm-0"  type="submit"><img src="{% static 'Images/logout.png'%}" height="45px;"></button>
-        </a>
+        <span class="form-inline my-2 my-lg-0" style="color: #34987a;">
+          <div> {% if request.user.is_authenticated %}
+            Hello, {{ request.user }}
+          </div>
+       <a href="{% url 'account:logout' %}">
+        <button class="btn btn-link my-2 my-sm-0" style="margin: 10px;">logout</button>
+      </a>
 
-        </span>
+              {% else %}
+              <a href="{% url 'account:login' %}">
+        <button class="btn btn-link my-2 my-sm-0" style="margin: 10px;">Login</button>
+      </a>
+
+          {% endif %}
+
+      </span>
       </div>
     </nav>
 
@@ -73,18 +80,25 @@
 
         <form method="post" action="/applyleave_form/">
             {% csrf_token %}
-            Start Date:<input type="date" name="a" required>
-            End Date:<input type="date" name="b" required>
-            Note:<input type="text" name="c" required>
-            <button type="submit">Apply</button>
+
+            <div class="col-sm-6">
+            Start Date:<input  class="form-control form-control-sm"type="date" name="a" required>
+            </div><br>
+         <div class="col-sm-6">
+            End Date:<input class="form-control form-control-sm" type="date" name="b" required>
+          </div><br>
+          <div class="col-sm-6">
+            Note:<textarea class="form-control form-control-sm" type="text" name="c" required></textarea>
+            </div><br>
+            <button class="btn btn-outline-info" type="submit" style="margin: 30px auto;">Apply</button>
         </form>
 
+<a href="{% url 'account:employeeTimesheet' %}"><button class="btn btn-outline-dark">Cancel</button></a>
 
-
-    <table class="table table-hover">
+    <table class="table table-hover" style="margin: 10px auto 70px auto;">
     <thead>
       <tr>
-        <th>Id</th>
+        <th>Job Id</th>
         <th>Start Date</th>
           <th>End Date</th>
        <th>Note</th>
@@ -121,6 +135,7 @@
   </table>
 
     </div>
+  </div>
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>
   </footer>

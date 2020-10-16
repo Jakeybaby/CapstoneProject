@@ -53,8 +53,8 @@
                 <a class="dropdown-item" href="{% url 'account:adminemployeepage'%}">Manage Employee</a>
               <a class="dropdown-item" href="{% url 'account:adminmanageleave'%}">Manage Leaves</a>
                 <a class="dropdown-item" href="{% url 'account:managePortal'%}">Learning Portal</a>
-                <a class="dropdown-item" href="{% url 'account:manageequipments' %}">Manage Equipments</a>
-                <a class="dropdown-item"href="{% url 'account:manageServices' %}">Manage Services</a>
+                <a class="dropdown-item" href="#">Manage Equipments</a>
+                <a class="dropdown-item"href="#">Manage Services</a>
 
             </div>
             </li>
@@ -77,22 +77,20 @@
       </span>
       </div>
     </nav>
-<div class="row">
-	<div class="col-md-6">
-		<div class="card card-body">
+<div class="container shadow p-3 mb-5 bg-white rounded" style="margin: 80px auto;text-align: center;">
 
 
-			<p>Are you sure you want to delete "{{order}}"?</p>
 
-			<form action="{% url 'account:admindeleteorder' order.id  %}" method="POST">
+			<p>Are you sure you want to delete order "{{order}}"?</p><br>
+
+			<form action="{% url 'account:admindeleteorder' order.id  %}" method="POST" >
 
 				{% csrf_token %}
-				<a class="btn btn-warning" href="{% url 'account:admin_dashboard' %}">Back</a>
+				<a class="btn btn-outline-secondary" href="{% url 'account:admin_dashboard' %}" style="margin: 0px 30px;">Cancel</a>
 
-				<button class="btn-danger" type="submit">Yes</button>
+				<input class="btn btn-outline-danger" type="submit" name="Confirm" value="Confirm">
 			</form>
-		</div>
-	</div>
+
 </div>
 </body>
 </html>

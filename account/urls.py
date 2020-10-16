@@ -70,6 +70,7 @@ urlpatterns =[
     path('Timesheet/', views.timesheettest, name='employeeTimesheet'),
     path('timein/', views.timein, name='timein'),
     path('timeout/', views.timeout, name='timeout'),
+path('breaktime/', views.recordbreak, name='recordbreak'),
     # path('total/', views.total, name='total'),
     path('reset/', views.reset, name='reset'),
     path('applyleave/', views.applyleavePage, name='applyleavePage'),
@@ -88,4 +89,5 @@ urlpatterns =[
     path('addSS', views.addSS, name='addss'),
     path('addPS', views.addPS, name='addps'),
 path('addEQ', views.addEQ, name='addeq'),
+path('LearningPortal/', views.portal, name='LearningPortal'),
 ]

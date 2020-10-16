@@ -162,3 +162,12 @@ li a{
 .w-50{
     width: 50%!important;
 }
+
+.container .profile{
+    padding: 0px;
+}
+
+#div_id_address{
+    padding: 0px;
+    margin: 0px;
+}

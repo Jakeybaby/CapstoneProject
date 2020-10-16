@@ -39,6 +39,7 @@ def contact(request):
 def timesheettest(request):
     user = request.user.employeeprofile
     ins = request.user.employeeprofile.timesheet_set.all()
+
     test1,created = TimeSheet.objects.get_or_create(Day='Monday', staff=user, isLast=False)
     test2,created = TimeSheet.objects.get_or_create(Day='Tuesday', staff=user, isLast=False)
     test3,created = TimeSheet.objects.get_or_create(Day='Wensday', staff=user, isLast=False)
@@ -46,7 +47,7 @@ def timesheettest(request):
     test5,created = TimeSheet.objects.get_or_create(Day='Friday', staff=user, isLast=False)
     test6, created = TimeSheet.objects.get_or_create(Day='Saturday', staff=user, isLast=False)
     test7, created = TimeSheet.objects.get_or_create(Day='Sunday', staff=user, isLast=False)
-    # total = round(test3.hour() + test1.hour() + test2.hour() + test4.hour() + test5.hour(), 2)
+
     test1.save()
     test2.save()
     test3.save()
@@ -58,7 +59,7 @@ def timesheettest(request):
     context={
         'txt':ins,
         'test':user
-        # 'total':total
+
     }
     return render(request,'account/Timesheet.html',context)
 
@@ -69,7 +70,7 @@ def reset(request):
     em = request.user.employeeprofile.employee_user.email
     send_mail(
         'Works hours of total this week',
-        str(firstname)+", Your works hour of this week is " + str(fe)+ " Hours",
+        'Kia ora, Admin\n\n'+str(firstname)+" work hour of this week is " + str(fe)+ " Hours\n\nKaipara Security Ltd",
         'dengc05@myunitec.ac.nz',
         [em],
         fail_silently=False,
@@ -102,6 +103,39 @@ def reset(request):
         # 'total':total
     }
     return redirect('account:employeeTimesheet')
+def recordbreak(request):
+    userid = request.user.employeeprofile
+    if datetime.today().isoweekday() == 1:
+        today = TimeSheet.objects.get(staff=userid,Day="Monday",isLast=False)
+        today.isBreak = True
+        today.save()
+
+    elif datetime.today().isoweekday() == 2:
+        today = TimeSheet.objects.get(staff=userid, Day="Tuesday", isLast=False)
+        today.isBreak = True
+        today.save()
+    elif datetime.today().isoweekday() == 3:
+        today = TimeSheet.objects.get(staff=userid, Day="Wensday", isLast=False)
+        today.isBreak = True
+        today.save()
+    elif datetime.today().isoweekday() == 4:
+        today = TimeSheet.objects.get(staff=userid, Day="Thursday", isLast=False)
+        today.isBreak = True
+        today.save()
+    elif datetime.today().isoweekday() == 5:
+        today = TimeSheet.objects.get(staff=userid, Day="Friday", isLast=False)
+        today.isBreak = True
+        today.save()
+    elif datetime.today().isoweekday() == 6:
+        today = TimeSheet.objects.get(staff=userid, Day="Saturday", isLast=False)
+        today.isBreak = True
+        today.save()
+    elif datetime.today().isoweekday() == 7:
+        today = TimeSheet.objects.get(staff=userid, Day="Sunday", isLast=False)
+        today.isBreak = True
+        today.save()
+
+    return redirect('account:employeeTimesheet')
 def timein(request):
     userid = request.user.employeeprofile
     if datetime.today().isoweekday() == 1:
@@ -113,8 +147,12 @@ def timein(request):
                 today.timeIn = datetime.now()
                 today.save()
         except TypeError:
-            today.timeIn = datetime.now()
-            today.save()
+            if datetime.now() <= datetime.now().replace(hour=8, minute=00, second=00):
+                today.timeIn = datetime.now().replace(hour=8, minute=00, second=00)
+                today.save()
+            elif datetime.now() > datetime.now().replace(hour=8, minute=00, second=00):
+                today.timeIn = datetime.now()
+                today.save()
 
     elif datetime.today().isoweekday() == 2:
         today = TimeSheet.objects.get(staff=userid,Day="Tuesday",isLast=False)
@@ -125,8 +163,12 @@ def timein(request):
                 today.timeIn = datetime.now()
                 today.save()
         except TypeError:
-            today.timeIn = datetime.now()
-            today.save()
+            if datetime.now() <= datetime.now().replace(hour=8, minute=00, second=00):
+                today.timeIn = datetime.now().replace(hour=8, minute=00, second=00)
+                today.save()
+            elif datetime.now() > datetime.now().replace(hour=8, minute=00, second=00):
+                today.timeIn = datetime.now()
+                today.save()
     elif datetime.today().isoweekday() == 3:
         today = TimeSheet.objects.get(staff=userid,Day="Wensday",isLast=False)
         try:
@@ -136,19 +178,26 @@ def timein(request):
                 today.timeIn = datetime.now()
                 today.save()
         except TypeError:
-            today.timeIn = datetime.now()
-            today.save()
+            if datetime.now() <= datetime.now().replace(hour=8, minute=00, second=00):
+                today.timeIn = datetime.now().replace(hour=8, minute=00, second=00)
+                today.save()
+            elif datetime.now() > datetime.now().replace(hour=8, minute=00, second=00):
+                today.timeIn = datetime.now()
+                today.save()
     elif datetime.today().isoweekday() == 4:
         today = TimeSheet.objects.get(staff=userid,Day="Thursday",isLast=False)
         try:
             if datetime.now().replace(tzinfo=None) - today.timeIn < timedelta(hours=23):
                 messages.success(request, "You already check in")
-            else:
+
+        except TypeError:
+            if datetime.now() <= datetime.now().replace(hour=8,minute=00,second=00):
+                today.timeIn = datetime.now().replace(hour=8,minute=00,second=00)
+                today.save()
+            elif datetime.now() > datetime.now().replace(hour=8,minute=00,second=00):
                 today.timeIn = datetime.now()
                 today.save()
-        except TypeError:
-            today.timeIn = datetime.now()
-            today.save()
+
     elif datetime.today().isoweekday() == 5:
         today = TimeSheet.objects.get(staff=userid,Day="Friday",isLast=False)
         try:
@@ -158,8 +207,12 @@ def timein(request):
                 today.timeIn = datetime.now()
                 today.save()
         except TypeError:
-            today.timeIn = datetime.now()
-            today.save()
+            if datetime.now() <= datetime.now().replace(hour=8, minute=00, second=00):
+                today.timeIn = datetime.now().replace(hour=8, minute=00, second=00)
+                today.save()
+            elif datetime.now() > datetime.now().replace(hour=8, minute=00, second=00):
+                today.timeIn = datetime.now()
+                today.save()
     elif datetime.today().isoweekday() == 6:
 
         today = TimeSheet.objects.get(staff=userid,Day="Saturday",isLast=False)
@@ -170,8 +223,12 @@ def timein(request):
                 today.timeIn = datetime.now()
                 today.save()
         except TypeError:
-            today.timeIn = datetime.now()
-            today.save()
+            if datetime.now() <= datetime.now().replace(hour=8, minute=00, second=00):
+                today.timeIn = datetime.now().replace(hour=8, minute=00, second=00)
+                today.save()
+            elif datetime.now() > datetime.now().replace(hour=8, minute=00, second=00):
+                today.timeIn = datetime.now()
+                today.save()
     elif datetime.today().isoweekday() == 7:
         today = TimeSheet.objects.get(staff=userid,Day="Sunday",isLast=False)
 
@@ -182,8 +239,12 @@ def timein(request):
                 today.timeIn = datetime.now()
                 today.save()
         except TypeError:
-            today.timeIn = datetime.now()
-            today.save()
+            if datetime.now() <= datetime.now().replace(hour=8, minute=00, second=00):
+                today.timeIn = datetime.now().replace(hour=8, minute=00, second=00)
+                today.save()
+            elif datetime.now() > datetime.now().replace(hour=8, minute=00, second=00):
+                today.timeIn = datetime.now()
+                today.save()
     return redirect('account:employeeTimesheet')
 
 def timeout(request):
@@ -384,6 +445,8 @@ def BookSecurity(request):
 
 
 
+def portal(request):
+    return render(request, 'account/LearningPortal.html')
 
 
 def assignedOrders(request):
@@ -445,11 +508,12 @@ def adminOrder(request, pk):
             form.save()
             # sending notification when assign the job to employee
             em = order.employee_order.employee_user.email
+            name = order.employee_order.employee_user.first_name
             subject = order.address
             jobdate = order.server_date
             send_mail(
                 'New Job Request',
-                'You have a New Order Request to' + str(subject) + ' on ' + str(jobdate) + '\n' +'Please Login in to Your Account to Confirm it',
+                'Kia ora, '+name+'\n\nYou have a New Order Request to \n' + str(subject)+"\n" + 'On ' + str(jobdate) + '\n' +'Please Login in to Your Account to Confirm it\n\nKaipara security Limited',
                 'dengc05@myunitec.ac.nz',
                 [em],
                 fail_silently=False,
@@ -485,11 +549,12 @@ def adminHiringOrder(request, pk):
             form.save()
             #sending notification when assign the job to employee
             em = order.employee_order.employee_user.email
+            name = order.employee_order.employee_user.first_name
             subject = order.address
             deliverdate = order.leash_date
             send_mail(
                 'New Job Request',
-                'You have a Hiring Order Required to deliver to ' + str(subject) + 'on' +str(deliverdate) + '\n' +'Please Login in to Your Account to Confirm it',
+                'Kia ora, '+name+'\n\nYou have a Hiring Order Required to deliver to ' + str(subject)+"\n"+ 'On ' +str(deliverdate) + '\n' +'Please Login in to Your Account to Confirm it\n\nKaipara security Limited',
                 'dengc05@myunitec.ac.nz',
                 [em],
                 fail_silently=False,

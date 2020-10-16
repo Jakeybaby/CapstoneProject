@@ -71,6 +71,7 @@ class TimeSheet(models.Model):
     timeIn = models.DateTimeField(blank=True,null=True)
     timeOut = models.DateTimeField(blank=True,null=True)
     isLast = models.BooleanField(default=False)
+    isBreak = models.BooleanField(default=False)
 
     def ti(self):
         return self.timeIn.strftime("%H:%M:%S")
@@ -80,10 +81,10 @@ class TimeSheet(models.Model):
 
     def hour(self):
         try:
-            # if self.timeIn and self.timeOut:
-                return round((self.timeOut - self.timeIn).seconds/60/60,2)
-            # elif self.timeIn == None or self.timeOut == None:
-            #     return int(0)
+            if self.isBreak == False:
+                return round(((self.timeOut - self.timeIn).seconds)/60/60,2)
+            elif self.isBreak == True:
+                return round(((self.timeOut - self.timeIn).seconds - 1800) / 60 / 60, 2)
         except TypeError:
             return 0
 
