@@ -94,6 +94,9 @@ class Order(models.Model):
     def payserviceorder(self):
         return reverse('account:payserviceorder', kwargs={"pk":self.id})
 
+    def payserviceorderse(self):
+        return reverse('account:payserviceorderse', kwargs={"pk":self.id})
+
     @property
     def latepayment(self):
         if (datetime.now().replace(tzinfo=None) - self.date_order.replace(tzinfo=None)) > timedelta(hours=24):

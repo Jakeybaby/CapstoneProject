@@ -35,6 +35,7 @@ urlpatterns =[
     path('customerorderfeedback/<str:pk>/', views.customerorderfeedback, name='customerorderfeedback'),
     path('employeeorderfeedback/<str:pk>/', views.employeeorderfeedback, name='employeeorderfeedback'),
     path('payserviceorder/<int:pk>/', views.payserviceorder, name='payserviceorder'),
+    path('payserviceorderse/<int:pk>/', views.payserviceorderse, name='payserviceorderse'),
     path('payhiringorder/<int:pk>/', views.payhiringorder, name='payhiringorder'),
     path('register/', views.CustomerRegiser,name='register'),
     path('staffregister/', views.EmployeeRegiser,name='staffregister'),

@@ -667,6 +667,56 @@ def payserviceorder(request, pk):
     return render(request, 'account/paymentPage.html',context)
 
 
+def payserviceorderse(request, pk):
+
+
+    ins = get_object_or_404(Order, pk=pk)
+    aa = ins.securityorder_set.all()
+    user = request.user
+    em = user.email
+    for i in aa:
+        ss = int(i.security_service.price)
+        dd = i.security_service.name
+    if request.method == "POST":
+        ins.isPaid = True
+        ins.save()
+        messages.success(request, 'Order ' + str(ins.id) + ' has been paid')
+
+        customer = stripe.Customer.create(
+            email=user.email,
+            name=user.first_name,
+
+        )
+        charge = stripe.Charge.create(
+
+            amount = ss*100,
+            currency = 'nzd',
+            source='tok_visa',
+            description = 'test',
+        )
+
+        send_mail(
+            'Customer Order '+ str(ins.id) + " Invoice",
+            'Hi '+ user.first_name+ ',\nYour order has successful pay to kairpara Limited LTD\n'
+                                    'The total amount of charge is '+str(ss)+'\n'
+                                                                             'Order item:\n'
+                                                                             'Name             Price\n'
+                                                                             +str(dd)+'                    '+str(ss),
+            'dengc05@myunitec.ac.nz',
+            [em],
+            fail_silently=False,
+        )
+        return redirect('account:customerOrder')
+
+    context={
+        'ins':ins,
+        'user':user,
+        'ss':ss
+
+    }
+    return render(request, 'account/paymentPage.html',context)
+
+
 def payhiringorder(request, pk):
 
     ins = get_object_or_404(HiringOrder, pk=pk)
