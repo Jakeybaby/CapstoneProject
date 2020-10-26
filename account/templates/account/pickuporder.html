@@ -98,7 +98,7 @@
     <tbody>
     {% for hiring in hiringorders %}
 
-                {% if hiring.isPickup %}
+
 
       <tr>
         <!--<td><input type="checkbox" id="checkme"/></td>-->
@@ -119,14 +119,24 @@
         </td>
 
       </tr>
-    {% endif %}
+
 
         {% endfor %}
 
           </tbody>
 
   </table>
-
+<div class="pagination"> <span class="step-links">
+{% if hiringorders.has_previous %}
+<a href="?page={{ hiringorders.previous_page_number }}">Previous</a>
+{% endif %}
+<span class="current">
+Page {{ hiringorders.number }} of {{ hiringorders.paginator.num_pages }}. </span>
+{% if hiringorders.has_next %}
+<a href="?page={{ hiringorders.next_page_number }}">Next</a>
+       {% endif %}
+     </span>
+</div>
 
 </div>
 </div>

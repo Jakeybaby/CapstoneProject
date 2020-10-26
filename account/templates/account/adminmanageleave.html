@@ -134,7 +134,17 @@
     {% endfor %}
           </tbody>
   </table>
-
+<div class="pagination"> <span class="step-links">
+{% if object.has_previous %}
+<a href="?page={{ object.previous_page_number }}">Previous</a>
+{% endif %}
+<span class="current">
+Page {{ object.number }} of {{ object.paginator.num_pages }}. </span>
+{% if object.has_next %}
+<a href="?page={{ object.next_page_number }}">Next</a>
+       {% endif %}
+     </span>
+</div>
 </div>
   <footer class="footer bg-dark">
       <p>&#169;2020 Kaipara Security Services Ltd. | All Rights Reserved  </p>

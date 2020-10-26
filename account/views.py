@@ -10,6 +10,7 @@ from .form import *
 from django.contrib.auth import login, authenticate, logout
 from datetime import datetime,date
 from django.core.mail import send_mail
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import time
 import json
 
@@ -365,7 +366,21 @@ def timeout(request):
 
 
 def admintimesheet(request):
-    memeber = EmployeeProfile.objects.all()
+    memeber_list = EmployeeProfile.objects.all().order_by('-id')
+    paginator = Paginator(memeber_list, 6)
+
+    page = request.GET.get('page')
+
+    try:
+        memeber = paginator.page(page)
+
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        memeber = paginator.page(1)
+
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        memeber = paginator.page(paginator.num_pages)
 
     context = {'member': memeber}
     return render(request,'account/admintimesheet.html',context)
@@ -467,7 +482,22 @@ def managePortal(request):
 def adminpage(request):
     if request.user.is_superuser:
         order = Order.objects.all()
-        hiringorder = HiringOrder.objects.all()
+        hiringorder_list = HiringOrder.objects.all().filter(isDelivery=True, employee_order=None).order_by('-id')
+        paginator = Paginator(hiringorder_list, 2)
+
+        page = request.GET.get('page')
+
+        try:
+            hiringorder = paginator.page(page)
+
+        except PageNotAnInteger:
+            # If page is not an integer deliver the first page
+            hiringorder = paginator.page(1)
+
+        except EmptyPage:
+            # If page is out of range deliver last page of results
+            hiringorder = paginator.page(paginator.num_pages)
+
         context = {
             'object': order,
             'hiringorders':hiringorder
@@ -475,6 +505,7 @@ def adminpage(request):
         return render(request, 'account/Admin_D.html', context)
     else:
         return HttpResponse("You are not admin")
+
 
 
 def adminemployeepage(request):
@@ -1180,7 +1211,17 @@ def updateItem(request):
 
 
 def adminmanageleave(request):
-    ins = leave.objects.all()
+    ins_list = leave.objects.all().order_by('-id')
+    paginator = Paginator(ins_list, 7)
+    page = request.GET.get('page')
+    try:
+        ins = paginator.page(page)
+    except PageNotAnInteger:
+    # If page is not an integer deliver the first page
+        ins = paginator.page(1)
+    except EmptyPage:
+    # If page is out of range deliver last page of results
+        ins = paginator.page(paginator.num_pages)
     context={
         'object':ins
     }
@@ -1188,7 +1229,17 @@ def adminmanageleave(request):
 
 
 def pickuporder(request):
-    hiringorder = HiringOrder.objects.all()
+    hiringorder_list = HiringOrder.objects.filter(isPickup=True)
+    paginator = Paginator(hiringorder_list, 10)
+    page = request.GET.get('page')
+    try:
+        hiringorder = paginator.page(page)
+    except PageNotAnInteger:
+    # If page is not an integer deliver the first page
+        hiringorder = paginator.page(1)
+    except EmptyPage:
+    # If page is out of range deliver last page of results
+        hiringorder = paginator.page(paginator.num_pages)
     context = {
         'hiringorders': hiringorder
     }
@@ -1287,8 +1338,17 @@ def applyleave(request):
 
 
 def applyleavePage(request):
-    ins = leave.objects.filter(staff=request.user.employeeprofile)
-
+    ins_list = leave.objects.filter(staff=request.user.employeeprofile).order_by('-id')
+    paginator = Paginator(ins_list, 3)
+    page = request.GET.get('page')
+    try:
+        ins = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        ins = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        ins = paginator.page(paginator.num_pages)
     context={
         'object':ins
     }

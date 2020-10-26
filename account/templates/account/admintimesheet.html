@@ -111,7 +111,17 @@
     {% endfor %}
           </tbody>
   </table>
-
+<div class="pagination"> <span class="step-links">
+{% if member.has_previous %}
+<a href="?page={{ member.previous_page_number }}">Previous</a>
+{% endif %}
+<span class="current">
+Page {{ member.number }} of {{ member.paginator.num_pages }}. </span>
+{% if member.has_next %}
+<a href="?page={{ member.next_page_number }}">Next</a>
+       {% endif %}
+     </span>
+</div>
 
 </div>
   <footer class="footer bg-dark">
