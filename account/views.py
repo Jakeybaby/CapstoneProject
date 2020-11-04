@@ -1229,7 +1229,7 @@ def adminmanageleave(request):
 
 
 def pickuporder(request):
-    hiringorder_list = HiringOrder.objects.filter(isPickup=True)
+    hiringorder_list = HiringOrder.objects.filter(isPickup=True).order_by('-id')
     paginator = Paginator(hiringorder_list, 10)
     page = request.GET.get('page')
     try:
