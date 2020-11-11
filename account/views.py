@@ -745,7 +745,7 @@ def payserviceorderse(request, pk):
         'ss':ss
 
     }
-    return render(request, 'account/paymentPage.html',context)
+    return render(request, 'account/paymentPagese.html',context)
 
 
 def payhiringorder(request, pk):
