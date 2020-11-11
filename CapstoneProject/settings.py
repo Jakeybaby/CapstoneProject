@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_google_maps',
-    'crispy_forms'
+    'crispy_forms',
+    'storages',
 
 
 
@@ -147,9 +148,18 @@ EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'apikey'
 # EMAIL_HOST_PASSWORD = os.environ.get('EMPS')
+# EMAIL_HOST_PASSWORD = os.environ.get('SendgripPW')
 EMAIL_HOST_PASSWORD = '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'
 EMAIL_USE_TLS = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
+AWS_ACCESS_KEY_ID = 'AKIARBLTACNBEYJ6CYAA'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'kaparajk1'
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
