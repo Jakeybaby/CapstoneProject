@@ -139,8 +139,8 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 
-# AIzaSyCvTF4JKso7zjNZqQbpQugNRMmOUcnoiKQ
-GOOGLE_MAPS_API_KEY = 'AIzaSyCvTF4JKso7zjNZqQbpQugNRMmOUcnoiKQ'
+
+GOOGLE_MAPS_API_KEY = '***'
 
 django_heroku.settings(locals())
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -155,9 +155,9 @@ EMAIL_USE_TLS = True
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
-AWS_ACCESS_KEY_ID = 'AKIARBLTACNBEYJ6CYAA'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'kaparajk1'
+AWS_ACCESS_KEY_ID = '***'
+AWS_SECRET_ACCESS_KEY = '***'
+AWS_STORAGE_BUCKET_NAME = '***'
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
