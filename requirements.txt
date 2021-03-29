@@ -44,7 +44,7 @@ httpie==2.1.0
 idna==2.9
 itsdangerous==1.1.0
 jedi==0.17.0
-Jinja2==2.11.1
+Jinja2==2.11.3
 jmespath==0.9.5
 kombu==5.0.2
 legacy==0.1.6
