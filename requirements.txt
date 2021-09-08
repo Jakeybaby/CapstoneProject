@@ -50,7 +50,7 @@ kombu==5.0.2
 legacy==0.1.6
 MarkupSafe==1.1.1
 parso==0.7.0
-Pillow==7.1.1
+Pillow==8.3.2
 pipenv==2020.6.2
 prompt-toolkit==3.0.5
 psycopg2==2.8.4
